@@ -10,8 +10,11 @@
                         <div class="col-xs-12 col-lg-12">
                             <div class="main-header-wrapper">
                                 <div class="user-name-ses-display text-end">
-                                    <h6 class="d-inline-block">Bagus Prayoga</h6>
-                                    <form class="float-end btn-logout-form" action="">
+                                    <?php if ($unfinishedQuiz) { ?>
+                                        <span style="color:red; padding:10px">Sorry, You Have Unfinished PNP Test</span>
+                                    <?php } ?>
+                                    <h6 class="d-inline-block"> <?= session('username') ?></h6>
+                                    <form class="float-end btn-logout-form" action="/">
                                         <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
                                             <div class="inner_content">
                                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -37,7 +40,7 @@
                         </div>
                         <div class="main-menu-wrapper row justify-content-md-center mt-5">
                             <div class="col-lg-3 col-md-3 text-center">
-                                <a class="btn main-menu-btn">
+                                <a class="btn main-menu-btn" href="<?= session()->get('user_level') === 'admin' ? '/pnp_test' : '/camera'; ?>">
                                     <img class="card-img-top menu-icon" src="<?= base_url('/img/icon-quiz3.png') ?>">
                                     <h5 class="card-title mt-3">PNP TEST</h5> 
                                 </a>

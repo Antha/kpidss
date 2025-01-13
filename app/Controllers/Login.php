@@ -17,18 +17,21 @@ class Login extends Controller
     {
         $session = session();
         $model = new UserModel();
-        $username = $this->request->getVar('username');
+        $username = $this->request->getVar('email');
         $password = $this->request->getVar('password');
 
-        //$user = $model->where('username', $username)->first();
+        $user = $model->where('username', $username)->first();
 
-        /*if ($user) {
-            if (!password_verify($password, $user['password'])) {
+        if ($user) {
+            if (password_verify($password, $user['password'])) {
                 $session->set([
                     'user_id' => $user['id'],
                     'username' => $user['username'],
+                    'user_level' => $user["level"],
                     'isLoggedIn' => true,
                 ]);
+
+                writeLogToFile("user_level : ".$user["level"]);
                 
                 return redirect()->to('/dashboard');
             } else {
@@ -38,7 +41,7 @@ class Login extends Controller
         } else {
             $session->setFlashdata('error', 'User not found');
             return redirect()->to('/login');
-        }*/
+        }
     }
 
     public function logout()

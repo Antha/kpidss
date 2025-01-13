@@ -10,7 +10,7 @@ class Kpi_model extends Model
 
     function __construct()
     {
-        $this->db_con = db_connect('db_barbara');
+        $this->db_con = db_connect('default');
     }
 
     function default_table_kpi_exists(){

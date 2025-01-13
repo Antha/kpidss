@@ -24,23 +24,26 @@
                         </div>
                         <div class="details">
                             <h3>Sign Into Your Account</h3>
-                            <form action="#" method="GET">
+                            <?php if (session()->getFlashdata('error')): ?>
+                                <p class="error"><?= session()->getFlashdata('error') ?></p>
+                            <?php endif; ?>
+                            <form action="/login/authenticate" method="POST">
                                 <div class="form-group form-box">
-                                    <input type="email" name="email" class="form-control" placeholder="Email Address" aria-label="Email Address">
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="Email Address/Name" aria-label="Email Address">
                                 </div>
                                 <div class="form-group form-box">
-                                    <input type="password" name="password" class="form-control" autocomplete="off" placeholder="Password" aria-label="Password">
+                                    <input type="password" name="password" id="password" class="form-control" autocomplete="off" placeholder="Password" aria-label="Password">
                                 </div>
                                 <div class="form-group form-box checkbox clearfix">
                                     <div class="form-check checkbox-theme">
-                                        <input class="form-check-input" type="checkbox" value="" id="rememberMe">
-                                        <label class="form-check-label" for="rememberMe">
+                                        <input class="form-check-input" type="checkbox" value="" id="security_chckbox">
+                                        <label class="form-check-label" for="security_chckbox">
                                             I am not a robot
                                         </label>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn-md btn-theme w-100">Login</button>
+                                    <button type="submit" class="btn-md btn-theme w-100" id="btn_login" disabled>Login</button>
                                 </div>
                             </form>
                         </div>
@@ -50,5 +53,18 @@
         </div>
     </div>
 </body>
+
+<script>
+    $(document).ready(function(){
+        $('#security_chckbox').on('click',function(){
+            let isCheckedSec = $('#security_chckbox').prop('checked');
+            if(isCheckedSec == true){
+                $('#btn_login').prop('disabled',false);
+            }else{
+                $('#btn_login').prop('disabled',true);
+            }
+        })
+    });
+</script>
 
 <?php $this->endSection() ?>

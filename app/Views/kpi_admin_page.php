@@ -16,7 +16,7 @@
             </nav>  
         </div>
 
-        <div id="menu-page">
+        <div id="main">
             <div class="header-top">
                 <div class="container-fluid">
                     <div class="row">
@@ -842,8 +842,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
         </div>
     </div>
 </body>

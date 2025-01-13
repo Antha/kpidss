@@ -28,7 +28,7 @@ class Kpi extends Controller
     
     public function index()
     {
-        $user_level = "admin";
+        $user_level = "agent";
 
         $get_table_info_default = $this->kpi_model->default_table_kpi_exists();
         $periode_default = explode("_",$get_table_info_default);
@@ -143,7 +143,7 @@ class Kpi extends Controller
                 $data['display_periode'] = $periode;
             }else{
                 $data['last_update_date'] = $latest_update_date;
-                $data['display_periode'] = $periode_default[1];
+                $data['display_periode'] = $periode_default[2];
                 $where_var = "WHERE branch = '".$agent_branch."'";
 
                 $data['kpi_data'] = $this->kpi_model->get_kpi_data($periode_default[2],$where_var);

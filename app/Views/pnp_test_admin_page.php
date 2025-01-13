@@ -25,6 +25,19 @@
                                 <button id="openNav" class="btn float-start open-nav-btn" onclick="w3_open()">&#9776;</button>
                                 <div class="main-header-title mt-2">
                                     <h6>BARBARA</h6>
+<<<<<<< HEAD
+                                </div>
+                                <div class="greeting float-end">
+                                    <h6 class="d-inline-block">Welcome,  <?= session('username') ?></h6>
+                                    <form class="float-end btn-logout-form" action="/logout">
+                                        <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
+                                            <div class="inner_content">
+                                                <i class="fa-solid fa-right-from-bracket"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </div>
+=======
                                     
                                 </div>
                                 <div class="greeting float-end">
@@ -37,6 +50,7 @@
                                             </button>
                                         </form>
                                     </div>
+>>>>>>> origin/hendra_branch
                             </div>
                         </div>                   
                     </div>
@@ -69,7 +83,10 @@
                                                     <input type="submit" id="btn_submit_periode" name="btn_submit_periode" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
                                                 </div>
                                                 <p style="padding-left:5px;color:#00bd52;"><?= session()->getFlashdata('error_message'); ?></p> 
+<<<<<<< HEAD
+=======
                                                 
+>>>>>>> origin/hendra_branch
                                                 <div style="clear: both;"></div>
                                                 </div>
                                             </form>
@@ -105,6 +122,55 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+<<<<<<< HEAD
+                                            <?php if (!empty($resumeResults)): ?>
+                                                <?php foreach ($resumeResults as $index => $result): ?>
+                                                    <tr>
+                                                        <td><?= $index + 1 ?></td>
+                                                        <td><?= esc($result['Agent ID']) ?></td>
+                                                        <td><?= esc($result['Digipos ID']) ?></td>
+                                                        <td><?= esc($result['DSS Name']) ?></td>
+                                                        <td><?= esc($result['datetime']) ?></td>
+                                                        <td><?= esc($result['num_right']) ?></td>
+                                                        <td><?= esc($result['num_wrong']) ?></td>
+                                                        <td><?= esc($result['score']) ?></td>
+                                                        <td><?= esc($result['status']) ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="9" class="text-center">No data available</td>
+                                                </tr>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+
+                                    <script>
+                                        function filterTable() {
+                                            const input = document.getElementById("searchInput");
+                                            const filter = input.value.toLowerCase();
+                                            const table = document.getElementById("dataTable");
+                                            const rows = table.getElementsByTagName("tr");
+
+                                            for (let i = 0; i < rows.length; i++) {
+                                                const cells = rows[i].getElementsByTagName("td");
+                                                let match = false;
+                                                
+                                                for (let j = 0; j < cells.length; j++) {
+                                                    if (cells[j]) {
+                                                        const textValue = cells[j].textContent || cells[j].innerText;
+                                                        if (textValue.toLowerCase().indexOf(filter) > -1) {
+                                                            match = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                rows[i].style.display = match ? "" : "none";
+                                            }
+                                        }
+                                    </script>
+=======
                                             <tr>
                                             <th scope="row">1</th>
                                             <td>Mark</td>
@@ -124,6 +190,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
+>>>>>>> origin/hendra_branch
                                 </div>
                             </div> 
                         </div>
