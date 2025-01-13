@@ -25,6 +25,7 @@
                                 <button id="openNav" class="btn float-start open-nav-btn" onclick="w3_open()">&#9776;</button>
                                 <div class="main-header-title mt-2">
                                     <h6>BARBARA</h6>
+<<<<<<< HEAD
                                 </div>
                                 <div class="greeting float-end">
                                     <h6 class="d-inline-block">Welcome,  <?= session('username') ?></h6>
@@ -36,6 +37,20 @@
                                         </button>
                                     </form>
                                 </div>
+=======
+                                    
+                                </div>
+                                <div class="greeting float-end">
+                                        <h6 class="d-inline-block">Welcome, Bagus Prayoga</h6>
+                                        <form class="float-end btn-logout-form" action="">
+                                            <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
+                                                <div class="inner_content">
+                                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+>>>>>>> origin/hendra_branch
                             </div>
                         </div>                   
                     </div>
@@ -68,6 +83,10 @@
                                                     <input type="submit" id="btn_submit_periode" name="btn_submit_periode" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
                                                 </div>
                                                 <p style="padding-left:5px;color:#00bd52;"><?= session()->getFlashdata('error_message'); ?></p> 
+<<<<<<< HEAD
+=======
+                                                
+>>>>>>> origin/hendra_branch
                                                 <div style="clear: both;"></div>
                                                 </div>
                                             </form>
@@ -103,6 +122,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+<<<<<<< HEAD
                                             <?php if (!empty($resumeResults)): ?>
                                                 <?php foreach ($resumeResults as $index => $result): ?>
                                                     <tr>
@@ -150,6 +170,27 @@
                                             }
                                         }
                                     </script>
+=======
+                                            <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+>>>>>>> origin/hendra_branch
                                 </div>
                             </div> 
                         </div>

@@ -102,12 +102,15 @@ body {
   color: #ea2c2c;
 }
 
+<<<<<<< HEAD
 .table-custom thead th,
 .table-custom thead td {
   text-align: center;
   color: #fff;
 }
 
+=======
+>>>>>>> origin/hendra_branch
 .input-group-addon {
   border: 1px solid #ced4da;
   color: #9ea9b2;
@@ -154,8 +157,49 @@ body {
   color: #ffa921;
 }
 
+<<<<<<< HEAD
 .table-scroll-y {
   overflow-y: scroll;
+=======
+.table-wrapper-scroll-y {
+  height: 500px;
+}
+
+.table-scroll-y {
+  overflow-y: auto;
+}
+
+.table-custom thead th,
+.table-custom thead td {
+  text-align: center;
+  color: #fff;
+  font-weight: normal !important;
+  vertical-align: middle;
+}
+
+.table-custom tbody.normal-fw tr th {
+  font-weight: normal !important;
+}
+
+.table-custom thead .custom-width {
+  min-width: 150px;
+}
+
+.table-custom thead .custom-width-large {
+  min-width: 250px;
+}
+
+.table-custom tbody tr td {
+  vertical-align: middle;
+}
+
+.table-dark-blue {
+  background-color: #1f5e9e !important;
+}
+
+.table-grey {
+  background-color: #7a7a7a !important;
+>>>>>>> origin/hendra_branch
 }
 
 .download-icon-wrapper a:hover,
@@ -163,6 +207,34 @@ body {
   color: #fc980c;
 }
 
+<<<<<<< HEAD
+=======
+.select_filter {
+  padding: 9px 5px;
+}
+
+.flashdata_error {
+  padding-left: 15px;
+  color: #a81c1c;
+  margin: 5px 0px;
+  font-style: italic;
+}
+
+.ott-bg {
+  background-color: #3549ff !important;
+  color: #fff;
+}
+
+.exc-bg {
+  background-color: #27ae60 !important;
+  color: #fff;
+}
+
+.bw-bg {
+  background-color: #d6d6d6 !important;
+}
+
+>>>>>>> origin/hendra_branch
 @media screen and (max-width: 575px) {
   .txt-input-data {
     font-size: 12px;
@@ -190,4 +262,11 @@ body {
   .btn_logout {
     padding: 7px 5px 5px 5px;
   }
+<<<<<<< HEAD
+=======
+
+  #col_periode_data {
+    margin-bottom: 15px;
+  }
+>>>>>>> origin/hendra_branch
 }

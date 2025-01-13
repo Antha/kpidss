@@ -19,3 +19,7 @@ $routes->post('camera/save', 'Camera::save');
 $routes->get('/quiz', 'Quiz::index');
 $routes->post('/quiz/(:num)', 'Quiz::index/$1');
 $routes->get('/quiz/result', 'Quiz::result');
+$routes->get('/dashboard', 'Dashboard::index');
+$routes->get('/pnp_test', 'Pnp_test::index');
+$routes->get('/kpi', 'Kpi::index');
+$routes->post('/kpi', 'Kpi::index');
