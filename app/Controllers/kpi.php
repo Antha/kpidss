@@ -43,6 +43,22 @@ class Kpi extends Controller
                 if($get_table_info == 0){
                     $data['kpi_data'] = $this->kpi_model->get_kpi_data($periode_default[2],"");
                     $this->session_user->setFlashdata('table_not_exists','data periode '.$periode.' tidak ditemukan');
+
+                    $data['kpi_lb_dps'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"DENPASAR");
+                    $data['kpi_lb_fls'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"FLORES");
+                    $data['kpi_lb_kpg'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"KUPANG");
+                    $data['kpi_lb_mtr'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"MATARAM");
+                    $data['kpi_lb_mgl'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"MAGELANG");
+                    $data['kpi_lb_pkl'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"PEKALONGAN");
+                    $data['kpi_lb_pwo'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"PURWOKERTO");
+                    $data['kpi_lb_smg'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"SEMARANG");
+                    $data['kpi_lb_jbr'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"JEMBER");
+                    $data['kpi_lb_lmn'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"LAMONGAN");
+                    $data['kpi_lb_mdn'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"MADIUN");
+                    $data['kpi_lb_mlg'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"MALANG");
+                    $data['kpi_lb_sdo'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"SIDOARJO");
+                    $data['kpi_lb_sby'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"SURABAYA");
+                    $data['kpi_lb_area3'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],"AREA 3");
                 }else{
                     $regional = $this->request->getPost('kpi_filter_regional_admin');
                     $branch = $this->request->getPost('kpi_filter_branch_admin');
@@ -109,6 +125,8 @@ class Kpi extends Controller
                 if($get_table_info == 0){
                     $data['kpi_data'] = $this->kpi_model->get_kpi_data($periode_default[2],"");
                     $this->session_user->setFlashdata('table_not_exists','data periode '.$periode.' tidak ditemukan');
+
+                    $data['kpi_leaderboard'] = $this->kpi_model->get_kpi_lb_branch($periode_default[2],$agent_branch);
                 }else{
                     $branch = $agent_branch;
                     $cluster = $this->request->getPost('kpi_filter_cluster_agent');
