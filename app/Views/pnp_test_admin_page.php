@@ -1,0 +1,164 @@
+<?php $this->extend('template_header_menu_page') ?>
+
+<?php $this->section('content') ?>
+
+<body>
+    <div class="dashboard-page">
+        
+        <div class="sidebar w3-bar-block w3-card animate-left" style="display:none" id="mySidebar">
+            <div class="close-nav-btn-wrapper">
+                <button class="btn close-nav-btn" onclick="w3_close()">&times;</button>
+            </div>
+            <nav class="nav flex-column">
+                <a class="nav-link active" aria-current="page" href="#">PNP TEST</a>
+                <a class="nav-link" href="#">KPI</a>
+                <a class="nav-link" href="#">LOYALTY</a>
+            </nav>  
+        </div>
+
+        <div id="main">
+            <div class="header-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-12">
+                            <div class="main-header-wrapper">
+                                <button id="openNav" class="btn float-start open-nav-btn" onclick="w3_open()">&#9776;</button>
+                                <div class="main-header-title mt-2">
+                                    <h6>BARBARA</h6>
+                                    
+                                </div>
+                                <div class="greeting float-end">
+                                        <h6 class="d-inline-block">Welcome, Bagus Prayoga</h6>
+                                        <form class="float-end btn-logout-form" action="">
+                                            <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
+                                                <div class="inner_content">
+                                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </div>
+                            </div>
+                        </div>                   
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-menu">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="content-wrapper">
+                                <div class="date-update-wrapper">
+                                    <h4 class="red-text">PNP TEST SUMMARY</h4>
+                                    <span>last update : 2025-01-09</span>
+                                </div>
+                                <div class="filter_wrapper mt-4">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-sm-2 col-md-2 col-5">
+                                            <form method="post" action="<?php echo base_url()."turis"; ?>" enctype="multipart/form-data">
+                                                <div class="row">
+                                                <div class="form-group col-md-8 col-8 no-pad-right" id="col_periode_data">
+                                                    <div class="input-group dropdown_input">
+                                                        <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_pnp_test" value="202501" />
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-4">			
+                                                    <input type="submit" id="btn_submit_periode" name="btn_submit_periode" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
+                                                </div>
+                                                <p style="padding-left:5px;color:#00bd52;"><?= session()->getFlashdata('error_message'); ?></p> 
+                                                
+                                                <div style="clear: both;"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-md-2 col-5">
+                                            <div class="input-group">
+                                                <input required type="text" id="search" class="form-control txt-input-data" placeholder="Search...">
+                                                <div class="input-group-addon">
+                                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-md-2 col-2 offset-lg-6 offset-md-6 download-icon-wrapper">
+                                            <a href="#">
+                                                <i class="fa-solid fa-file-arrow-down"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-wrapper table-responsive table-scroll-y">
+                                    <table class="table table-bordered table-hover table-custom">
+                                        <thead>
+                                            <tr class="bg-danger">
+                                                <th scope="col">No</th>
+                                                <th scope="col">Agent ID</th>
+                                                <th scope="col">Digipos ID</th>
+                                                <th scope="col">DSS Name</th>
+                                                <th scope="col">Test Date</th>
+                                                <th scope="col">Right Answer</th>
+                                                <th scope="col">Wrong Answer</th>
+                                                <th scope="col">Score</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                            </tr>
+                                            <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+        </div>
+           
+    </div>
+</body>
+
+<link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
+<script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
+<script>
+    function w3_open() {
+    document.getElementById("main").style.marginLeft = "25%";
+    document.getElementById("mySidebar").style.width = "25%";
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("openNav").style.display = 'none';
+    }
+    function w3_close() {
+    document.getElementById("main").style.marginLeft = "0%";
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("openNav").style.display = "inline-block";
+    }
+
+    $('#periode_data').datepicker({
+        format: "yyyymm",
+        startView: 1,
+        minViewMode:1,
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>
+
+<?php $this->endSection() ?>

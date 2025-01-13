@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+body {
+  font-family: "Rubik", serif;
+  font-size: 12px !important;
+  background-color: #f7f7f7;
+}
+
+.dashboard-page {
+  min-height: 100vh;
+}
+
+.dashboard-page::before {
+  content: "";
+  background: url(../img/hero-bg.jpg) top left no-repeat;
+  position: absolute;
+  opacity: 0.2;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.main-content-dashboard {
+  position: relative;
+  z-index: 9999;
+}
+
+.main-header-wrapper {
+  padding: 15px 0px;
+}
+
+.main-header-title {
+  color: #ff3838;
+  letter-spacing: 3px;
+  padding-top: 3px;
+}
+
+.user-name-ses-display,
+.btn_logout i {
+  color: #343a40;
+}
+
+.btn_logout:hover i {
+  color: #ea2c2c;
+}
+
+.btn-logout-form {
+  margin-left: 8px;
+}
+
+.user-name-ses-display h6 {
+  margin-top: 10px;
+}
+
+.menu-icon {
+  width: 100px;
+  padding: 10px;
+}
+
+.main-menu-btn,
+.main-menu-btn:hover,
+.main-menu-btn:active {
+  background: #fff;
+  border: 2px solid #ff3838;
+  border-radius: 500px;
+  padding: 35px 50px;
+}
+
+.main-menu-btn:hover .card-title {
+  color: #ff3838;
+}
+
+.card-title {
+  color: #343a40;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .main-menu-btn,
+  .main-menu-btn:hover {
+    background: #fff;
+    border: 2px solid #ff3838;
+    border-radius: 500px;
+    padding: 15px 30px;
+    margin-bottom: 30px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    margin-top: 5px !important;
+  }
+}
