@@ -40,10 +40,10 @@ class UserQuizModel extends Model
         $db = \Config\Database::connect();
 
         $query = $db->query("
-            SELECT
-                kd.`Agent ID`, 
-                kd.`Digipos ID`,
-                kd.`DSS Name`, 
+             SELECT
+                kd.agent_id AS `Agent ID`, 
+                kd.`digipos_id` `Digipos ID`,
+                kd.`dss_name` `DSS Name`, 
                 uq.datetime, 
                 ss.num_right,
                 ss.num_wrong,
@@ -72,7 +72,7 @@ class UserQuizModel extends Model
                 GROUP BY user_id, quiz_id
             ) AS ss 
             JOIN `users` u ON ss.user_id = u.id
-            JOIN `kpi_dss` kd ON u.agent_id = kd.`Agent ID`
+            JOIN `kpi_data_202412` kd ON u.agent_id = kd.agent_id
             JOIN `user_quizess` uq ON ss.quiz_id = uq.id
         ");
 
