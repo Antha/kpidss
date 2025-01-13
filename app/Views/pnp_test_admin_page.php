@@ -25,7 +25,6 @@
                                 <button id="openNav" class="btn float-start open-nav-btn" onclick="w3_open()">&#9776;</button>
                                 <div class="main-header-title mt-2">
                                     <h6>BARBARA</h6>
-<<<<<<< HEAD
                                 </div>
                                 <div class="greeting float-end">
                                     <h6 class="d-inline-block">Welcome,  <?= session('username') ?></h6>
@@ -37,20 +36,6 @@
                                         </button>
                                     </form>
                                 </div>
-=======
-                                    
-                                </div>
-                                <div class="greeting float-end">
-                                        <h6 class="d-inline-block">Welcome, Bagus Prayoga</h6>
-                                        <form class="float-end btn-logout-form" action="">
-                                            <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
-                                                <div class="inner_content">
-                                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                                </div>
-                                            </button>
-                                        </form>
-                                    </div>
->>>>>>> origin/hendra_branch
                             </div>
                         </div>                   
                     </div>
@@ -69,7 +54,7 @@
                                 <div class="filter_wrapper mt-4">
                                     <div class="row">
                                         <div class="col-lg-2 col-sm-2 col-md-2 col-5">
-                                            <form method="post" action="<?php echo base_url()."turis"; ?>" enctype="multipart/form-data">
+                                            <form method="post"  enctype="multipart/form-data" id="form_submit_date">
                                                 <div class="row">
                                                 <div class="form-group col-md-8 col-8 no-pad-right" id="col_periode_data">
                                                     <div class="input-group dropdown_input">
@@ -80,20 +65,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-4">			
-                                                    <input type="submit" id="btn_submit_periode" name="btn_submit_periode" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
+                                                    <input type="submit" id="btn_submit_periode" name="" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
                                                 </div>
                                                 <p style="padding-left:5px;color:#00bd52;"><?= session()->getFlashdata('error_message'); ?></p> 
-<<<<<<< HEAD
-=======
-                                                
->>>>>>> origin/hendra_branch
                                                 <div style="clear: both;"></div>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="col-lg-2 col-sm-2 col-md-2 col-5">
                                             <div class="input-group">
-                                                <input required type="text" id="search" class="form-control txt-input-data" placeholder="Search...">
+                                                <input required type="text" id="searchInput" class="form-control txt-input-data" placeholder="Search..."  onkeyup="filterTable()">
                                                 <div class="input-group-addon">
                                                     <i class="fa-solid fa-magnifying-glass"></i>
                                                 </div>
@@ -107,7 +88,7 @@
                                     </div>
                                 </div>
                                 <div class="table-wrapper table-responsive table-scroll-y">
-                                    <table class="table table-bordered table-hover table-custom">
+                                    <table class="table table-bordered table-hover table-custom" id="dataTable">
                                         <thead>
                                             <tr class="bg-danger">
                                                 <th scope="col">No</th>
@@ -122,7 +103,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-<<<<<<< HEAD
                                             <?php if (!empty($resumeResults)): ?>
                                                 <?php foreach ($resumeResults as $index => $result): ?>
                                                     <tr>
@@ -146,13 +126,32 @@
                                     </table>
 
                                     <script>
+                                        document.getElementById("form_submit_date").addEventListener("submit", function () {
+                                            event.preventDefault(); // Mencegah refresh halaman
+
+                                            const filter = document.getElementById("periode_data").value; // Value in 'ym' format
+                                            const table = document.getElementById("dataTable");
+                                            const rows = table.getElementsByTagName("tr");
+
+                                            for (let i = 1; i < rows.length; i++) { // Skip the header row
+                                                const cells = rows[i].getElementsByTagName("td");
+                                                if (cells.length > 0) {
+                                                    const testDate = cells[4]?.textContent || cells[4]?.innerText; // Get 'Test Date' column value
+                                                    const testDateYM = testDate ? testDate.substring(0, 7).replace("-", "") : ""; // Extract 'ym' format
+
+                                                    // Show row if it matches the filter; otherwise hide it
+                                                    rows[i].style.display = testDateYM === filter ? "" : "none";
+                                                }
+                                            }
+                                        });
+
                                         function filterTable() {
                                             const input = document.getElementById("searchInput");
                                             const filter = input.value.toLowerCase();
                                             const table = document.getElementById("dataTable");
                                             const rows = table.getElementsByTagName("tr");
 
-                                            for (let i = 0; i < rows.length; i++) {
+                                            for (let i = 1; i < rows.length; i++) {
                                                 const cells = rows[i].getElementsByTagName("td");
                                                 let match = false;
                                                 
@@ -170,27 +169,6 @@
                                             }
                                         }
                                     </script>
-=======
-                                            <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            </tr>
-                                            <tr>
-                                            <th scope="row">2</th>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                            </tr>
-                                            <tr>
-                                            <th scope="row">3</th>
-                                            <td colspan="2">Larry the Bird</td>
-                                            <td>@twitter</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
->>>>>>> origin/hendra_branch
                                 </div>
                             </div> 
                         </div>

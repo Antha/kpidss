@@ -51,6 +51,7 @@
                                     <div class="col-md-6 offset-md-3 text-center">
                                         <div class="card shadow">
                                             <div class="card-body">
+                                            <?php if (!is_array(session('unfinishedQuiz'))) : ?>
                                                 <h5 class="card-title">Camera Capture</h5>
                                                 <button id="capture" class="btn btn-primary mt-3 mb-3">Capture</button>
                                                 <div class="d-flex justify-content-center align-items-center">
@@ -61,6 +62,16 @@
                                                     <input type="hidden" name="imageData" id="imageData">
                                                     <button type="submit" id="saveButton" class="btn btn-success" disabled>Save</button>
                                                 </form>
+                                                <?php else : ?>
+                                                    <div class="alert alert-danger text-center mt-4">
+                                                        <h5 class="card-title text-danger">You have an unfinished quiz</h5>
+                                                        <p class="mb-3">Do you want to continue working on your quiz?</p>
+                                                        <div class="d-flex justify-content-center gap-3">
+                                                            <a href="/quiz" class="btn btn-success">Yes</a>
+                                                            <a href="/dashboard" class="btn btn-secondary">No</a>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>

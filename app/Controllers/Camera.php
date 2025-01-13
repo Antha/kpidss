@@ -7,14 +7,7 @@ class Camera extends BaseController
     public function index()
     {
         $session = session();
-        //writeLogToFile("uQ : ".json_encode($session->get("unfinishedQuiz")));
-        if (is_array($session->get("unfinishedQuiz"))) {
-            // Tampilkan quiz
-            return redirect()->to('/quiz');
-        } else {
-            // Tampilkan halaman kamera
-            return view('camera');
-        }
+        return view('camera_page');
         
     }
 
@@ -29,6 +22,6 @@ class Camera extends BaseController
             session()->set('capturedImage', $imageData);
         }
 
-        return redirect()->to('/quiz');
+        return redirect()->to('/quiz_page');
     }
 }

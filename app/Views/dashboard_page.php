@@ -10,11 +10,8 @@
                         <div class="col-xs-12 col-lg-12">
                             <div class="main-header-wrapper">
                                 <div class="user-name-ses-display text-end">
-                                    <?php if ($unfinishedQuiz) { ?>
-                                        <span style="color:red; padding:10px">Sorry, You Have Unfinished PNP Test</span>
-                                    <?php } ?>
                                     <h6 class="d-inline-block"> <?= session('username') ?></h6>
-                                    <form class="float-end btn-logout-form" action="/">
+                                    <form class="float-end btn-logout-form" action="/logout">
                                         <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
                                             <div class="inner_content">
                                                 <i class="fa-solid fa-right-from-bracket"></i>

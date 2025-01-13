@@ -100,7 +100,7 @@ class Quiz extends BaseController
             writeLogToFile("questionNumber : ".$questionNumber);
             $question = $this->questionModel->getQuestionByNumber($questionNumber);
 
-            return view('quiz', [
+            return view('quiz_page', [
                 'question' => $question,
                 'questionNumber' => $questionNumber
             ]);
@@ -139,7 +139,7 @@ class Quiz extends BaseController
         $session->remove('quiz_answers');
 
         // Tampilkan hasil atau redirect ke halaman lain
-        return view('quiz_result', ['answers' => $quizAnswers]);
+        return view('quiz_result_page', ['answers' => $quizAnswers]);
     }
 
     function saveBase64Image($base64String, $uploadPath) {
