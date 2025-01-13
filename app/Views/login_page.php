@@ -36,14 +36,14 @@
                                 </div>
                                 <div class="form-group form-box checkbox clearfix">
                                     <div class="form-check checkbox-theme">
-                                        <input class="form-check-input" type="checkbox" value="" id="rememberMe">
-                                        <label class="form-check-label" for="rememberMe">
+                                        <input class="form-check-input" type="checkbox" value="" id="security_chckbox">
+                                        <label class="form-check-label" for="security_chckbox">
                                             I am not a robot
                                         </label>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn-md btn-theme w-100">Login</button>
+                                    <button type="submit" class="btn-md btn-theme w-100" id="btn_login" disabled>Login</button>
                                 </div>
                             </form>
                         </div>
@@ -53,5 +53,18 @@
         </div>
     </div>
 </body>
+
+<script>
+    $(document).ready(function(){
+        $('#security_chckbox').on('click',function(){
+            let isCheckedSec = $('#security_chckbox').prop('checked');
+            if(isCheckedSec == true){
+                $('#btn_login').prop('disabled',false);
+            }else{
+                $('#btn_login').prop('disabled',true);
+            }
+        })
+    });
+</script>
 
 <?php $this->endSection() ?>

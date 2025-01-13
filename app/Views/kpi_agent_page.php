@@ -25,18 +25,8 @@
                                 <button id="openNav" class="btn float-start open-nav-btn" onclick="w3_open()">&#9776;</button>
                                 <div class="main-header-title mt-2">
                                     <h6>BARBARA</h6>
-                                    
                                 </div>
-                                <div class="greeting float-end">
-                                        <h6 class="d-inline-block">Welcome, Bagus Prayoga</h6>
-                                        <form class="float-end btn-logout-form" action="">
-                                            <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
-                                                <div class="inner_content">
-                                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                                </div>
-                                            </button>
-                                        </form>
-                                    </div>
+                                <?php echo $this->include('partials/include_header_top') ?>
                             </div>
                         </div>                   
                     </div>
@@ -115,13 +105,13 @@
                                                             <tr>
                                                                 <th><?php echo $row['cluster']; ?></th>
                                                                 <th <?php if($row['runrate_status'] == "EXC"){?> 
-                                                                        class="text-center exc-bg"
-                                                                    <?php }else if($row['runrate_status'] == "OTT"){ ?>
-                                                                        class="text-center ott-bg"
-                                                                    <?php }else if($row['runrate_status'] == "BW"){ ?>
-                                                                        class="text-center bw-bg"
-                                                                    <?php } ?>
-                                                                ><?php echo $row['runrate_status']; ?></th>
+                                                                                    class="text-center exc-bg"
+                                                                                <?php }else if($row['runrate_status'] == "OTT"){ ?>
+                                                                                    class="text-center ott-bg"
+                                                                                <?php }else if($row['runrate_status'] == "BW"){ ?>
+                                                                                    class="text-center bw-bg"
+                                                                                <?php } ?>
+                                                                            ><?php echo $row['runrate_status']; ?></th>
                                                             </tr>
                                                             
                                                         <?php } ?>
@@ -300,6 +290,16 @@
                
             </div>
 
+        </div>
+
+        <div id="footer" style="margin-top: 50px;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 text-center p-3 footer-wrapper">
+                        <span>Copyright © 2025. All rights reserved by FROSTBURN</span>
+                    </div>
+                </div>
+            </div>
         </div>
            
     </div>

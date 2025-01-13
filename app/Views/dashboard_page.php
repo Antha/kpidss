@@ -10,16 +10,7 @@
                         <div class="col-xs-12 col-lg-12">
                             <div class="main-header-wrapper">
                                 <div class="user-name-ses-display text-end">
-                                    <h6 class="d-inline-block"> <?= session('username') ?></h6>
-                                    <form class="float-end btn-logout-form" action="/logout">
-                                        <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
-                                            <div class="inner_content">
-                                                <i class="fa-solid fa-right-from-bracket"></i>
-                                            </div>
-                                        </button>
-                                    </form>
-                                </div>
-                                
+                                <?php echo $this->include('partials/include_header_top') ?>
                             </div>
                         </div>                   
                     </div>
@@ -43,7 +34,7 @@
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-3 text-center">
-                                <a class="btn main-menu-btn">
+                                <a class="btn main-menu-btn" href="/kpi">
                                     <img class="card-img-top menu-icon" src="<?= base_url('/img/icon-kpi.png') ?>">
                                     <h5 class="card-title mt-3">KPI</h5> 
                                 </a>
