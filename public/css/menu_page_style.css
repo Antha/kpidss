@@ -21,8 +21,15 @@ body {
   margin-top: 10px;
 }
 
-.btn_logout:hover i {
+.home-link {
+  color: #ff3838;
+  text-decoration: none;
+}
+
+.btn_logout:hover i,
+.home-link:hover {
   color: #ea2c2c;
+  text-decoration: none;
 }
 
 .content-wrapper {

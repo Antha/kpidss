@@ -34,7 +34,7 @@
                         <div class="col-lg-12">
                             <div class="main-header-title mt-5">
                                 <div class="display-3 text-center">
-                                    BARBARA
+                                   BARBARA
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-3 text-center">
-                                <a class="btn main-menu-btn">
+                                <a class="btn main-menu-btn" href="<?php echo base_url('/kpi') ?>">
                                     <img class="card-img-top menu-icon" src="<?= base_url('/img/icon-kpi.png') ?>">
                                     <h5 class="card-title mt-3">KPI</h5> 
                                 </a>

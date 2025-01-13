@@ -24,10 +24,18 @@
                             <div class="main-header-wrapper">
                                 <button id="openNav" class="btn float-start open-nav-btn" onclick="w3_open()">&#9776;</button>
                                 <div class="main-header-title mt-2">
-                                    <h6>BARBARA</h6>
-                                    
+                                    <a class="home-link" href="<?php echo base_url('/') ?>"><h6>BARBARA</h6></a>
                                 </div>
-                                <?php $this->include('include_header_top') ?>
+                                <div class="greeting float-end">
+                                    <h6 class="d-inline-block">Welcome, Bagus Prayoga</h6>
+                                    <form class="float-end btn-logout-form" action="">
+                                        <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
+                                            <div class="inner_content">
+                                                <i class="fa-solid fa-right-from-bracket"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>                   
                     </div>
