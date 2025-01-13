@@ -10,7 +10,7 @@ class Login extends Controller
     public function index()
     {
         //echo "hai";
-        return view('login');
+        return view('login_page');
     }
 
     public function authenticate()

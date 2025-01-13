@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\Kpi_model;
+use Config\Session;
 
 class Kpi extends Controller
 {
@@ -28,7 +29,9 @@ class Kpi extends Controller
     
     public function index()
     {
-        $user_level = "agent";
+        $session = Session();
+        
+        $user_level = $session->get("user_level");
 
         $get_table_info_default = $this->kpi_model->default_table_kpi_exists();
         $periode_default = explode("_",$get_table_info_default);
