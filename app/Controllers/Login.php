@@ -28,6 +28,10 @@ class Login extends Controller
                     'user_id' => $user['id'],
                     'username' => $user['username'],
                     'user_level' => $user["level"],
+                    'agent_id' => $user['agent_id'],
+                    'digipos_id' => $user['digipos_id'],
+                    'regional' => $user['regional'],
+                    'branch' => $user['branch'],
                     'isLoggedIn' => true,
                 ]);
 

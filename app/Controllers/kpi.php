@@ -118,8 +118,8 @@ class Kpi extends Controller
             }
             return view('kpi_admin_page',$data);
         }else if($user_level == "agent"){
-            $agent_id = '9903000677';
-            $agent_branch = 'DENPASAR';
+            $agent_id = $session->get("agent_id");
+            $agent_branch = $session->get("branch");
 
             if($this->request->getPost('btn_submit_periode_kip_agent')){
                 $periode = $this->request->getPost('periode_data_kpi_agent');
@@ -157,6 +157,39 @@ class Kpi extends Controller
             $data['agent_branch'] = $agent_branch;
             return view('kpi_agent_page',$data);
         }
-       
     }
+
+    function download_data_agent(){
+        if($this->request->getPost('btn_dl_data_agent')){
+            $periode = $this->request->getPost('periode_data_kpi_admin');
+            $get_table_info = $this->kpi_model->cek_table_kpi_exists($periode);
+            $branch = $this->request->getPost('kpi_filter_branch_agent');
+            $cluster = $this->request->getPost('kpi_filter_cluster_agent');
+                    
+            /*if($get_table_info == 0){ 
+                return redirect()->to(base_url('kpi'));
+            }else{
+
+                $filename = 'DOWNLOAD KPI DATA '.$periode.'.csv'; 
+                header("Content-Description: File Transfer"); 
+                header("Content-Disposition: attachment; filename=$filename"); 
+                header("Content-Type: application/csv; ");
+
+                // file creation 
+                $file = fopen('php://output', 'w');
+                
+                $header = array('f_payload_date','msisdn','regional_m','branch_m','cluster_m','city_m','trx_date','area','regional','kabupaten','package_type','package_service','package_category','channel_status','content_id','validity','revenue'); 
+                fputcsv($file, $header);
+
+                $renewal_so_query_result_dl_data = $this->download_model->get_renewal_so_download_data($var_renewal_so_area,$renewal_so_periode_short,$renewal_so_periode_long,$offset,$this->max_limit);
+                foreach ($renewal_so_query_result_dl_data as $key=>$line){ 
+                    fputcsv($file,$line); 
+                }
+            }
+        
+            fclose($file); 
+            exit;*/
+        }
+    }
+        
 }

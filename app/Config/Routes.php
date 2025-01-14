@@ -21,4 +21,5 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/quiz/result', 'Quiz::result');
     $routes->get('/kpi', 'Kpi::index');
     $routes->post('/kpi', 'Kpi::index');
+    $routes->post('/kpi/download_data_agent', 'Kpi::download_data_agent');
 });

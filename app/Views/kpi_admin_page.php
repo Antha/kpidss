@@ -5,16 +5,7 @@
 <body>
     <div class="dashboard-page">
         
-        <div class="sidebar w3-bar-block w3-card animate-left" style="display:none" id="mySidebar">
-            <div class="close-nav-btn-wrapper">
-                <button class="btn close-nav-btn" onclick="w3_close()">&times;</button>
-            </div>
-            <nav class="nav flex-column">
-                <a class="nav-link active" aria-current="page" href="#">PNP TEST</a>
-                <a class="nav-link" href="#">KPI</a>
-                <a class="nav-link" href="#">LOYALTY</a>
-            </nav>  
-        </div>
+        <?php echo $this->include('partials/include_sidebar') ?>
 
         <div id="main">
             <div class="header-top">
@@ -824,15 +815,7 @@
 
         </div>
         
-        <div id="footer" style="margin-top: 50px;">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 text-center p-3 footer-wrapper">
-                        <span>Copyright © 2025. All rights reserved by FROSTBURN</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php echo $this->include('partials/include_footer'); ?>
     </div>
 </body>
 

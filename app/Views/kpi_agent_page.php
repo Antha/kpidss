@@ -5,16 +5,7 @@
 <body>
     <div class="dashboard-page">
         
-        <div class="sidebar w3-bar-block w3-card animate-left" style="display:none" id="mySidebar">
-            <div class="close-nav-btn-wrapper">
-                <button class="btn close-nav-btn" onclick="w3_close()">&times;</button>
-            </div>
-            <nav class="nav flex-column">
-                <a class="nav-link active" aria-current="page" href="#">PNP TEST</a>
-                <a class="nav-link" href="#">KPI</a>
-                <a class="nav-link" href="#">LOYALTY</a>
-            </nav>  
-        </div>
+        <?php echo $this->include('partials/include_sidebar') ?>
 
         <div id="main">
             <div class="header-top">
@@ -105,13 +96,13 @@
                                                             <tr>
                                                                 <th><?php echo $row['cluster']; ?></th>
                                                                 <th <?php if($row['runrate_status'] == "EXC"){?> 
-                                                                                    class="text-center exc-bg"
-                                                                                <?php }else if($row['runrate_status'] == "OTT"){ ?>
-                                                                                    class="text-center ott-bg"
-                                                                                <?php }else if($row['runrate_status'] == "BW"){ ?>
-                                                                                    class="text-center bw-bg"
-                                                                                <?php } ?>
-                                                                            ><?php echo $row['runrate_status']; ?></th>
+                                                                        class="text-center exc-bg"
+                                                                    <?php }else if($row['runrate_status'] == "OTT"){ ?>
+                                                                        class="text-center ott-bg"
+                                                                    <?php }else if($row['runrate_status'] == "BW"){ ?>
+                                                                        class="text-center bw-bg"
+                                                                    <?php } ?>
+                                                                ><?php echo $row['runrate_status']; ?></th>
                                                             </tr>
                                                             
                                                         <?php } ?>
@@ -122,11 +113,14 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <h6 style="display: inline-block;">SUMMARY</h6>
-                                                        <div class="download-icon-wrapper" style="float: right;margin-top: -15px;padding-right:0px;">
+                                                        <form method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                                            <div class="download-icon-wrapper" style="float: right;margin-top: -15px;padding-right:0px;">
                                                             <a href="#" title="DOWNLOAD CSV">
                                                                 <i class="fa-solid fa-file-arrow-down"></i>
                                                             </a>
-                                                        </div>
+                                                                
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                                 <div class="table-wrapper-scroll-y table-scroll-y">
@@ -292,15 +286,7 @@
 
         </div>
 
-        <div id="footer" style="margin-top: 50px;">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 text-center p-3 footer-wrapper">
-                        <span>Copyright © 2025. All rights reserved by FROSTBURN</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php echo $this->include('partials/include_footer'); ?>
            
     </div>
 </body>
@@ -327,8 +313,7 @@
         autoclose: true,
         todayHighlight: true
     });
-
-    console.log($('#hidden-value-branch').text());
+    
     if($('#hidden-value-branch').text() =="DENPASAR"){
         $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
         $('#kpi_filter_cluster_agent').append('<option value="BALI BARAT">BALI BARAT</option>');
@@ -345,6 +330,7 @@
         $('#kpi_filter_cluster_admin').append('<option value="MALAKA TIMTIM BELU">MALAKA TIMTIM BELU</option>');
         $('#kpi_filter_cluster_admin').append('<option value="SUMBA">SUMBA</option>');
     }else if($('#hidden-value-branch').text() =="MATARAM"){
+        console.log($('#hidden-value-branch').text());
         $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
         $('#kpi_filter_cluster_admin').append('<option value="LOMBOK">LOMBOK</option>');
         $('#kpi_filter_cluster_admin').append('<option value="SUMBAWA BARAT">SUMBAWA BARAT</option>');
