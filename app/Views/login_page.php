@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn-md btn-theme w-100">Login</button>
+                                    <button id="btn_login" type="submit" class="btn-md btn-theme w-100" disabled>Login</button>
                                 </div>
                             </form>
                         </div>

@@ -33,6 +33,7 @@
   min-height: 100vh;
   z-index: 999;
   background: #ff3838;
+  /*background: #2b558c;*/
   opacity: 1;
   position: relative;
   display: flex;

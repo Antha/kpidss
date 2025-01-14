@@ -36,12 +36,12 @@
                                 <div class="filter_wrapper mt-4">
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-12 mb-3">
-                                            <div id="hidden-value-branch" style="display: none;"><?php echo $agent_branch; ?></div>
+                                            <div id="hidden-value-branch" name="hidden-value-branch" style="display: none;"><?php echo $agent_branch; ?></div>
                                             <form method="post" action="<?php echo base_url()."kpi"; ?>" enctype="multipart/form-data">
                                                 <div class="row no-gutters">
                                                     <div class="form-group col-md-2 col-4 no-pad-right" id="col_periode_data">
                                                         <div class="input-group dropdown_input">
-                                                            <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_kpi_admin" value="<?php echo $display_periode; ?>" />
+                                                            <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_kpi_agent" value="<?php echo $display_periode; ?>" />
                                                             <div class="input-group-addon">
                                                                 <i class="fa fa-calendar"></i>
                                                             </div>
@@ -52,7 +52,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-2 col-2">			
-                                                        <input type="submit" id="btn_submit_periode_kip" name="btn_submit_periode_kip_agent" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
+                                                        <input type="submit" id="btn_submit_periode_kip" name="btn_submit_periode_kpi_agent" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
                                                     </div>
                                                     <p class="flashdata_error"><?= session()->getFlashdata('table_not_exists'); ?></p> 
                                                     
@@ -99,7 +99,7 @@
                                                                         class="text-center exc-bg"
                                                                     <?php }else if($row['runrate_status'] == "OTT"){ ?>
                                                                         class="text-center ott-bg"
-                                                                    <?php }else if($row['runrate_status'] == "BW"){ ?>
+                                                                    <?php }else if($row['runrate_status'] == "BLW"){ ?>
                                                                         class="text-center bw-bg"
                                                                     <?php } ?>
                                                                 ><?php echo $row['runrate_status']; ?></th>
@@ -113,12 +113,11 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <h6 style="display: inline-block;">SUMMARY</h6>
-                                                        <form method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
-                                                            <div class="download-icon-wrapper" style="float: right;margin-top: -15px;padding-right:0px;">
-                                                            <a href="#" title="DOWNLOAD CSV">
-                                                                <i class="fa-solid fa-file-arrow-down"></i>
-                                                            </a>
-                                                                
+                                                        <form class="float-end" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                                            <div style="float: right;margin-top: -15px;padding-right:0px;">
+                                                                <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
+                                                                <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
+                                                                <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -325,69 +324,68 @@
         $('#kpi_filter_cluster_agent').append('<option value="FLORES TIMUR">FLORES TIMUR</option>');
         $('#kpi_filter_cluster_agent').append('<option value="MANGGARAI">MANGGARAI</option>');
     }else if($('#hidden-value-branch').text() =="KUPANG"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="KUPANG ROTE">KUPANG ROTE</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="MALAKA TIMTIM BELU">MALAKA TIMTIM BELU</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="SUMBA">SUMBA</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="KUPANG ROTE">KUPANG ROTE</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="MALAKA TIMTIM BELU">MALAKA TIMTIM BELU</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="SUMBA">SUMBA</option>');
     }else if($('#hidden-value-branch').text() =="MATARAM"){
-        console.log($('#hidden-value-branch').text());
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="LOMBOK">LOMBOK</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="SUMBAWA BARAT">SUMBAWA BARAT</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="SUMBAWA TIMUR">SUMBAWA TIMUR</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="LOMBOK">LOMBOK</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="SUMBAWA BARAT">SUMBAWA BARAT</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="SUMBAWA TIMUR">SUMBAWA TIMUR</option>');
     }else if($('#hidden-value-branch').text() =="MAGELANG"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="MAGELANG KOTA">MAGELANG KOTA</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="NEW KEBUMEN">NEW KEBUMEN</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="MAGELANG KOTA">MAGELANG KOTA</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="NEW KEBUMEN">NEW KEBUMEN</option>');
     }else if($('#hidden-value-branch').text() =="PEKALONGAN"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="NEW BATANG">NEW BATANG</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="TEGAL BREBES">TEGAL BREBES</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="NEW BATANG">NEW BATANG</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="TEGAL BREBES">TEGAL BREBES</option>');
     }else if($('#hidden-value-branch').text() =="PURWOKERTO"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="BANJARNEGARA">BANJARNEGARA</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="CILCAP MAS">CILCAP MAS</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="BANJARNEGARA">BANJARNEGARA</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="CILCAP MAS">CILCAP MAS</option>');
     }else if($('#hidden-value-branch').text() =="SEMARANG"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="DEMAK">DEMAK</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="JEPARA KUDUS">JEPARA KUDUS</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="PATI">PATI</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="SEMARANG">SEMARANG</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="DEMAK">DEMAK</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="JEPARA KUDUS">JEPARA KUDUS</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="PATI">PATI</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="SEMARANG">SEMARANG</option>');
     }else if($('#hidden-value-branch').text() =="SURAKARTA"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="BOYOLALI">BOYOLALI</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="SRAGEN">SRAGEN</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="SURAKARTA">SURAKARTA</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="BOYOLALI">BOYOLALI</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="SRAGEN">SRAGEN</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="SURAKARTA">SURAKARTA</option>');
     }else if($('#hidden-value-branch').text() =="YOGYAKARTA"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="DAERAH ISTIMEWA YOGYAKARTA">DAERAH ISTIMEWA YOGYAKARTA</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="DAERAH ISTIMEWA YOGYAKARTA">DAERAH ISTIMEWA YOGYAKARTA</option>');
     }else if($('#hidden-value-branch').text() =="JEMBER"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="BANYUWANGI">BANYUWANGI</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="JEMBER">JEMBER</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="KOTA PROBOLINGGO">KOTA PROBOLINGGO</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="SITUBONDO">SITUBONDO</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="BANYUWANGI">BANYUWANGI</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="JEMBER">JEMBER</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="KOTA PROBOLINGGO">KOTA PROBOLINGGO</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="SITUBONDO">SITUBONDO</option>');
     }else if($('#hidden-value-branch').text() =="LAMONGAN"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="LAMONGAN GRESIK">LAMONGAN GRESIK</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="TUBAN BOJONEGORO">TUBAN BOJONEGORO</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="LAMONGAN GRESIK">LAMONGAN GRESIK</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="TUBAN BOJONEGORO">TUBAN BOJONEGORO</option>');
     }else if($('#hidden-value-branch').text() =="MADIUN"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="KEDIRI">KEDIRI</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="MADIUN">MADIUN</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="PONOROGO">PONOROGO</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="KEDIRI">KEDIRI</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="MADIUN">MADIUN</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="PONOROGO">PONOROGO</option>');
     }else if($('#hidden-value-branch').text() =="MALANG"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="MALANG">MALANG</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="TULUNGAGUNG">TULUNGAGUNG</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="MALANG">MALANG</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="TULUNGAGUNG">TULUNGAGUNG</option>');
     }else if($('#hidden-value-branch').text() =="SIDOARJO"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="JOMBANG MOJOKERTO">JOMBANG MOJOKERTO</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="SIDOARJO PASURUAN">SIDOARJO PASURUAN</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="JOMBANG MOJOKERTO">JOMBANG MOJOKERTO</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="SIDOARJO PASURUAN">SIDOARJO PASURUAN</option>');
     }else if($('#hidden-value-branch').text() =="SURABAYA"){
-        $('#kpi_filter_cluster_admin').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="KOTA SURABAYA">KOTA SURABAYA</option>');
-        $('#kpi_filter_cluster_admin').append('<option value="MADURA">MADURA</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="KOTA SURABAYA">KOTA SURABAYA</option>');
+        $('#kpi_filter_cluster_agent').append('<option value="MADURA">MADURA</option>');
     }
 
 </script>

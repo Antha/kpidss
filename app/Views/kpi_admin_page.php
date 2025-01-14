@@ -67,6 +67,7 @@
                                                     <div class="col-md-2 col-2">			
                                                         <input type="submit" id="btn_submit_periode_kip" name="btn_submit_periode_kip_admin" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
                                                     </div>
+
                                                     <p class="flashdata_error"><?= session()->getFlashdata('table_not_exists'); ?></p> 
                                                     
                                                     <div style="clear: both;"></div>
@@ -636,15 +637,21 @@
                                         </div>
                                     </div>
 
-                                    <div class="container-fluid p-0">
-                                        <div class="row">
+                                    <div class="container-fluid p-0 mt-3">
+                                        <div class="row mb-2">
                                             <div class="col-4" style="margin-top: 15px;">
                                                 <h6>SUMMARY</h6>
                                             </div>
                                             <div class="col-lg-2 col-sm-2 col-md-2 col-2 offset-lg-6 offset-sm-6 offset-md-6 offset-6 download-icon-wrapper">
-                                                <a href="#" title="DOWNLOAD CSV">
-                                                    <i class="fa-solid fa-file-arrow-down"></i>
-                                                </a>
+                                                <form class="float-end" method="post" action="<?php echo base_url()."kpi/download_data_admin"; ?>" enctype="multipart/form-data" >
+                                                    <div style="float: right;margin-top: -15px;padding-right:0px;padding-top:22px;font-size: 12px">
+                                                        <input type="submit" id="btn_dl_data_admin" name="btn_dl_data_admin" value="download" class="submit_btn border_rad1"></input>
+                                                    </div>
+                                                    <input type="hidden" id="periode_data" name="periode_data_kpi_admin" style="display: none;" value="<?php echo $display_periode; ?>" />
+                                                    <input type="hidden" id="regional_hidden" name="regional_hidden" style="display: none;" value="<?php echo $regional_hidden; ?>"></input>
+                                                    <input type="hidden" id="branch_hidden" name="branch_hidden" style="display: none;" value="<?php echo $branch_hidden; ?>"></input>
+                                                    <input type="hidden" id="cluster_hidden" name="cluster_hidden" style="display: none;" value="<?php echo $cluster_hidden; ?>"></input>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
