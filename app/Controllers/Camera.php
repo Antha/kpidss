@@ -22,6 +22,6 @@ class Camera extends BaseController
             session()->set('capturedImage', $imageData);
         }
 
-        return redirect()->to('/quiz_page');
+        return redirect()->to('/quiz');
     }
 }

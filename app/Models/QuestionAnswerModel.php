@@ -26,16 +26,26 @@ class QuestionAnswerModel extends Model
 
     public function getAnswersByUserId(int $userId, int $quizId): array
     {
-        // Build the query to select question_id and answer for the given user_id
-        $query = $this->db->table($this->table)
-                          ->select('question_id, answer')
-                          ->where('user_id', $userId)
-                          ->where('quiz_id', $quizId)
-                          ->get();
-
-        // Return the result as an array
+        $query = $this->db->query("
+            SELECT * FROM (
+                SELECT 
+                    qa.user_id, 
+                    qa.quiz_id, 
+                    qa.question_id, 
+                    qa.answer, 
+                    q.correct_option,
+                    CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
+                    CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
+                FROM 
+                    `quiz_answers` qa 
+                JOIN `questions` q ON qa.question_id = q.id
+                WHERE qa.user_id = ? AND qa.quiz_id = ?
+            ) AS subquery
+        ", [$userId, $quizId]);
+ 
         return $query->getResultArray();
     }
+    
 }
 
 ?>

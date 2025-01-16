@@ -2,6 +2,27 @@
 
 <?php $this->section('content') ?>
 
+<style>
+    .result {
+        display: flex;  /* Menggunakan Flexbox untuk menampilkan elemen secara horizontal */
+        justify-content: space-between;  /* Memberikan jarak antar elemen */
+        background-color: #f0f8ff;
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;  /* Memastikan div mengambil seluruh lebar kontainer */
+        margin: 10px auto;
+    }
+
+    .result p {
+        font-size: 16px;
+        margin: 0 10px;  /* Memberikan jarak antar elemen di kiri dan kanan */
+    }
+
+    .result strong {
+        color: #2e8b57;
+    }
+</style>
+
 <body>
     <div class="dashboard-page">
         
@@ -38,9 +59,26 @@
                                                     <?php foreach ($answers as $key => $answer): ?>
                                                         <li class="list-group-item">
                                                             <strong>Question <?= $answer["question_id"] ?>:</strong> Your Answer - <?= htmlspecialchars($answer["answer"]) ?>
+                                                            ( <?= isset($answer["is_right"]) && $answer["is_right"] == 1 ? 'Right' : 'Wrong' ?> )
                                                         </li>
                                                     <?php endforeach; ?>
                                                 </ul>
+                                                <?php 
+                                                    $totalIsRight = 0;
+                                                    $totalIsWrong = 0;
+                                                    
+                                                    foreach ($answers as $item) {
+                                                        $totalIsRight += $item['is_right'];
+                                                        $totalIsWrong += $item['is_wrong'];
+                                                    }
+
+                                                    // Menampilkan hasil
+                                                    echo "<div class='result'>";
+                                                    echo "<p><strong>Right Answer:</strong> " . $totalIsRight . "</p>";
+                                                    echo "<p><strong>Wrong Answer:</strong> " . $totalIsWrong . "</p>";
+                                                    echo "<p><strong>Score:</strong> " . ($totalIsRight * 10) . "</p>";
+                                                    echo "</div>";
+                                                ?>
                                                 <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
                                             </div>
                                         </div>
