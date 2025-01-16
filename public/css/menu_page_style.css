@@ -264,6 +264,15 @@ body {
   margin-top: 10px;
 }
 
+.icon-wrapper1 {
+  width: 50px;
+  padding-right: 0px;
+}
+
+.product-redeem .card-body {
+  background-color: #ededed;
+}
+
 @media screen and (max-width: 575px) {
   .main-sidebar-open {
     margin-left: 180px;
