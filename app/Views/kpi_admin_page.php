@@ -30,7 +30,11 @@
                         <div class="col-xs-12">
                             <div class="content-wrapper">
                                 <div class="date-update-wrapper">
+                                    <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
+                                        <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
+                                    </a>
                                     <h4 class="red-text">KPI</h4>
+                                    <div style="clear: both;"></div>
                                     <span>last update : <?php echo $last_update_date; ?></span>
                                 </div>
                                 <div class="filter_wrapper mt-4">
@@ -38,7 +42,7 @@
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-12 mb-3">
                                             <form method="post" action="<?php echo base_url()."kpi"; ?>" enctype="multipart/form-data">
                                                 <div class="row no-gutters">
-                                                    <div class="form-group col-md-2 col-4 no-pad-right" id="col_periode_data">
+                                                    <div class="form-group col-md-2 col-4 no-pad-right mb-3" id="col_periode_data">
                                                         <div class="input-group dropdown_input">
                                                             <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_kpi_admin" value="<?php echo $display_periode; ?>" />
                                                             <div class="input-group-addon">
@@ -46,7 +50,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-md-2 col-3 no-pad-right" id="wrap_kip_filter_regional">
+                                                    <div class="form-group col-md-2 col-3 no-pad-right mb-3" id="wrap_kip_filter_regional">
                                                         <select name='kpi_filter_regional_admin' id='kpi_filter_regional_admin' class="select_filter" title="Area Type" style="width:100%;">
                                                             <option value="" selected disabled>Regional</option>
                                                             <option value="BALI NUSRA">BALI NUSRA</option>
@@ -54,17 +58,17 @@
                                                             <option value="JATIM">JATIM</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-md-2 col-3 no-pad-right" id="wrap_kip_filter_branch">
+                                                    <div class="form-group col-md-2 col-3 no-pad-right mb-3" id="wrap_kip_filter_branch">
                                                         <select name='kpi_filter_branch_admin' id='kpi_filter_branch_admin' class="select_filter" title="Area Type" style="width:100%;">
                                                             <option value="" selected disabled>Branch</option>
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col-md-2 col-3 no-pad-right" id="wrap_kip_filter_cluster">
+                                                    <div class="form-group col-md-2 col-3 no-pad-right mb-3" id="wrap_kip_filter_cluster">
                                                         <select name='kpi_filter_cluster_admin' id='kpi_filter_cluster_admin' class="select_filter" title="Area Type" style="width:100%;">
                                                             <option value="" selected disabled>Cluster</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-2 col-2">			
+                                                    <div class="col-md-2 col-2 mb-3">			
                                                         <input type="submit" id="btn_submit_periode_kip" name="btn_submit_periode_kip_admin" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
                                                     </div>
 
@@ -639,10 +643,18 @@
 
                                     <div class="container-fluid p-0 mt-3">
                                         <div class="row mb-2">
-                                            <div class="col-4" style="margin-top: 15px;">
+                                            <div class="col-12" style="margin-top: 15px;">
                                                 <h6>SUMMARY</h6>
                                             </div>
-                                            <div class="col-lg-2 col-sm-2 col-md-2 col-2 offset-lg-6 offset-sm-6 offset-md-6 offset-6 download-icon-wrapper">
+                                            <div class="col-10">
+                                            <span style="font-size: 12px;" class="sub-title-table red-text">
+                    
+                                                
+                                                    AREA 3
+                                            
+                                            </span>
+                                            </div>
+                                            <div class="col-2 download-icon-wrapper" style="margin-top: -16px;">
                                                 <form class="float-end" method="post" action="<?php echo base_url()."kpi/download_data_admin"; ?>" enctype="multipart/form-data" >
                                                     <div style="float: right;margin-top: -15px;padding-right:0px;padding-top:22px;font-size: 12px">
                                                         <input type="submit" id="btn_dl_data_admin" name="btn_dl_data_admin" value="download" class="submit_btn border_rad1"></input>
@@ -830,15 +842,27 @@
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
-    document.getElementById("main").style.marginLeft = "25%";
-    document.getElementById("mySidebar").style.width = "25%";
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("openNav").style.display = 'none';
+        $('#main').removeClass('main-sidebar-close');
+        $('#main').addClass('main-sidebar-open');
+        $('#footer').removeClass('main-sidebar-close');
+        $('#footer').addClass('main-sidebar-open');
+        $('#mySidebar').removeClass('sidebar-close');
+        $('#mySidebar').addClass('sidebar-open');
+        $('.dashboard-menu').addClass('main-sidebar-open');
+        $('.dashboard-menu').removeClass('main-sidebar-close');
+        document.getElementById("openNav").style.display = 'none';
     }
     function w3_close() {
-    document.getElementById("main").style.marginLeft = "0%";
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("openNav").style.display = "inline-block";
+        $('#main').removeClass('main-sidebar-open');
+        $('#main').addClass('main-sidebar-close');
+        $('#footer').addClass('main-sidebar-close');
+        $('#footer').removeClass('main-sidebar-open');
+        $('#mySidebar').removeClass('sidebar-open');
+        $('#mySidebar').addClass('sidebar-close');
+        $('.dashboard-menu').removeClass('main-sidebar-open');
+        $('.dashboard-menu').addClass('main-sidebar-close');
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openNav").style.display = "inline-block";
     }
 
     $('#periode_data').datepicker({

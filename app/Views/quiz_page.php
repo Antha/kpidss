@@ -28,9 +28,9 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="content-wrapper">
+                            <div class="content-wrapper" style="min-height: 480px;">
                                 <div class="row w-100">
-                                    <div class="col-md-6 offset-md-3 text-center">
+                                    <div class="col-md-6 offset-md-3 text-center" style="font-size: 14px;">
                                         <div class="card shadow">
                                             <div class="card-body">
                                                 <p class="question mb-4"><strong>Question <?= $questionNumber ?>:</strong> <?= $question['question'] ?></p>
