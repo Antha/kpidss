@@ -36,14 +36,14 @@
                                 </div>
                                 <div class="form-group form-box checkbox clearfix">
                                     <div class="form-check checkbox-theme">
-                                        <input class="form-check-input" type="checkbox" value="" id="security_chckbox">
+                                        <input required class="form-check-input" type="checkbox" value="" id="security_chckbox">
                                         <label class="form-check-label" for="security_chckbox">
                                             I am not a robot
                                         </label>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button id="btn_login" type="submit" class="btn-md btn-theme w-100" disabled>Login</button>
+                                    <button id="btn_login" type="submit" class="btn-md btn-theme w-100 disable-btn" disabled>Login</button>
                                 </div>
                             </form>
                         </div>
@@ -60,8 +60,10 @@
             let isCheckedSec = $('#security_chckbox').prop('checked');
             if(isCheckedSec == true){
                 $('#btn_login').prop('disabled',false);
+                $('#btn_login').removeClass('disable-btn');
             }else{
                 $('#btn_login').prop('disabled',true);
+                $('#btn_login').addClass('disable-btn');
             }
         })
     });

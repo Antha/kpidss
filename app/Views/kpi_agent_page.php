@@ -30,7 +30,11 @@
                         <div class="col-xs-12">
                             <div class="content-wrapper">
                                 <div class="date-update-wrapper">
+                                    <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
+                                        <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
+                                    </a>
                                     <h4 class="red-text">KPI</h4>
+                                    <div style="clear: both;"></div>
                                     <span>last update : <?php echo $last_update_date; ?></span>
                                 </div>
                                 <div class="filter_wrapper mt-4">
@@ -74,8 +78,14 @@
 
                                     <div class="container-fluid p-0">
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 mb-4">
                                                 <h6>LEADERBOARD</h6>
+                                                <div class="row">
+                                                    <div class="col-12" style="padding-bottom: 16px;">
+                                                        <span style="font-size: 12px;" class="sub-title-table mt-2 red-text">BRANCH <?php echo $agent_branch ?></span>
+                                                    </div>
+                                                </div>
+                                                
                                                 <table class="table table-bordered table-custom">
                                                     <thead>
                                                         <tr class="bg-danger">
@@ -112,14 +122,30 @@
                                             <div class="col-md-9">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <h6 style="display: inline-block;">SUMMARY</h6>
-                                                        <form class="float-end" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
-                                                            <div style="float: right;margin-top: -15px;padding-right:0px;">
-                                                                <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
-                                                                <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
-                                                                <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
-                                                            </div>
-                                                        </form>
+                                                        <h6 class="mb-0">SUMMARY</h6>
+                                                    </div>
+                                                    <div class="col-12 mb-2">
+                                                        <div class="row">
+                                                        <div style="display: inline-block;padding-top: 10px;" class="col-8">
+                                                            <span style="font-size: 12px;" class="sub-title-table red-text">
+                                                                <?php if($hidden_cluster == NULL){ ?>
+                                                                BRANCH <?php echo $agent_branch; ?>
+                                                                <?php }else{ ?>
+                                                                CLUSTER <?php echo $hidden_cluster; ?>
+                                                                <?php } ?>
+                                                            </span>
+                                                        </div>
+                                                        
+                                                        <div style="display: inline-block;text-align:right;" class="col-4">
+                                                            <form method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                                                <div style="padding-right:0px;">
+                                                                    <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
+                                                                    <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
+                                                                    <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="table-wrapper-scroll-y table-scroll-y">
@@ -294,15 +320,27 @@
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
-    document.getElementById("main").style.marginLeft = "25%";
-    document.getElementById("mySidebar").style.width = "25%";
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("openNav").style.display = 'none';
+        $('#main').removeClass('main-sidebar-close');
+        $('#main').addClass('main-sidebar-open');
+        $('#footer').removeClass('main-sidebar-close');
+        $('#footer').addClass('main-sidebar-open');
+        $('#mySidebar').removeClass('sidebar-close');
+        $('#mySidebar').addClass('sidebar-open');
+        $('.dashboard-menu').addClass('main-sidebar-open');
+        $('.dashboard-menu').removeClass('main-sidebar-close');
+        document.getElementById("openNav").style.display = 'none';
     }
     function w3_close() {
-    document.getElementById("main").style.marginLeft = "0%";
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("openNav").style.display = "inline-block";
+        $('#main').removeClass('main-sidebar-open');
+        $('#main').addClass('main-sidebar-close');
+        $('#footer').addClass('main-sidebar-close');
+        $('#footer').removeClass('main-sidebar-open');
+        $('#mySidebar').removeClass('sidebar-open');
+        $('#mySidebar').addClass('sidebar-close');
+        $('.dashboard-menu').removeClass('main-sidebar-open');
+        $('.dashboard-menu').addClass('main-sidebar-close');
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openNav").style.display = "inline-block";
     }
 
     $('#periode_data').datepicker({

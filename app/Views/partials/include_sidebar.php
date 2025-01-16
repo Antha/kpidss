@@ -1,4 +1,4 @@
-<div class="sidebar w3-bar-block w3-card animate-left" style="display:none" id="mySidebar">
+<div class="sidebarzz w3-bar-block w3-card" style="display:none" id="mySidebar">
     <div class="close-nav-btn-wrapper">
         <button class="btn close-nav-btn" onclick="w3_close()">&times;</button>
     </div>
