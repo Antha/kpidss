@@ -40,11 +40,11 @@
 
                                     <div class="point-info">
                                         <div class="row mt-4">
-                                            <div class="icon-wrapper1">
-                                                <img class="img-fluid" src="<?php echo base_url('/img/icon-loyalty.png')?>">
-                                            </div>
-                                            <div class="col-4" style="padding-top: 8px;color: #ea2c2c;">
-                                                <h5>POINT ANDA SAAT INI : 100</h5>
+                                            <div class="col-10 col-sm-4 mt-2">
+                                                <div class="d-inline-block p-3 rounded point-info-user">
+                                                    <i class="fa-solid fa-coins icon-point d-inline-block" style="margin-right: 5px;color:#efba50;"></i>
+                                                    <h6 class="dark-blue-text d-inline-block">POINT ANDA : 100 point</h6>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -53,37 +53,21 @@
                                         <div class="row">
                                             <div class="col-md-3 col-6 mb-3">
                                                 <div class="card">
-                                                    <img class="card-img-top img-fluid" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
+                                                    <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
                                                         <h5 class="card-title">iPhone 13</h5>
-                                                        <p class="card-text float-start" style="font-size: 14px;color: #ea2c2c;">1000 poin</p>
-                                                        <p class="card-text float-end" style="font-size: 14px;text-transform:uppercase">Stocks 5</p>
+                                                        <div class="product-point-group float-start">
+                                                            <i class="fa-solid fa-coins icon-point"></i>
+                                                            <p class="card-text product-point">1000 poin</p>
+                                                        </div>
+                                                        <div class="product-stock-group float-end">
+                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
+                                                            <p class="card-text float-end product-stock">Stocks 5</p>
+                                                        </div>
                                                         <div style="clear: both;"></div>
-                                                        <a href="#" class="btn submit_btn float-end">REDEEM</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-6 mb-3">
-                                                <div class="card">
-                                                    <img class="card-img-top img-fluid" src="<?php echo base_url('/img/prize2.jpg')?>" alt="prize-redeem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">iPhone 13</h5>
-                                                        <p class="card-text float-start" style="font-size: 14px;color: #ea2c2c;">1000 poin</p>
-                                                        <p class="card-text float-end" style="font-size: 14px;text-transform:uppercase">Stocks 5</p>
-                                                        <div style="clear: both;"></div>
-                                                        <a href="#" class="btn submit_btn float-end">REDEEM</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-6 mb-3">
-                                                <div class="card">
-                                                    <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">iPhone 13</h5>
-                                                        <p class="card-text float-start" style="font-size: 14px;color: #ea2c2c;">1000 poin</p>
-                                                        <p class="card-text float-end" style="font-size: 14px;text-transform:uppercase">Stocks 5</p>
-                                                        <div style="clear: both;"></div>
-                                                        <a href="#" class="btn submit_btn float-end">REDEEM</a>
+                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,10 +76,18 @@
                                                     <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
                                                         <h5 class="card-title">iPhone 13</h5>
-                                                        <p class="card-text float-start" style="font-size: 14px;color: #ea2c2c;">1000 poin</p>
-                                                        <p class="card-text float-end" style="font-size: 14px;text-transform:uppercase">Stocks 5</p>
+                                                        <div class="product-point-group float-start">
+                                                            <i class="fa-solid fa-coins icon-point"></i>
+                                                            <p class="card-text product-point">1000 poin</p>
+                                                        </div>
+                                                        <div class="product-stock-group float-end">
+                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
+                                                            <p class="card-text float-end product-stock">Stocks 5</p>
+                                                        </div>
                                                         <div style="clear: both;"></div>
-                                                        <a href="#" class="btn submit_btn float-end">REDEEM</a>
+                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,10 +96,18 @@
                                                     <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
                                                         <h5 class="card-title">iPhone 13</h5>
-                                                        <p class="card-text float-start" style="font-size: 14px;color: #ea2c2c;">1000 poin</p>
-                                                        <p class="card-text float-end" style="font-size: 14px;text-transform:uppercase">Stocks 5</p>
+                                                        <div class="product-point-group float-start">
+                                                            <i class="fa-solid fa-coins icon-point"></i>
+                                                            <p class="card-text product-point">1000 poin</p>
+                                                        </div>
+                                                        <div class="product-stock-group float-end">
+                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
+                                                            <p class="card-text float-end product-stock">Stocks 5</p>
+                                                        </div>
                                                         <div style="clear: both;"></div>
-                                                        <a href="#" class="btn submit_btn float-end">REDEEM</a>
+                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -116,10 +116,38 @@
                                                     <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
                                                         <h5 class="card-title">iPhone 13</h5>
-                                                        <p class="card-text float-start" style="font-size: 14px;color: #ea2c2c;">1000 poin</p>
-                                                        <p class="card-text float-end" style="font-size: 14px;text-transform:uppercase">Stocks 5</p>
+                                                        <div class="product-point-group float-start">
+                                                            <i class="fa-solid fa-coins icon-point"></i>
+                                                            <p class="card-text product-point">1000 poin</p>
+                                                        </div>
+                                                        <div class="product-stock-group float-end">
+                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
+                                                            <p class="card-text float-end product-stock">Stocks 5</p>
+                                                        </div>
                                                         <div style="clear: both;"></div>
-                                                        <a href="#" class="btn submit_btn float-end">REDEEM</a>
+                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-6 mb-3">
+                                                <div class="card">
+                                                    <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">iPhone 13</h5>
+                                                        <div class="product-point-group float-start">
+                                                            <i class="fa-solid fa-coins icon-point"></i>
+                                                            <p class="card-text product-point">1000 poin</p>
+                                                        </div>
+                                                        <div class="product-stock-group float-end">
+                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
+                                                            <p class="card-text float-end product-stock">Stocks 5</p>
+                                                        </div>
+                                                        <div style="clear: both;"></div>
+                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

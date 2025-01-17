@@ -4,6 +4,7 @@ body {
   font-family: "Roboto", serif;
   font-optical-sizing: auto;
   font-size: 14px;
+  background-color: #fff;
 }
 
 .user-name-ses-display {
@@ -311,8 +312,71 @@ body {
   padding-right: 0px;
 }
 
+.point-info-user {
+  background-color: #003057;
+  border: 3px solid #efba50;
+}
+
+.point-info-user h6 {
+  margin-bottom: 0px !important;
+  color: #efba50;
+}
+
 .product-redeem .card-body {
-  background-color: #ededed;
+  background-color: #003057;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.product-redeem .card-title {
+  color: #fff;
+}
+
+.product-redeem .card-title {
+  color: #fff;
+}
+
+.product-point-group {
+  /*color: #ffde23;*/
+  color: #efba50;
+  font-size: 14px;
+}
+
+.product-redeem .product-point,
+.product-redeem .icon-point {
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.product-stock-group {
+  color: #eef1f6;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.product-redeem .product-stock,
+.product-redeem .icon-stock {
+  font-weight: bold;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.product-redeem .icon-stock {
+  margin-right: 5px;
+}
+
+/*.product-redeem .redeem-product-img {
+  height: 315px;
+}*/
+
+.redeem-btn {
+  font-size: 14px;
+}
+
+.redeem-btn:hover {
+  color: #fff;
+  background-color: #0ad3ef;
 }
 
 @media screen and (max-width: 575px) {
