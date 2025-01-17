@@ -7,18 +7,19 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12 bg-img">
                     <div class="row login-title-section">
-                        <div class="col-sm-6 page-login-logo">
-                            <img class="img-fluid" src="<?php echo base_url('/img/logo_barbara.png')?>">
+                        <div class="col-xs-12 page-login-title">
+                            <h1>BARBARA</h1>
+                        </div>
+                        <div class="col-xs-12 page-login-title-sm">
+                            <h5>BALINUSRA BACKED ASSESMENT REPORTING APPS</h5>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 form-section">
                     <div class="login-inner-form">
                         <div class="login-title-section-mobile">
-                            <div class="page-login-title-mobile row justify-content-center">
-                                <div class="col-5 page-login-logo-mobile">
-                                    <img class="img-fluid" src="<?php echo base_url('/img/logo_barbara.png')?>">
-                                </div>
+                            <div class="page-login-title-mobile">
+                                <h1>BARBARA</h1>
                             </div>
                         </div>
                         <div class="details">

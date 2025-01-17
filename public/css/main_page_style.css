@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
-  font-family: "Rubik", serif;
-  font-size: 12px !important;
-  background-color: #f7f7f7;
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+  font-size: 14px;
 }
 
 .dashboard-page {
@@ -31,18 +31,25 @@ body {
 }
 
 .main-header-title {
-  color: #ff3838;
+  color: #003057;
   letter-spacing: 3px;
   padding-top: 3px;
 }
 
-.user-name-ses-display,
+.main-header-title .display-3 {
+  font-weight: bold;
+}
+
+.user-name-ses-display {
+  color: #003057;
+}
+
 .btn_logout i {
-  color: #343a40;
+  color: #0bb4ed;
 }
 
 .btn_logout:hover i {
-  color: #ea2c2c;
+  color: #0ad3ef;
 }
 
 .btn-logout-form {
@@ -53,43 +60,72 @@ body {
   margin-top: 10px;
 }
 
-.menu-icon {
+.menu-icon-dark-blue,
+.menu-icon-light-blue {
   width: 100px;
   padding: 10px;
 }
 
-.main-menu-btn,
-.main-menu-btn:hover,
-.main-menu-btn:active {
-  background: #fff;
-  border: 2px solid #ff3838;
+.main-menu-btn {
+  background: #eef1f6;
+  border: 5px solid #003057;
   border-radius: 500px;
   padding: 35px 50px;
+  transition: 0.5s;
+}
+
+.main-menu-btn:hover,
+.main-menu-btn:active {
+  background: #003057;
+  border: 5px solid #777777;
+  border-radius: 500px;
+  padding: 35px 50px;
+  transition: 0.5s;
+}
+
+.main-menu-btn:hover .menu-icon-dark-blue {
+  display: none;
+}
+
+.main-menu-btn .menu-icon-light-blue {
+  display: none;
+}
+
+.main-menu-btn:hover .menu-icon-light-blue {
+  display: inline-block;
 }
 
 .main-menu-btn:hover .card-title {
-  color: #ff3838;
+  color: #fff;
 }
 
 .card-title {
-  color: #343a40;
+  color: #003057;
   font-size: 18px;
   text-transform: uppercase;
   text-align: center;
 }
 
 @media screen and (max-width: 600px) {
-  .main-menu-btn,
-  .main-menu-btn:hover {
-    background: #fff;
-    border: 2px solid #ff3838;
+  .main-menu-btn {
+    background: #003057;
+    border: 3px solid #777777;
     border-radius: 500px;
-    padding: 15px 30px;
+    padding: 20px 30px;
     margin-bottom: 30px;
   }
 
   .card-title {
+    color: #fff;
     font-size: 14px;
     margin-top: 5px !important;
+  }
+
+  .menu-icon-dark-blue {
+    display: none;
+  }
+
+  .main-menu-btn .menu-icon-light-blue {
+    display: inline-block;
   }
 }

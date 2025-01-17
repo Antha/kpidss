@@ -33,7 +33,7 @@
                                     <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
                                         <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
                                     </a>
-                                    <h4 class="red-text float-end">LOYALTY</h4>
+                                    <h4 class="dark-blue-text float-end">LOYALTY</h4>
                                     <div style="clear: both;"></div>
                                 </div>
                                 <div class="point-content">
@@ -51,7 +51,7 @@
     
                                     <div class="product-redeem mt-4">
                                         <div class="row">
-                                            <div class="col-md-2 col-6 mb-2">
+                                            <div class="col-md-3 col-6 mb-3">
                                                 <div class="card">
                                                     <img class="card-img-top img-fluid" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
@@ -63,7 +63,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-6 mb-2">
+                                            <div class="col-md-3 col-6 mb-3">
                                                 <div class="card">
                                                     <img class="card-img-top img-fluid" src="<?php echo base_url('/img/prize2.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
@@ -75,7 +75,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-6 mb-2">
+                                            <div class="col-md-3 col-6 mb-3">
                                                 <div class="card">
                                                     <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
@@ -87,7 +87,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-6 mb-2">
+                                            <div class="col-md-3 col-6 mb-3">
                                                 <div class="card">
                                                     <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
@@ -99,7 +99,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-6 mb-2">
+                                            <div class="col-md-3 col-6 mb-3">
                                                 <div class="card">
                                                     <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">
@@ -111,7 +111,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-6 mb-2">
+                                            <div class="col-md-3 col-6 mb-3">
                                                 <div class="card">
                                                     <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
                                                     <div class="card-body">

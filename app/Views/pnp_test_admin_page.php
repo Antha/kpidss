@@ -33,7 +33,7 @@
                                     <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
                                         <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
                                     </a>
-                                    <h4 class="red-text">PNP TEST SUMMARY</h4>
+                                    <h4 class="dark-blue-text">PNP TEST SUMMARY</h4>
                                     <span>last update : <?php echo $lastUpdateData; ?></span>
                                 </div>
                                 <div class="filter_wrapper mt-4">
@@ -77,7 +77,7 @@
                                 <div class="table-wrapper-scroll-y table-responsive table-scroll-y">
                                     <table class="table table-bordered table-hover table-custom" id="dataTable">
                                         <thead>
-                                            <tr class="bg-danger">
+                                            <tr class="bg-tb-blue">
                                                 <th scope="col">No</th>
                                                 <th scope="col">Agent ID</th>
                                                 <th scope="col">Digipos ID</th>
