@@ -188,6 +188,9 @@ body {
 }
 
 @media (max-width: 991px) {
+  .bg-img::after {
+    min-height: 1000px;
+  }
   .login-page {
     background: #003057;
   }
@@ -200,7 +203,7 @@ body {
   }
 
   .login-inner-form {
-    margin-top: -500px;
+    margin-top: -300px;
     padding-top: 200px;
   }
 

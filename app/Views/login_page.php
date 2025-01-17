@@ -8,7 +8,7 @@
                 <div class="col-lg-6 col-md-12 bg-img">
                     <div class="row login-title-section">
                         <div class="col-sm-6 page-login-logo">
-                            <img class="img-fluid" src="<?php echo base_url('/img/logo_barbara.png')?>">
+                            <img class="img-fluid" src="<?php echo base_url('/img/Logo_Barbara.png')?>">
                         </div>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                         <div class="login-title-section-mobile">
                             <div class="page-login-title-mobile row justify-content-center">
                                 <div class="col-5 page-login-logo-mobile">
-                                    <img class="img-fluid" src="<?php echo base_url('/img/logo_barbara.png')?>">
+                                    <img class="img-fluid" src="<?php echo base_url('/img/Logo_Barbara.png')?>">
                                 </div>
                             </div>
                         </div>

@@ -109,9 +109,9 @@ body {
 @media screen and (max-width: 600px) {
   .main-menu-btn {
     background: #003057;
-    border: 3px solid #777777;
+    border: 5px solid #003057;
     border-radius: 500px;
-    padding: 20px 30px;
+    padding: 35px 50px;
     margin-bottom: 30px;
   }
 
