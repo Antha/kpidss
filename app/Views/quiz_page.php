@@ -33,6 +33,9 @@
                                     <div class="col-md-6 offset-md-3 text-center" style="font-size: 14px;">
                                         <div class="card shadow">
                                             <div class="card-body">
+                                                <P>
+                                                    <span id="timer"></span>
+                                                </P>
                                                 <p class="question mb-4"><strong>Question <?= $questionNumber ?>:</strong> <?= $question['question'] ?></p>
                                                 <form action="/quiz/<?= $questionNumber + 1 ?>" method="post">
                                                     <?= csrf_field() ?>
@@ -92,15 +95,15 @@
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
-    document.getElementById("main").style.marginLeft = "25%";
-    document.getElementById("mySidebar").style.width = "25%";
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("openNav").style.display = 'none';
+        document.getElementById("main").style.marginLeft = "25%";
+        document.getElementById("mySidebar").style.width = "25%";
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("openNav").style.display = 'none';
     }
     function w3_close() {
-    document.getElementById("main").style.marginLeft = "0%";
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("openNav").style.display = "inline-block";
+        document.getElementById("main").style.marginLeft = "0%";
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openNav").style.display = "inline-block";
     }
 
     $('#periode_data').datepicker({
@@ -110,6 +113,67 @@
         autoclose: true,
         todayHighlight: true
     });
+</script>
+
+<script>
+  
+    let remainingSeconds = 0; // Variabel untuk menyimpan waktu tersisa
+    let timerInterval = null;
+
+    // Fungsi untuk memulai timer
+    function startTimer(durationMinutes) {
+        remainingSeconds = durationMinutes * 60;
+
+        // Jalankan timer
+        updateTimer();
+    }
+
+    // Fungsi untuk memperbarui timer
+    function updateTimer() {
+        timerInterval = setInterval(() => {
+            if (remainingSeconds > 0) {
+                remainingSeconds--; // Kurangi waktu tersisa
+                const minutes = Math.floor(remainingSeconds / 60);
+                const seconds = remainingSeconds % 60;
+
+                // Update tampilan
+                document.getElementById('timer').innerText = `${minutes}m ${seconds}s`;
+            } else {
+                clearInterval(timerInterval); // Hentikan timer jika selesai
+                document.getElementById('timer').innerText = "Time's up!";
+                window.location.href = '/quiz/result';
+            }
+        }, 1000);
+    }
+
+
+    // Simpan waktu tersisa ke database saat browser ditutup
+    window.addEventListener('beforeunload', () => {
+        fetch('/quiz/timer/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                remaining_seconds: remainingSeconds,
+            }),
+        });
+    });
+
+    // Cek apakah ada waktu tersisa di database saat halaman dimuat
+    fetch(`/quiz/timer/get`)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status === 'success') {
+                remainingSeconds = data.remaining_seconds;
+                updateTimer(); // Lanjutkan timer
+            } else {
+                document.getElementById('timer').innerText = "30m 0s";
+            }
+        });
+
+    startTimer(1/6);
+
 </script>
 
 <?php $this->endSection() ?>

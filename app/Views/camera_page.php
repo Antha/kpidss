@@ -2,6 +2,19 @@
 
 <?php $this->section('content') ?>
 
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkAWnE66-S2rVK8XBXPp2LLGVePFEw0x0&libraries=places,geometry&callback=initMap" async defer></script>
+  -->
+<script src="script/mapsJavaScriptAPI.js"></script>
+
+<script src="/script/sweetalert/sweetalert2@11.js"></script>
+<style>
+    /* Gaya CSS untuk ukuran peta */
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
+
 <body>
     <div class="dashboard-page">
         
@@ -43,16 +56,26 @@
                                         <div class="card shadow">
                                             <div class="card-body">
                                             <?php if (!is_array(session('unfinishedQuiz'))) : ?>
-                                                <h5 class="card-title">Camera Capture</h5>
-                                                <button id="capture" class="btn btn-primary mt-3 mb-3">Capture</button>
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <video id="video" autoplay class="border rounded" style="max-width: 100%; height: auto;"></video>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <h5 class="card-title">Camera Capture</h5>
+                                                        <button id="capture" class="btn btn-primary mt-3 mb-3">Capture</button>
+                                                        <div class="d-flex justify-content-center align-items-center">
+                                                            <video id="video" autoplay class="border rounded" style="max-width: 100%; height: auto;"></video>
+                                                        </div>
+                                                        <canvas id="canvas" class="mt-3 border rounded" style="max-width: 100%; display: none;"></canvas>
+                                                        <form id="saveForm" method="POST" action="/camera/save" class="mt-4 text-center">
+                                                            <input type="hidden" name="imageData" id="imageData">
+                                                            <input type="hidden" name="mylong" id="mylong">
+                                                            <input type="hidden" name="mylat" id="mylat">
+                                                            <button type="submit" id="saveButton" class="btn btn-success" disabled>Save</button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button class="btn btn-info mb-2" id="getLocationBtn">Activate My Location</button>
+                                                        <div id="map"></div>
+                                                    </div>
                                                 </div>
-                                                <canvas id="canvas" class="mt-3 border rounded" style="max-width: 100%; display: none;"></canvas>
-                                                <form id="saveForm" method="POST" action="/camera/save" class="mt-4 text-center">
-                                                    <input type="hidden" name="imageData" id="imageData">
-                                                    <button type="submit" id="saveButton" class="btn btn-success" disabled>Save</button>
-                                                </form>
                                                 <?php else : ?>
                                                     <div class="alert alert-danger text-center mt-4">
                                                         <h5 class="card-title text-danger">You have an unfinished quiz</h5>
@@ -67,6 +90,81 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    let map;
+                                    let userMarker;
+                                    let isSetLoc = false;
+
+                                    $("#saveForm").on("submit",function(e){
+                                        e.preventDefault()
+
+                                        if(!imageDataInput){
+                                            Swal.fire({
+                                                imageHeight: 250,
+                                                icon: 'warning',
+                                                title: 'Please Capture Your Photo'
+                                            })
+
+                                            return false
+                                        }
+
+                                        if(!isSetLoc){
+                                            Swal.fire({
+                                                imageHeight: 250,
+                                                icon: 'warning',
+                                                title: 'Activate Your Location'
+                                            })
+
+                                            return false
+                                        }
+
+                                         // All validations passed; submit form normally
+                                        this.submit();
+                                    })
+
+                                    // Fungsi untuk menginisialisasi peta
+                                    function initMap() {
+                                        // Peta awal di Jakarta
+                                        map = new google.maps.Map(document.getElementById("map"), {
+                                            center: { lat: -6.2088, lng: 106.8456 },
+                                            zoom: 10,
+                                        });
+                                    }
+
+                                    // Fungsi untuk mendapatkan lokasi pengguna
+                                    document.getElementById('getLocationBtn').addEventListener('click', function() {
+                                        if (navigator.geolocation) {
+                                            navigator.geolocation.getCurrentPosition(function(position) {
+                                                const latitude = position.coords.latitude;
+                                                const longitude = position.coords.longitude;
+                                                
+                                                // Update posisi peta ke lokasi pengguna
+                                                const userLocation = { lat: latitude, lng: longitude };
+                                                map.setCenter(userLocation);
+                                                map.setZoom(15);
+
+                                                isSetLoc = true;
+                                                $("#mylong").val(longitude)
+                                                $("#mylat").val(latitude)
+
+                                                // Menambahkan marker untuk lokasi pengguna
+                                                if (userMarker) {
+                                                    userMarker.setMap(null); // Menghapus marker lama jika ada
+                                                }
+                                                userMarker = new google.maps.Marker({
+                                                    position: userLocation,
+                                                    map: map,
+                                                    title: "You are here"
+                                                });
+                                            }, function(error) {
+                                                alert("Error getting location: " + error.message);
+                                            });
+                                        } else {
+                                            alert("Geolocation is not supported by this browser.");
+                                        }
+                                    });
+                                </script>
 
                                 <script>
                                     const video = document.getElementById('video');
@@ -125,15 +223,15 @@
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
-    document.getElementById("main").style.marginLeft = "25%";
-    document.getElementById("mySidebar").style.width = "25%";
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("openNav").style.display = 'none';
+        document.getElementById("main").style.marginLeft = "25%";
+        document.getElementById("mySidebar").style.width = "25%";
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("openNav").style.display = 'none';
     }
     function w3_close() {
-    document.getElementById("main").style.marginLeft = "0%";
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("openNav").style.display = "inline-block";
+        document.getElementById("main").style.marginLeft = "0%";
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openNav").style.display = "inline-block";
     }
 
     $('#periode_data').datepicker({

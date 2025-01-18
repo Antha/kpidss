@@ -16,9 +16,13 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('camera', 'Camera::index');
     $routes->post('camera/save', 'Camera::save');
+    
     $routes->get('/quiz', 'Quiz::index');
     $routes->post('/quiz/(:num)', 'Quiz::index/$1');
     $routes->get('/quiz/result', 'Quiz::result');
+    $routes->post('/quiz/timer/save', 'Quiz::saveRemainingTime');
+    $routes->get('/quiz/timer/get', 'Quiz::getRemainingTime');
+
     $routes->get('/kpi', 'Kpi::index');
     $routes->post('/kpi', 'Kpi::index');
     $routes->post('/kpi/download_data_agent', 'Kpi::download_data_agent');

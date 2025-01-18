@@ -5,12 +5,14 @@ namespace App\Controllers;
 use App\Models\QuestionModel;
 use App\Models\QuestionAnswerModel;
 use App\Models\UserQuizModel;
+use App\Models\UserQuizTimerModel;
 
 class Quiz extends BaseController
 {
     protected $questionModel;
     protected $questionAnswerModel;
     protected $userQuizModel;
+    protected $userQuizTimerModel;
 
     public function __construct()
     {
@@ -18,6 +20,7 @@ class Quiz extends BaseController
         $this->questionModel = new QuestionModel();
         $this->questionAnswerModel = new QuestionAnswerModel();
         $this->userQuizModel = new UserQuizModel();
+        $this->userQuizTimerModel = new UserQuizTimerModel();
     }
 
     public function index($questionNumber = 1)
@@ -29,6 +32,14 @@ class Quiz extends BaseController
         $quizId = "";
         if($unfinishedQuiz){
             $quizId = $unfinishedQuiz["id"];
+            $fileName = $unfinishedQuiz["photo"];
+            $mylong = $unfinishedQuiz["long"];
+            $mylat = $unfinishedQuiz["lat"];
+
+            $session->set('id_quiz', $quizId);
+            $session->set('file_name', $fileName);
+            $session->set('mylong', $mylong);
+            $session->set('mylat', $mylat);
         }
         // $stringUN =  json_encode($unfinishedQuiz);
         // writeLogToFile( $stringUN);
@@ -37,14 +48,19 @@ class Quiz extends BaseController
             if($unfinishedQuiz){
                 $quizId = $unfinishedQuiz["id"];
                 $fileName = $unfinishedQuiz["photo"];
+                $mylong = $unfinishedQuiz["long"];
+                $mylat = $unfinishedQuiz["lat"];
 
                 writeLogToFile("fileName : ".$fileName);
+                writeLogToFile("ulong : ".$unfinishedQuiz["long"]);
 
                 // Data yang akan dimasukkan atau di-replace
                 $data = [
                     'id' => $quizId,
                     'user_id' => $userId,
                     'photo' => $fileName,
+                    'long' => $mylong,
+                    'lat' => $mylat,
                     'status' => 'unfinished',
                     'datetime' => date('Y-m-d H:i:s'),
                 ];
@@ -55,9 +71,13 @@ class Quiz extends BaseController
             }else{
                 // Data yang akan dimasukkan atau di-insert
                 $fileName = $this->saveBase64Image($session->get("capturedImage"), "./uploads/photos");
+                $mylong = $session->get('mylong');
+                $mylat = $session->get('mylat');
                 $data = [
                     'user_id' => $userId,
                     'photo' => $fileName,
+                    'long' => $session->get('mylong'),
+                    'lat' => $session->get('mylat'),
                     'status' => 'unfinished',
                     'datetime' => date('Y-m-d H:i:s'),
                 ];
@@ -68,6 +88,8 @@ class Quiz extends BaseController
 
             $session->set('id_quiz', $quizId);
             $session->set('file_name', $fileName);
+            $session->set('mylong', $mylong);
+            $session->set('mylat', $mylat);
 
             //===================Simpan Jawaban
             // Ambil jawaban dari POST
@@ -112,20 +134,20 @@ class Quiz extends BaseController
     {
         $session = session();
         $quizAnswers = $session->get('quiz_answers');
-      
-        // if (!$quizAnswers) {
-        //     return redirect()->to('/quiz');
-        // }
 
         $userId = $session->get('user_id');
         $quizId = $session->get('id_quiz');
         $fileName = $session->get('file_name');
+        $mylong = $session->get('mylong');
+        $mylat = $session->get('mylat');
     
-         // Data yang akan dimasukkan atau di-replace
-         $data = [
+        // Data yang akan dimasukkan atau di-replace
+        $data = [
             'id' => $quizId,
             'user_id' => $userId,
             'photo' => $fileName,
+            'long' => $mylong,
+            'lat' => $mylat,
             'status' => 'finished',
             'datetime' => date('Y-m-d H:i:s'),
         ];
@@ -133,10 +155,15 @@ class Quiz extends BaseController
         // Panggil metode replaceData
         $result = $this->userQuizModel->replaceData($data);
 
+        //writeLogToFile($this->userQuizModel->getLastQuery());
+
         $quizAnswers = $this->questionAnswerModel->getAnswersByUserId($userId, (int) $quizId);
 
         // Bersihkan session jawaban setelah disimpan
         $session->remove('quiz_answers');
+
+        // Delete user timer
+        $this->userQuizTimerModel->deleteByUserId($userId);
 
         // Tampilkan hasil atau redirect ke halaman lain
         return view('quiz_result_page', ['answers' => $quizAnswers]);
@@ -171,5 +198,62 @@ class Quiz extends BaseController
         return false; // Jika gagal
     }
 
+     // Simpan sisa waktu ke database
+     public function saveRemainingTime()
+     {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: POST");
+        header("Access-Control-Allow-Headers: Content-Type");
 
+         $session = session();
+         $userId = $session->get('user_id');
+
+         //$userId = $this->request->getPost('user_id'); // ID pengguna
+         $json = $this->request->getJSON();
+         writeLogToFile("saved remaining time :".$json->remaining_seconds);
+         $remainingSeconds = $json->remaining_seconds; // Sisa waktu dalam detik
+ 
+         // Cek apakah user sudah memiliki timer
+         $this->userQuizTimerModel->where('user_id', $userId);
+         $existingTimer = $this->userQuizTimerModel->get()->getRow();
+
+         writeLogToFile(json_encode($existingTimer));
+ 
+         if ($existingTimer) {
+             // Update sisa waktu
+             writeLogToFile("update sisa waktu : ".$remainingSeconds) ;  
+             $this->userQuizTimerModel->updateRemainingTime($userId, $remainingSeconds);
+         } else {
+             // Simpan waktu baru
+             writeLogToFile("insert waktu terbaru :".$json->remaining_seconds) ; 
+             $this->userQuizTimerModel->insert([
+                 'user_id' => $userId,
+                 'remaintime' => (int) $remainingSeconds
+             ]);
+            
+         }
+
+       
+ 
+         return $this->response->setJSON(['status' => 'success']);
+     }
+
+     // Ambil sisa waktu dari database
+    public function getRemainingTime()
+    {
+        $session = session();
+        
+        $userId = $session->get('user_id'); // ID pengguna
+
+        $timer =  $this->userQuizTimerModel->where('user_id', $userId)->get()->getRow();
+
+        if ($timer) {
+            return $this->response->setJSON([
+                'status' => 'success',
+                'remaining_seconds' => $timer->remaintime,
+            ]);
+        } else {
+            return $this->response->setJSON(['status' => 'not_found']);
+        }
+    }
 }
