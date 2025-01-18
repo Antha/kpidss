@@ -1,4 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+  font-size: 14px;
+}
 
 .login-page {
   background: #eef1f6;
@@ -10,7 +16,6 @@
 
 .page-login-title h1 {
   color: #fff;
-  font-family: "Rubik", serif;
   letter-spacing: 5px;
   font-size: 50px !important;
   padding-left: 20px;
@@ -18,7 +23,6 @@
 
 .page-login-title-sm h5 {
   color: #fff;
-  font-family: "Rubik", serif;
   font-size: 18px !important;
   padding-left: 20px;
 }
@@ -32,8 +36,8 @@
   bottom: 0;
   min-height: 100vh;
   z-index: 999;
-  background: #ff3838;
-  /*background: #2b558c;*/
+  /*background: #ff3838;red-background*/
+  background: #003057;
   opacity: 1;
   position: relative;
   display: flex;
@@ -79,7 +83,11 @@
   margin: 0 0 30px;
   font-size: 25px;
   font-weight: 400;
-  color: #040404;
+  color: #003057;
+}
+
+.login-inner-form .form-check-label {
+  color: #003057;
 }
 
 .login-inner-form .form-group {
@@ -89,6 +97,11 @@
 .form-section .form-box {
   width: 100%;
   position: relative;
+}
+
+.page-login-logo {
+  margin-top: 60px;
+  margin-left: 50px;
 }
 
 .login-inner-form .form-control {
@@ -127,13 +140,17 @@
 }
 
 .login-inner-form .btn-theme {
-  background: #ff3838;
+  /*background: #ff3838;*/
+  background-color: #0c7a99;
   border: none;
   color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.5s;
 }
 
 .login-inner-form .btn-theme:hover {
-  background: #ea2c2c;
+  background: #095f77;
 }
 
 .login-inner-form .btn-md {
@@ -142,8 +159,7 @@
   color: #fff;
   padding: 15.5px 50px 14.5px 50px;
   font-size: 17px;
-  font-weight: 400;
-  font-family: "Jost", sans-serif;
+  font-weight: bold;
   border-radius: 3px;
 }
 
@@ -172,6 +188,12 @@
 }
 
 @media (max-width: 991px) {
+  .bg-img::after {
+    min-height: 1000px;
+  }
+  .login-page {
+    background: #003057;
+  }
   .login-title-section-mobile {
     display: inline-block;
   }
@@ -181,33 +203,34 @@
   }
 
   .login-inner-form {
-    margin-top: -500px;
+    margin-top: -300px;
+    padding-top: 200px;
   }
 
   .login-title-section-mobile {
     margin-bottom: 50px;
   }
 
-  .page-login-title-mobile h1 {
+  /*.page-login-title-mobile h1 {
     color: #ff3838;
     font-family: "Rubik", serif;
     letter-spacing: 3px;
     font-size: 30px !important;
-  }
+  }*/
 
   .login-inner-form h3 {
+    color: #fff;
     font-size: 20px;
   }
-}
 
-@media (max-width: 600px) {
-  .login-inner-form {
-    margin-top: -350px;
+  .login-inner-form .form-check-label {
+    color: #fff;
   }
 }
 
 @media screen and (max-width: 400px) {
   .login-inner-form {
-    margin-top: -250px;
+    /*margin-top: -250px;*/
+    padding-top: 120px;
   }
 }

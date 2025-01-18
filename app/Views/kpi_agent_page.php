@@ -33,9 +33,9 @@
                                     <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
                                         <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
                                     </a>
-                                    <h4 class="red-text">KPI</h4>
+                                    <h4 class="dark-blue-text">KPI</h4>
                                     <div style="clear: both;"></div>
-                                    <span>last update : <?php echo $last_update_date; ?></span>
+                                    <span class="sub-title">last update : <?php echo $last_update_date; ?></span>
                                 </div>
                                 <div class="filter_wrapper mt-4">
                                     <div class="row">
@@ -82,13 +82,13 @@
                                                 <h6>LEADERBOARD</h6>
                                                 <div class="row">
                                                     <div class="col-12" style="padding-bottom: 16px;">
-                                                        <span style="font-size: 12px;" class="sub-title-table mt-2 red-text">BRANCH <?php echo $agent_branch ?></span>
+                                                        <span class="sub-title-table mt-2">BRANCH <?php echo $agent_branch ?></span>
                                                     </div>
                                                 </div>
                                                 
                                                 <table class="table table-bordered table-custom">
                                                     <thead>
-                                                        <tr class="bg-danger">
+                                                        <tr class="bg-tb-blue">
                                                             <th scope="col">RANK</th>
                                                             <th scope="col">DSS NAME</th>
                                                             <th scope="col">RUNRATE</th>
@@ -127,7 +127,7 @@
                                                     <div class="col-12 mb-2">
                                                         <div class="row">
                                                         <div style="display: inline-block;padding-top: 10px;" class="col-8">
-                                                            <span style="font-size: 12px;" class="sub-title-table red-text">
+                                                            <span class="sub-title-table">
                                                                 <?php if($hidden_cluster == NULL){ ?>
                                                                 BRANCH <?php echo $agent_branch; ?>
                                                                 <?php }else{ ?>
@@ -152,27 +152,27 @@
                                                     <div class="table-responsive">
                                                         <table class="table table-bordered table-hover table-custom">
                                                             <thead>
-                                                                <tr><th class="bg-danger" rowspan="3" scope="col">No</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Regional</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Branch</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Cluster</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">City</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Agent ID</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">LinkAja</th>
-                                                                    <th class="bg-danger custom-width-large" rowspan="3" scope="col">DSS Name</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Digipos ID</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Active Date</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Inactive Date</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Level Competition</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">City War Profile</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Final ACH</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Runrate</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Class May'23</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Class Jun'23</th>
-                                                                    <th class="bg-danger custom-width" rowspan="3" scope="col">Class</th>
+                                                                <tr><th class="bg-tb-blue" rowspan="3" scope="col">No</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Regional</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Branch</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Cluster</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">City</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Agent ID</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">LinkAja</th>
+                                                                    <th class="bg-tb-blue custom-width-large" rowspan="3" scope="col">DSS Name</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Digipos ID</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Active Date</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Inactive Date</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Level Competition</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">City War Profile</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Final ACH</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Runrate</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Class May'23</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Class Jun'23</th>
+                                                                    <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Class</th>
                                                                     <th class="table-dark-blue" colspan="26" scope="col">Performance Based</th>
                                                                     <th class="table-grey" rowspan="3" scope="col">Sub Bobot (70%)</th>
-                                                                    <th class="bg-danger" colspan="15" scope="col">Operational Based</th>
+                                                                    <th class="bg-tb-blue" colspan="15" scope="col">Operational Based</th>
                                                                     <th class="table-grey" rowspan="3" scope="col">Sub Bobot (30%)</th>
                                                                     
                                                                 </tr>
@@ -187,11 +187,11 @@
                                                                     <th class="table-grey" rowspan="2" scope="col">Bobot</th>
                                                                     <th class="table-dark-blue" colspan="4" scope="col">MyTsel New Installer</th>
                                                                     <th class="table-grey" rowspan="2" scope="col">Bobot</th>
-                                                                    <th class="bg-danger" colspan="4" scope="col">PJP School Campus</th>
+                                                                    <th class="bg-tb-blue" colspan="4" scope="col">PJP School Campus</th>
                                                                     <th class="table-grey" rowspan="2" scope="col">Bobot</th>
-                                                                    <th class="bg-danger" colspan="4" scope="col">Event Productivity</th>
+                                                                    <th class="bg-tb-blue" colspan="4" scope="col">Event Productivity</th>
                                                                     <th class="table-grey" rowspan="2" scope="col">Bobot</th>
-                                                                    <th class="bg-danger" colspan="4" scope="col">Campaign Sosmed</th>
+                                                                    <th class="bg-tb-blue" colspan="4" scope="col">Campaign Sosmed</th>
                                                                     <th class="table-grey" rowspan="2" scope="col">Bobot</th>
                                                                 </tr>
                                                                 <tr>
@@ -210,10 +210,10 @@
                                                                         <th class="table-dark-blue" scope="col">Runrate</th>
                                                                     <?php } ?>
                                                                     <?php for($i=1;$i<=3;$i++){ ?>
-                                                                        <th class="bg-danger" scope="col">Target</th>
-                                                                        <th class="bg-danger" scope="col">Actual</th>
-                                                                        <th class="bg-danger" scope="col">Ach</th>
-                                                                        <th class="bg-danger" scope="col">Runrate</th>
+                                                                        <th class="bg-tb-blue" scope="col">Target</th>
+                                                                        <th class="bg-tb-blue" scope="col">Actual</th>
+                                                                        <th class="bg-tb-blue" scope="col">Ach</th>
+                                                                        <th class="bg-tb-blue" scope="col">Runrate</th>
                                                                     <?php } ?>
                                                                 </tr>
                                                             </thead>

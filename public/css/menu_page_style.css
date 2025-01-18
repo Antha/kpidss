@@ -1,8 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
-  font-family: "Rubik", serif;
-  font-size: 12px !important;
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.user-name-ses-display {
+  color: #003057;
+}
+
+.btn_logout i {
+  color: #0bb4ed;
+}
+
+.btn_logout:hover i {
+  color: #0ad3ef;
+}
+
+.user-name-ses-display h6 {
+  margin-top: 10px;
 }
 
 .main-sidebar-open {
@@ -20,7 +38,7 @@ body {
 }
 
 .sidebar-open {
-  background-color: #343a40;
+  background-color: #003057;
   display: block !important;
   width: 300px;
   height: 100%; /* 100% Full-height */
@@ -32,8 +50,16 @@ body {
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
 }
 
+.sidebar-title-menu {
+  font-size: 18px;
+}
+
 .red-text {
   color: #ea2c2c;
+}
+
+.dark-blue-text {
+  color: #003057;
 }
 
 .no-pad-right {
@@ -46,17 +72,6 @@ body {
 
 .greeting h6 {
   margin-top: 10px;
-}
-
-.home-link {
-  color: #ff3838;
-  text-decoration: none;
-}
-
-.btn_logout:hover i,
-.home-link:hover {
-  color: #ea2c2c;
-  text-decoration: none;
 }
 
 .content-wrapper {
@@ -75,13 +90,25 @@ body {
   font-size: 14px;
   letter-spacing: 1px;
   color: #fff;
-  border-bottom: 1px solid #ea2c2c;
+  margin: 10px 0px;
 }
 
 .nav-link:hover,
 .nav-link:active,
 .nav-link:target {
-  color: #ea2c2c;
+  color: #0ad3ef;
+}
+
+.nav-link:hover .menu-icon-front {
+  display: none;
+}
+
+.nav-link .menu-icon-back {
+  display: none;
+}
+
+.nav-link:hover .menu-icon-back {
+  display: inline-block;
 }
 
 .header-top {
@@ -93,7 +120,7 @@ body {
 }
 
 .main-header-title {
-  color: #ff3838;
+  color: #003057;
   display: inline-block;
   letter-spacing: 3px;
   padding-top: 3px;
@@ -103,22 +130,22 @@ body {
   margin-right: 12px;
   color: #fff;
   border-radius: 20px;
-  background: #ff3838;
+  background: #003057;
 }
 
 .open-nav-btn:hover,
 .open-nav-btn:active,
 .open-nav-btn:target {
-  background: #ea2c2c;
+  background: #00508e;
   color: #fff;
 }
 
 .back-btn {
-  color: #ff3838;
+  color: #0bb4ed;
 }
 
 .back-btn:hover {
-  color: #ea2c2c;
+  color: #0ad3ef;
 }
 
 .close-nav-btn-wrapper {
@@ -132,7 +159,7 @@ body {
 }
 
 .close-nav-btn:hover {
-  color: #ea2c2c;
+  color: #0ad3ef;
 }
 
 .input-group-addon {
@@ -150,16 +177,19 @@ body {
 .submit_btn_datepicker,
 .submit_btn {
   padding: 7px 8px 7px 8px;
-  border: 1px solid #ffa921;
+  border: 1px solid #0bb4ed;
   font-weight: bold;
   text-transform: uppercase;
   color: #fff;
-  background-color: #ffa921;
+  background-color: #0bb4ed;
 }
 
 .submit_btn_datepicker:hover,
-.submit_btn_datepicker:active {
-  background-color: #fc980c;
+.submit_btn_datepicker:active,
+.submit_btn:hover,
+.submit_btn:active {
+  border: 1px solid #0ad3ef;
+  background-color: #0ad3ef;
 }
 
 .txt-input-data {
@@ -222,6 +252,19 @@ body {
   background-color: #7a7a7a !important;
 }
 
+.bg-tb-blue {
+  background-color: #004f90 !important;
+}
+
+.sub-title-table {
+  font-size: 12px;
+  color: #505f77;
+}
+
+.sub-title {
+  color: #505f77;
+}
+
 .download-icon-wrapper a:hover,
 .download-icon-wrapper a:active {
   color: #fc980c;
@@ -253,7 +296,7 @@ body {
 }
 
 .footer-style {
-  background: #ea2c2c;
+  background: #003057;
   color: #fff;
 }
 
@@ -264,6 +307,78 @@ body {
   margin-top: 10px;
 }
 
+.icon-wrapper1 {
+  width: 50px;
+  padding-right: 0px;
+}
+
+.point-info-user {
+  background-color: #003057;
+  border: 3px solid #efba50;
+}
+
+.point-info-user h6 {
+  margin-bottom: 0px !important;
+  color: #efba50;
+}
+
+.product-redeem .card-body {
+  background-color: #003057;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.product-redeem .card-title {
+  color: #fff;
+}
+
+.product-redeem .card-title {
+  color: #fff;
+}
+
+.product-point-group {
+  /*color: #ffde23;*/
+  color: #efba50;
+  font-size: 14px;
+}
+
+.product-redeem .product-point,
+.product-redeem .icon-point {
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.product-stock-group {
+  color: #eef1f6;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.product-redeem .product-stock,
+.product-redeem .icon-stock {
+  font-weight: bold;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.product-redeem .icon-stock {
+  margin-right: 5px;
+}
+
+/*.product-redeem .redeem-product-img {
+  height: 315px;
+}*/
+
+.redeem-btn {
+  font-size: 14px;
+}
+
+.redeem-btn:hover {
+  color: #fff;
+  background-color: #0ad3ef;
+}
+
 @media screen and (max-width: 575px) {
   .main-sidebar-open {
     margin-left: 180px;
@@ -271,6 +386,10 @@ body {
 
   .sidebar-open {
     width: 180px;
+  }
+
+  .sidebar-title-menu {
+    font-size: 14px;
   }
 
   .txt-input-data {

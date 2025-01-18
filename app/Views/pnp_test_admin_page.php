@@ -33,24 +33,24 @@
                                     <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
                                         <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
                                     </a>
-                                    <h4 class="red-text">PNP TEST SUMMARY</h4>
-                                    <span>last update : 2025-01-09</span>
+                                    <h4 class="dark-blue-text">PNP TEST SUMMARY</h4>
+                                    <span>last update : <?php echo $lastUpdateData; ?></span>
                                 </div>
                                 <div class="filter_wrapper mt-4">
                                     <div class="row">
                                         <div class="col-lg-2 col-sm-2 col-md-2 col-6">
-                                            <form method="post"  enctype="multipart/form-data" id="form_submit_date">
+                                            <form method="post"  action="<?php echo base_url()."pnp_test"; ?>" enctype="multipart/form-data" id="form_submit_date">
                                                 <div class="row">
                                                 <div class="form-group col-md-8 col-8 no-pad-right" id="col_periode_data">
                                                     <div class="input-group dropdown_input">
-                                                        <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_pnp_test" value="202501" />
+                                                        <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_pnp_test" value="<?php echo $displayPeriode; ?>" />
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-4">			
-                                                    <input type="submit" id="btn_submit_periode" name="" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
+                                                    <input type="submit" id="btn_submit_periode" name="submit_periode_data_pnp_test" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
                                                 </div>
                                                 <p style="padding-left:5px;color:#00bd52;"><?= session()->getFlashdata('error_message'); ?></p> 
                                                 <div style="clear: both;"></div>
@@ -69,16 +69,15 @@
                                             <form method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
                                                 <div class="download-btn-style1" style="padding-right:0px;">
                                                     <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
-                                                    
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-wrapper table-responsive table-scroll-y">
+                                <div class="table-wrapper-scroll-y table-responsive table-scroll-y">
                                     <table class="table table-bordered table-hover table-custom" id="dataTable">
                                         <thead>
-                                            <tr class="bg-danger">
+                                            <tr class="bg-tb-blue">
                                                 <th scope="col">No</th>
                                                 <th scope="col">Agent ID</th>
                                                 <th scope="col">Digipos ID</th>
@@ -94,7 +93,7 @@
                                             <?php if (!empty($resumeResults)): ?>
                                                 <?php foreach ($resumeResults as $index => $result): ?>
                                                     <tr>
-                                                        <td><?= $index + 1 ?></td>
+                                                        <td class="text-center"><?= $index + 1 ?></td>
                                                         <td><?= esc($result['Agent ID']) ?></td>
                                                         <td><?= esc($result['Digipos ID']) ?></td>
                                                         <td><?= esc($result['DSS Name']) ?></td>

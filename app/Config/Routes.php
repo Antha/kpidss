@@ -27,4 +27,5 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/kpi', 'Kpi::index');
     $routes->post('/kpi/download_data_agent', 'Kpi::download_data_agent');
     $routes->post('/kpi/download_data_admin', 'Kpi::download_data_admin');
+    $routes->get('/loyalty', 'Loyalty::index');
 });

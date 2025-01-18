@@ -19,6 +19,19 @@ class UserQuizModel extends Model
                     ->first();
     }
 
+    public function getLastUpdateData()
+    {
+        return $this->selectMax('datetime')->first();
+    }
+
+    function isDataExists($periode){
+        $db = \Config\Database::connect();
+
+        $query = $db->query("SELECT datetime FROM user_quizess WHERE datetime LIKE '$periode%' LIMIT 1");
+
+        return $query->getNumRows();
+    }
+
     public function replaceData(array $data)
     {
         $query = "

@@ -12,10 +12,14 @@ class Pnp_test extends Controller
     {
         $session = Session();
         $userQuizModel = new UserQuizModel();
-        $resumeResults = $userQuizModel->getSummaryPNP();
+        $getLastUpdateData = $userQuizModel->getLastUpdateData();
+        $lastUpdateData = date("Y-m-d",strtotime($getLastUpdateData['datetime']));
+        $displayPeriode = date("Ym",strtotime($getLastUpdateData['datetime']));
 
+        $resumeResults = $userQuizModel->getSummaryPNP();
+        
         if($session->get('user_level') == "admin"){
-            return view('pnp_test_admin_page', ['resumeResults' => $resumeResults]);
+            return view('pnp_test_admin_page', ['resumeResults' => $resumeResults,'lastUpdateData' => $lastUpdateData,'displayPeriode' => $displayPeriode]);
         }
         else{
             return view('forbidden_page');
