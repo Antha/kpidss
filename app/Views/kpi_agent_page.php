@@ -41,28 +41,30 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-12 mb-3">
                                             <div id="hidden-value-branch" name="hidden-value-branch" style="display: none;"><?php echo $agent_branch; ?></div>
-                                            <form method="post" action="<?php echo base_url()."kpi"; ?>" enctype="multipart/form-data">
-                                                <div class="row no-gutters">
-                                                    <div class="form-group col-md-2 col-4 no-pad-right" id="col_periode_data">
-                                                        <div class="input-group dropdown_input">
-                                                            <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_kpi_agent" value="<?php echo $display_periode; ?>" />
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
+                                            <?php if($user_level == 'agent_branch'){ ?>
+                                                <form method="post" action="<?php echo base_url()."kpi"; ?>" enctype="multipart/form-data">
+                                                    <div class="row no-gutters">
+                                                        <div class="form-group col-md-2 col-4 no-pad-right" id="col_periode_data">
+                                                            <div class="input-group dropdown_input">
+                                                                <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_kpi_agent" value="<?php echo $display_periode; ?>" />
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group col-md-2 col-3 no-pad-right" id="wrap_kip_filter_cluster">
+                                                            <select name='kpi_filter_cluster_agent' id='kpi_filter_cluster_agent' class="select_filter" title="Area Type" style="width:100%;">
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-2">			
+                                                            <input type="submit" id="btn_submit_periode_kip" name="btn_submit_periode_kpi_agent" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
+                                                        </div>
+                                                        <p class="flashdata_error"><?= session()->getFlashdata('table_not_exists'); ?></p> 
+                                                        
+                                                        <div style="clear: both;"></div>
                                                     </div>
-                                                    <div class="form-group col-md-2 col-3 no-pad-right" id="wrap_kip_filter_cluster">
-                                                        <select name='kpi_filter_cluster_agent' id='kpi_filter_cluster_agent' class="select_filter" title="Area Type" style="width:100%;">
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2 col-2">			
-                                                        <input type="submit" id="btn_submit_periode_kip" name="btn_submit_periode_kpi_agent" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
-                                                    </div>
-                                                    <p class="flashdata_error"><?= session()->getFlashdata('table_not_exists'); ?></p> 
-                                                    
-                                                    <div style="clear: both;"></div>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            <?php } ?>
                                         </div>
                                         <!--<div class="col-lg-3 col-sm-3 col-md-3 col-3">
                                             <div class="input-group">
@@ -128,22 +130,36 @@
                                                         <div class="row">
                                                         <div style="display: inline-block;padding-top: 10px;" class="col-8">
                                                             <span class="sub-title-table">
-                                                                <?php if($hidden_cluster == NULL){ ?>
-                                                                BRANCH <?php echo $agent_branch; ?>
+                                                                <?php if($user_level == 'agent_branch'){ ?>
+                                                                    <?php if($hidden_cluster == NULL){ ?>
+                                                                    BRANCH <?php echo $agent_branch; ?>
+                                                                    <?php }else{ ?>
+                                                                    CLUSTER <?php echo $hidden_cluster; ?>
+                                                                    <?php } ?>
                                                                 <?php }else{ ?>
-                                                                CLUSTER <?php echo $hidden_cluster; ?>
+                                                                    CLUSTER <?php echo $agent_cluster; ?>
                                                                 <?php } ?>
                                                             </span>
                                                         </div>
                                                         
                                                         <div style="display: inline-block;text-align:right;" class="col-4">
-                                                            <form method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
-                                                                <div style="padding-right:0px;">
-                                                                    <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
-                                                                    <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
-                                                                    <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
-                                                                </div>
-                                                            </form>
+                                                            <?php if($user_level == 'agent_branch'){ ?>
+                                                                <form method="post" action="<?php echo base_url()."kpi/download_data_agent_branch"; ?>" enctype="multipart/form-data">
+                                                                    <div style="padding-right:0px;">
+                                                                        <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
+                                                                        <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
+                                                                        <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
+                                                                    </div>
+                                                                </form>
+                                                            <?php }else{ ?>
+                                                                <form method="post" action="<?php echo base_url()."kpi/download_data_agent_cluster"; ?>" enctype="multipart/form-data">
+                                                                    <div style="padding-right:0px;">
+                                                                        <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
+                                                                        <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
+                                                                        <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
+                                                                    </div>
+                                                                </form>
+                                                            <?php } ?>
                                                         </div>
                                                         </div>
                                                     </div>

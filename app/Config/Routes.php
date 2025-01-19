@@ -21,7 +21,10 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/quiz/result', 'Quiz::result');
     $routes->get('/kpi', 'Kpi::index');
     $routes->post('/kpi', 'Kpi::index');
-    $routes->post('/kpi/download_data_agent', 'Kpi::download_data_agent');
+    $routes->post('/kpi/download_data_agent_branch', 'Kpi::download_data_agent_branch');
+    $routes->post('/kpi/download_data_agent_cluster', 'Kpi::download_data_agent_cluster');
     $routes->post('/kpi/download_data_admin', 'Kpi::download_data_admin');
     $routes->get('/loyalty', 'Loyalty::index');
+    $routes->post('/loyalty/cek_redeem_point', 'Loyalty::cek_redeem_point');
+    $routes->post('/loyalty/redeem_process', 'Loyalty::redeem_process');
 });
