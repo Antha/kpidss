@@ -90,13 +90,27 @@
         <!-- Modal -->
         <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <span id="fail_info"></span>
+                <div class="modal-content" style="background-color: transparent">
+                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                        <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-fail.png')?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3 style="font-size: 20px;margin-top:15px;"><span id="fail-info"></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -104,29 +118,50 @@
         <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Redeem Confirmation</h5>
-                </div>
-                <div class="modal-body">
-                    Anda akan melakukan proses redeem 1 buah <span id="modal-info-product-name"></span> senilai <span id="modal-info-product-point"></span> point. Lanjutkan proses?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-conf-redeem" id="btn-redeem-conf"  data-bs-dismiss="modal">redeem</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">batal</button>
-                </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6 p-3">
+                                <img class="img-fluid" src ="<?php echo base_url('/img/prize1.jpg')?>">
+                            </div>
+                            <div class="col-sm-6 p-3 modal-body-info" style="
+                                        border-top-right-radius: 8px;
+                                        border-bottom-right-radius: 8px;">
+                                <h5 class="modal-title mb-5" id="exampleModalLongTitle">Redeem Confirmation</h5>
+                                <p class="modal-info-process">Anda akan melakukan proses redeem 1 buah <span id="modal-info-product-name" style="font-weight: bold;"></span> senilai <span id="modal-info-product-point" style="font-weight: bold;"></span> point. Lanjutkan proses?</p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-cancel-redeem" data-bs-dismiss="modal">CANCEL</button>
+                                    <button type="button" class="btn btn-primary btn-conf-redeem" id="btn-redeem-conf"  data-bs-dismiss="modal">REDEEM</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="modal fade" id="finishModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        Anda telah berhasil melakukan redeem
+                <div class="modal-content" style="background-color: transparent">
+                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                        <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-party.png')?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3 style="font-size: 20px;margin-top:15px;">Redeem Berhasil</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -171,10 +206,10 @@
           cache: false,
           success: function (data) 
           {
-            if(data == "not enough point"){
+            if(data.info == 'not enough point'){
                 $("#fail-info").text("Maaf, point Anda tidak cukup");
                 $("#failModal").modal('show');
-            }else if(data == "empty stock"){
+            }else if(data.info == 'empty stock'){
                 $("#fail-info").text("Maaf, stock habis");
                 $("#failModal").modal('show');
             }else{

@@ -33,7 +33,7 @@ class Loyalty extends Controller
 
     function cek_redeem_point(){
         //dummy data for query result of calculating user point
-        $query_result_user_point = 3000;
+        $query_result_user_point = 10000;
 
         //get product id
         $product_id = $_POST['product_id'];
@@ -44,13 +44,15 @@ class Loyalty extends Controller
         if($query_result_user_point > $get_product_point[0]['product_point'])
         {
             if($get_product_point[0]['product_point'] == 0){
-                echo "empty stock";
+                $parse_value = array('info' => "empty stock");
+                echo json_encode($parse_value);
             }else{
-                $parse_value = array('parse_product_point' => $get_product_point[0]['product_point'], 'parse_product_name' => $get_product_point[0]['product_name']);
+                $parse_value = array('info' => "good",'parse_product_point' => $get_product_point[0]['product_point'], 'parse_product_name' => $get_product_point[0]['product_name']);
                 echo json_encode($parse_value);
             }
         }else{
-            echo "not enough point";
+            $parse_value = array('info' => "not enough point");
+            echo json_encode($parse_value);
         }
     }
 
