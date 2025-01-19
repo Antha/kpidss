@@ -32,6 +32,7 @@ class Login extends Controller
                     'digipos_id' => $user['digipos_id'],
                     'regional' => $user['regional'],
                     'branch' => $user['branch'],
+                    'cluster' => $user['cluster'],
                     'isLoggedIn' => true,
                 ]);
 

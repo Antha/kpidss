@@ -39,118 +39,42 @@
                                 <div class="point-content">
 
                                     <div class="point-info">
-                                        <div class="row mt-4">
+                                        <div class="row mt-3">
                                             <div class="col-10 col-sm-4 mt-2">
                                                 <div class="d-inline-block p-3 rounded point-info-user">
                                                     <i class="fa-solid fa-coins icon-point d-inline-block" style="margin-right: 5px;color:#efba50;"></i>
-                                                    <h6 class="dark-blue-text d-inline-block">POINT ANDA : 100 point</h6>
+                                                    <h6 class="dark-blue-text d-inline-block">POINT ANDA : <?php echo $display_user_point; ?> point</h6>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-    
+
+                                    <div style="display: none;" id="alert-not-enough-point" class="alert alert-danger mt-3" role="alert">
+                                        Poin Anda Tidak Cukup
+                                    </div>
+
                                     <div class="product-redeem mt-4">
                                         <div class="row">
-                                            <div class="col-md-3 col-6 mb-3">
-                                                <div class="card">
-                                                    <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">iPhone 13</h5>
-                                                        <div class="product-point-group float-start">
-                                                            <i class="fa-solid fa-coins icon-point"></i>
-                                                            <p class="card-text product-point">1000 poin</p>
+                                            <?php foreach($display_all_product as $rows){ ?>
+                                                <div class="col-md-3 mb-4">
+                                                    <div class="card">
+                                                        <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title"><?php echo ucwords($rows['product_name']); ?></h5>
+                                                            <div class="product-point-group float-start">
+                                                                <i class="fa-solid fa-coins icon-point"></i>
+                                                                <p class="card-text product-point"><?php echo $rows['product_point']; ?> poin</p>
+                                                            </div>
+                                                            <div class="product-stock-group float-end">
+                                                                <i class="fa-solid fa-boxes-stacked icon-stock"></i>
+                                                                <p class="card-text float-end product-stock">Stocks <?php echo $rows['product_stock']; ?></p>
+                                                            </div>
+                                                            <div style="clear: both;"></div>
+                                                            <input type="button" id="btn_submit_redeem_<?php echo $rows['id'];?>" name="btn_submit_redeem" value="REDEEM" class="mt-3 btn submit_btn redeem-btn float-end border_rad1"></input>
                                                         </div>
-                                                        <div class="product-stock-group float-end">
-                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
-                                                            <p class="card-text float-end product-stock">Stocks 5</p>
-                                                        </div>
-                                                        <div style="clear: both;"></div>
-                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
-                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
-                                                        </form>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3 col-6 mb-3">
-                                                <div class="card">
-                                                    <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">iPhone 13</h5>
-                                                        <div class="product-point-group float-start">
-                                                            <i class="fa-solid fa-coins icon-point"></i>
-                                                            <p class="card-text product-point">1000 poin</p>
-                                                        </div>
-                                                        <div class="product-stock-group float-end">
-                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
-                                                            <p class="card-text float-end product-stock">Stocks 5</p>
-                                                        </div>
-                                                        <div style="clear: both;"></div>
-                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
-                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-6 mb-3">
-                                                <div class="card">
-                                                    <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">iPhone 13</h5>
-                                                        <div class="product-point-group float-start">
-                                                            <i class="fa-solid fa-coins icon-point"></i>
-                                                            <p class="card-text product-point">1000 poin</p>
-                                                        </div>
-                                                        <div class="product-stock-group float-end">
-                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
-                                                            <p class="card-text float-end product-stock">Stocks 5</p>
-                                                        </div>
-                                                        <div style="clear: both;"></div>
-                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
-                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-6 mb-3">
-                                                <div class="card">
-                                                    <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">iPhone 13</h5>
-                                                        <div class="product-point-group float-start">
-                                                            <i class="fa-solid fa-coins icon-point"></i>
-                                                            <p class="card-text product-point">1000 poin</p>
-                                                        </div>
-                                                        <div class="product-stock-group float-end">
-                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
-                                                            <p class="card-text float-end product-stock">Stocks 5</p>
-                                                        </div>
-                                                        <div style="clear: both;"></div>
-                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
-                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-6 mb-3">
-                                                <div class="card">
-                                                    <img class="card-img-top" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">iPhone 13</h5>
-                                                        <div class="product-point-group float-start">
-                                                            <i class="fa-solid fa-coins icon-point"></i>
-                                                            <p class="card-text product-point">1000 poin</p>
-                                                        </div>
-                                                        <div class="product-stock-group float-end">
-                                                            <i class="fa-solid fa-boxes-stacked icon-stock"></i>
-                                                            <p class="card-text float-end product-stock">Stocks 5</p>
-                                                        </div>
-                                                        <div style="clear: both;"></div>
-                                                        <form class="mt-3" method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
-                                                            <input type="submit" id="btn_submit_redeem" name="btn_submit_redeem" value="redeem" class="btn submit_btn redeem-btn float-end border_rad1"></input>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -158,18 +82,93 @@
                         </div>
                     </div>
                 </div>
-               
             </div>
-
         </div>
 
         <?php echo $this->include('partials/include_footer'); ?>
-           
+        
+        <!-- Modal -->
+        <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="background-color: transparent">
+                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                        <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-fail.png')?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3 style="font-size: 20px;margin-top:15px;"><span id="fail-info"></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6 p-3">
+                                <img class="img-fluid" src ="<?php echo base_url('/img/prize1.jpg')?>">
+                            </div>
+                            <div class="col-sm-6 p-3 modal-body-info" style="
+                                        border-top-right-radius: 8px;
+                                        border-bottom-right-radius: 8px;">
+                                <h5 class="modal-title mb-5" id="exampleModalLongTitle">Redeem Confirmation</h5>
+                                <p class="modal-info-process">Anda akan melakukan proses redeem 1 buah <span id="modal-info-product-name" style="font-weight: bold;"></span> senilai <span id="modal-info-product-point" style="font-weight: bold;"></span> point. Lanjutkan proses?</p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-cancel-redeem" data-bs-dismiss="modal">CANCEL</button>
+                                    <button type="button" class="btn btn-primary btn-conf-redeem" id="btn-redeem-conf"  data-bs-dismiss="modal">REDEEM</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="finishModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="background-color: transparent">
+                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                        <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-party.png')?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3 style="font-size: 20px;margin-top:15px;">Redeem Berhasil</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!--modal-->
     </div>
 </body>
 
-<link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
-<script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
         $('#main').removeClass('main-sidebar-close');
@@ -194,90 +193,65 @@
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("openNav").style.display = "inline-block";
     }
-
-    $('#periode_data').datepicker({
-        format: "yyyymm",
-        startView: 1,
-        minViewMode:1,
-        autoclose: true,
-        todayHighlight: true
-    });
     
-    if($('#hidden-value-branch').text() =="DENPASAR"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="BALI BARAT">BALI BARAT</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="BALI TENGAH">BALI TENGAH</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="BALI TIMUR">BALI TIMUR</option>');
-    }else if($('#hidden-value-branch').text() =="FLORES"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="ENDE SIKKA">ENDE SIKKA</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="FLORES TIMUR">FLORES TIMUR</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="MANGGARAI">MANGGARAI</option>');
-    }else if($('#hidden-value-branch').text() =="KUPANG"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="KUPANG ROTE">KUPANG ROTE</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="MALAKA TIMTIM BELU">MALAKA TIMTIM BELU</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="SUMBA">SUMBA</option>');
-    }else if($('#hidden-value-branch').text() =="MATARAM"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="LOMBOK">LOMBOK</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="SUMBAWA BARAT">SUMBAWA BARAT</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="SUMBAWA TIMUR">SUMBAWA TIMUR</option>');
-    }else if($('#hidden-value-branch').text() =="MAGELANG"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="MAGELANG KOTA">MAGELANG KOTA</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="NEW KEBUMEN">NEW KEBUMEN</option>');
-    }else if($('#hidden-value-branch').text() =="PEKALONGAN"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="NEW BATANG">NEW BATANG</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="TEGAL BREBES">TEGAL BREBES</option>');
-    }else if($('#hidden-value-branch').text() =="PURWOKERTO"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="BANJARNEGARA">BANJARNEGARA</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="CILCAP MAS">CILCAP MAS</option>');
-    }else if($('#hidden-value-branch').text() =="SEMARANG"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="DEMAK">DEMAK</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="JEPARA KUDUS">JEPARA KUDUS</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="PATI">PATI</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="SEMARANG">SEMARANG</option>');
-    }else if($('#hidden-value-branch').text() =="SURAKARTA"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="BOYOLALI">BOYOLALI</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="SRAGEN">SRAGEN</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="SURAKARTA">SURAKARTA</option>');
-    }else if($('#hidden-value-branch').text() =="YOGYAKARTA"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="DAERAH ISTIMEWA YOGYAKARTA">DAERAH ISTIMEWA YOGYAKARTA</option>');
-    }else if($('#hidden-value-branch').text() =="JEMBER"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="BANYUWANGI">BANYUWANGI</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="JEMBER">JEMBER</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="KOTA PROBOLINGGO">KOTA PROBOLINGGO</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="SITUBONDO">SITUBONDO</option>');
-    }else if($('#hidden-value-branch').text() =="LAMONGAN"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="LAMONGAN GRESIK">LAMONGAN GRESIK</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="TUBAN BOJONEGORO">TUBAN BOJONEGORO</option>');
-    }else if($('#hidden-value-branch').text() =="MADIUN"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="KEDIRI">KEDIRI</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="MADIUN">MADIUN</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="PONOROGO">PONOROGO</option>');
-    }else if($('#hidden-value-branch').text() =="MALANG"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="MALANG">MALANG</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="TULUNGAGUNG">TULUNGAGUNG</option>');
-    }else if($('#hidden-value-branch').text() =="SIDOARJO"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="JOMBANG MOJOKERTO">JOMBANG MOJOKERTO</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="SIDOARJO PASURUAN">SIDOARJO PASURUAN</option>');
-    }else if($('#hidden-value-branch').text() =="SURABAYA"){
-        $('#kpi_filter_cluster_agent').append('<option value="" selected disabled>Cluster</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="KOTA SURABAYA">KOTA SURABAYA</option>');
-        $('#kpi_filter_cluster_agent').append('<option value="MADURA">MADURA</option>');
-    }
+    $(".redeem-btn").on("click",function(){
+        let productId = $(this).attr("id").split("btn_submit_redeem_");
+        $.ajax({
+          type:"post",
+          url :"<?php echo base_url(); ?>/loyalty/cek_redeem_point",
+          data: {
+            product_id : productId[1]
+          },
+          dataType: "json",
+          cache: false,
+          success: function (data) 
+          {
+            if(data.info == 'not enough point'){
+                $("#fail-info").text("Maaf, point Anda tidak cukup");
+                $("#failModal").modal('show');
+            }else if(data.info == 'empty stock'){
+                $("#fail-info").text("Maaf, stock habis");
+                $("#failModal").modal('show');
+            }else{
+                $("#modal-info-product-name").text(data.parse_product_name);
+                $("#modal-info-product-point").text(data.parse_product_point);
+                $("#btn-redeem-conf").val(productId[1]);
+                $("#confirmationModal").modal('show');
+            }
+          }
+        });
+    });
 
+    $("#btn-redeem-conf").on("click", function(){
+        let productId = $(this).val();
+        let productPoint = $("#modal-info-product-point").text();
+
+        $.ajax({
+          type:"post",
+          url :"<?php echo base_url(); ?>/loyalty/redeem_process",
+          data: {
+            product_id : productId,
+            product_point : productPoint
+          },
+          cache: false,
+          success: function (data) 
+          {
+            if(data == "success"){
+               $("#finishModal").modal("show");
+            }else{
+                console.error();
+            }
+          }
+        });
+    });
+
+    $("#finishModal").on("hidden.bs.modal",function(){
+        window.location.reload();
+    })
+
+    $("#failModal").on("hidden.bs.modal",function(){
+        window.location.reload();
+    })
 </script>
 
 <?php $this->endSection() ?>

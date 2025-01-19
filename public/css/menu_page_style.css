@@ -379,6 +379,59 @@ body {
   background-color: #0ad3ef;
 }
 
+.modal-header {
+  border-bottom: 0px;
+}
+
+.modal-body-info,
+#finsihModal .modal-content {
+  background-color: #003057;
+}
+
+.modal-title,
+#modal-info-product-name,
+#modal-info-product-point {
+  color: #efba50;
+}
+
+.modal-info-process {
+  color: #eef1f6;
+  text-align: justify;
+}
+
+.modal-body {
+  padding: 0px;
+}
+
+.modal-footer {
+  border-top: 0px;
+}
+
+#confirmationModal .modal-footer {
+  margin-top: 100px;
+}
+
+.btn-conf-redeem,
+.btn-cancel-redeem {
+  font-size: 12px;
+}
+
+.btn-conf-redeem {
+  border: 1px solid #0bb4ed;
+  color: #fff;
+  background-color: #0bb4ed;
+}
+
+.btn-conf-redeem:hover,
+.btn-conf-redeem:active {
+  border: 1px solid #0ad3ef;
+  background-color: #0ad3ef;
+}
+
+#confirmationModal .modal-footer {
+  padding: 0px;
+}
+
 @media screen and (max-width: 575px) {
   .main-sidebar-open {
     margin-left: 180px;
