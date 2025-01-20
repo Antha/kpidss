@@ -48,7 +48,51 @@ class UserQuizModel extends Model
         return $this->insertID();
     }
 
-    public function getSummaryPNP()
+    public function getSummaryPNP($periode)
+    {
+        $db = \Config\Database::connect();
+
+        $query = $db->query("
+             SELECT
+                u.agent_id AS `Agent ID`, 
+                u.`digipos_id` `Digipos ID`,
+                u.`dss_name` `DSS Name`, 
+                uq.datetime, 
+                ss.num_right,
+                ss.num_wrong,
+                ss.num_right * 10 AS score, 
+                uq.status
+            FROM
+            (
+                SELECT
+                    user_id, quiz_id, 
+                    SUM(is_right) AS num_right,   
+                    SUM(is_wrong) AS num_wrong
+                FROM
+                (
+                    SELECT 
+                        qa.user_id, 
+                        qa.quiz_id, 
+                        qa.question_id, 
+                        qa.answer, 
+                        q.correct_option,
+                        CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
+                        CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
+                    FROM 
+                        `quiz_answers` qa 
+                    JOIN `questions` q ON qa.question_id = q.id 
+                    WHERE DATE_FORMAT(created_at,'%Y%m') = '$periode'
+                ) AS quiz_data
+                GROUP BY user_id, quiz_id
+            ) AS ss 
+            JOIN `users` u ON ss.user_id = u.id
+            JOIN `user_quizess` uq ON ss.quiz_id = uq.id
+        ");
+
+        return $query->getResultArray();
+    }
+
+    public function getSummaryPNP_old()
     {
         $db = \Config\Database::connect();
 
@@ -85,7 +129,7 @@ class UserQuizModel extends Model
                 GROUP BY user_id, quiz_id
             ) AS ss 
             JOIN `users` u ON ss.user_id = u.id
-            JOIN `kpi_data_202412` kd ON u.agent_id = kd.agent_id
+            JOIN `kpi_data` kd ON u.agent_id = kd.agent_id
             JOIN `user_quizess` uq ON ss.quiz_id = uq.id
         ");
 

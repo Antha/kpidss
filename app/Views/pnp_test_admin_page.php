@@ -66,9 +66,10 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-sm-2 col-md-2 col-12 offset-lg-10 offset-md-10 download-icon-wrapper">
-                                            <form method="post" action="<?php echo base_url()."kpi/download_data_agent"; ?>" enctype="multipart/form-data">
+                                            <form method="post" action="<?php echo base_url()."pnp_test/download_test_result"; ?>" enctype="multipart/form-data">
                                                 <div class="download-btn-style1" style="padding-right:0px;">
-                                                    <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
+                                                    <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
+                                                    <input type="hidden" name="periode_dl" id="periode_dl" value="<?php echo $displayPeriode; ?>">
                                                 </div>
                                             </form>
                                         </div>
@@ -130,6 +131,9 @@
                                                     rows[i].style.display = testDateYM === filter ? "" : "none";
                                                 }
                                             }
+                                            
+                                            //isi hidden input dengan nilai dari filter
+                                            $('#periode_dl').val(filter);
                                         });
 
                                         function filterTable() {

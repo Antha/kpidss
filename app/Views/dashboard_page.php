@@ -35,14 +35,14 @@
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-3 text-center">
-                                <a class="btn main-menu-btn" href="/kpi">
+                                <a class="btn main-menu-btn" href="<?php echo base_url('/kpi')?>">
                                     <img class="card-img-top menu-icon-dark-blue" src="<?= base_url('/img/icon-kpi-dark-blue.png') ?>">
                                     <img class="card-img-top menu-icon-light-blue" src="<?= base_url('/img/icon-kpi-white.png') ?>">
                                     <h5 class="card-title mt-3">KPI</h5> 
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-3 text-center">
-                                <a class="btn main-menu-btn">
+                                <a class="btn main-menu-btn" href="<?php echo base_url('/loyalty')?>">
                                     <img class="card-img-top menu-icon-dark-blue" src="<?= base_url('/img/icon-loyalty-dark-blue.png') ?>">
                                     <img class="card-img-top menu-icon-light-blue" src="<?= base_url('/img/icon-loyalty-white.png') ?>">
                                     <h5 class="card-title mt-3">LOYALTY</h5>
