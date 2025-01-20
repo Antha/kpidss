@@ -51,7 +51,7 @@ public function insertData($data)
 
 
     function display_all_product(){
-        $sql = "SELECT * FROM product_redeem WHERE product_stock > 0";
+        $sql = "SELECT * FROM product_redeem WHERE product_stock > 0 order by id desc";
 
         $query = $this->db_con->query($sql);
 

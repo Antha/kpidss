@@ -58,7 +58,7 @@
                                             <?php foreach($display_all_product as $rows){ ?>
                                                 <div class="col-md-3 mb-4">
                                                     <div class="card">
-                                                        <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/img/prize1.jpg')?>" alt="prize-redeem">
+                                                        <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/uploads/loyalty/').$rows["product_image"]?>" alt="prize-redeem">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><?php echo ucwords($rows['product_name']); ?></h5>
                                                             <div class="product-point-group float-start">
