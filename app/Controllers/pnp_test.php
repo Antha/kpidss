@@ -16,13 +16,40 @@ class Pnp_test extends Controller
         $lastUpdateData = date("Y-m-d",strtotime($getLastUpdateData['datetime']));
         $displayPeriode = date("Ym",strtotime($getLastUpdateData['datetime']));
 
-        $resumeResults = $userQuizModel->getSummaryPNP();
+        $resumeResults = $userQuizModel->getSummaryPNP($displayPeriode);
         
         if($session->get('user_level') == "admin"){
             return view('pnp_test_admin_page', ['resumeResults' => $resumeResults,'lastUpdateData' => $lastUpdateData,'displayPeriode' => $displayPeriode]);
         }
         else{
-            return view('forbidden_page');
+            return redirect()->to('/camera');
+        }
+    }
+
+    function download_test_result(){
+        if($this->request->getPost('btn_dl_test_result')){
+            $userQuizModel = new UserQuizModel();
+            $periode = $this->request->getPost('periode_dl');
+
+            $filename = 'DOWNLOAD TEST RESULT '.$periode.'.csv'; 
+            header("Content-Description: File Transfer"); 
+            header("Content-Disposition: attachment; filename=$filename"); 
+            header("Content-Type: application/csv; ");
+
+            // file creation 
+            $file = fopen('php://output', 'w');
+            
+            $header = array('Agent ID','Digipos ID','DSS Name','Test Date','Right Answer','Wrong Answer','Score','Status');
+
+            fputcsv($file, $header);
+
+            $data_dl =$userQuizModel->getSummaryPNP($periode);;
+
+            foreach ($data_dl as $key=>$line){ 
+                fputcsv($file,$line); 
+            }
+            fclose($file); 
+            exit;
         }
     }
 }

@@ -23,10 +23,13 @@ class Loyalty extends Controller
     public function index()
     {
         //dummy data for query result of calculating user point
-        $query_result_user_point = 300;
+        
+        //$query_result_user_point = 300;
+        $session = session();
+        $results= $this->loyalty_model->getPoint($session->get("user_id"));
 
         //display user point
-        $data['display_user_point'] = $query_result_user_point;
+        $data['display_user_point'] = $results[0]["point_now"];
         $data['display_all_product'] = $this->loyalty_model->display_all_product();
 
         return view('loyalty_page',$data);
@@ -39,8 +42,12 @@ class Loyalty extends Controller
     }
 
     function cek_redeem_point(){
+        $session = session();
+        //
+        $results= $this->loyalty_model->getPoint($session->get("user_id"));
+
         //dummy data for query result of calculating user point
-        $query_result_user_point = 10000;
+        $query_result_user_point = $results[0]["point_now"];
 
         //get product id
         $product_id = $_POST['product_id'];
@@ -64,13 +71,14 @@ class Loyalty extends Controller
     }
 
     function redeem_process(){
+        $session = session();
+
         $product_id = $_POST['product_id'];
-        $product_point = $_POST['product_point'];
-        
-        $this->loyalty_model->redeem_process_product($product_id);
+        $userId = $session->get("user_id");
+        $get_product_point = $this->loyalty_model->get_product_point($product_id);
 
+        $this->loyalty_model->redeem_process_product($product_id, $userId, $get_product_point[0]['product_point']);
         //belum dengan dikurangi user-point - product-point
-
         echo "success";
     }
 

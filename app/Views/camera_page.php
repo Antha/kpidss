@@ -46,7 +46,12 @@
                                     <div class="col-md-6 offset-md-3 text-center">
                                         <div class="card shadow">
                                             <div class="card-body">
-                                            <?php if (!is_array(session('unfinishedQuiz'))) : ?>
+        
+                                                <?php if (is_array(session('recentFinishedQuiz'))) { ?>
+                                                <div class="alert alert-danger text-center mt-4">
+                                                    <h5 class="card-title text-danger">You Can't Access Quiz After 1 Month Since Last Quiz</h5>
+                                                </div>
+                                                <?php } else if(!is_array(session('unfinishedQuiz'))) { ?>
                                                 <div class="row">
                                                     <div class="col-md-6 col-12 mb-5 mb-md-3">
                                                         <h6 class="card-title">AMBIL FOTO SELFIE</h6>
@@ -68,7 +73,7 @@
                                                             <button type="submit" id="saveButton" class="btn btn-success submit_btn"  disabled>SAVE</button>
                                                         </form>
                                                 </div>
-                                                <?php else : ?>
+                                                <?php } else { ?>
                                                     <div class="alert alert-danger text-center mt-4">
                                                         <h5 class="card-title text-danger">You have an unfinished quiz</h5>
                                                         <p class="mb-3">Do you want to continue working on your quiz?</p>
@@ -77,7 +82,7 @@
                                                             <a href="/dashboard" class="btn btn-secondary">No</a>
                                                         </div>
                                                     </div>
-                                                <?php endif; ?>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>

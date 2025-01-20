@@ -19,6 +19,28 @@ class UserQuizModel extends Model
                     ->first();
     }
 
+    public function getRecentFinishedQuiz($userId)
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table($this->table);
+
+        $query = $db->query("
+            SELECT *
+            FROM (
+                SELECT 
+                    user_id,
+                    MIN(DATEDIFF(CURDATE(), `datetime`)) AS days_difference
+                FROM 
+                    `user_quizess`
+                WHERE 
+                    user_id = ? AND status = 'finished'
+            ) AS DATA
+            WHERE days_difference < 30
+        ", [$userId]);
+
+        return $query->getRowArray(); // Mengembalikan satu baris data sebagai array
+    }
+
     public function getLastUpdateData()
     {
         return $this->selectMax('datetime')->first();

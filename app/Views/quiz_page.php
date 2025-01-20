@@ -172,7 +172,7 @@
             }
         });
 
-    startTimer(1/6);
+    startTimer(30);
 
 </script>
 

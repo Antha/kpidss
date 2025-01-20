@@ -6,6 +6,7 @@ use App\Models\QuestionModel;
 use App\Models\QuestionAnswerModel;
 use App\Models\UserQuizModel;
 use App\Models\UserQuizTimerModel;
+use App\Models\UsersPointsModel;
 
 class Quiz extends BaseController
 {
@@ -13,6 +14,7 @@ class Quiz extends BaseController
     protected $questionAnswerModel;
     protected $userQuizModel;
     protected $userQuizTimerModel;
+    protected $usersPointsModel;
 
     public function __construct()
     {
@@ -21,6 +23,7 @@ class Quiz extends BaseController
         $this->questionAnswerModel = new QuestionAnswerModel();
         $this->userQuizModel = new UserQuizModel();
         $this->userQuizTimerModel = new UserQuizTimerModel();
+        $this->usersPointsModel = new UsersPointsModel();
     }
 
     public function index($questionNumber = 1)
@@ -164,6 +167,49 @@ class Quiz extends BaseController
 
         // Delete user timer
         $this->userQuizTimerModel->deleteByUserId($userId);
+
+        //insert to point
+        $totalIsRight = 0;
+        $poinVal = 0;
+        
+        foreach ($quizAnswers as $item) {
+            $totalIsRight += $item['is_right'];
+        }
+
+        switch($totalIsRight){
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                $poinVal = 0;
+                break;
+            case 6:
+                $poinVal = 80;
+                break;
+            case 7:
+                $poinVal = 90;
+                break;
+            case 8:
+                $poinVal = 100;
+                break;
+            case 9:
+                $poinVal = 110;
+                break;
+            case 10:
+                $poinVal = 150;
+                break;
+            
+        }
+
+        $dataPoint = [
+            'user_id'    => $userId,
+            'point'       => $poinVal,
+            'point_category' => "Quiz",
+            'periode'     => date("Ym"),
+        ];
+
+        $this->usersPointsModel->insert($dataPoint);
 
         // Tampilkan hasil atau redirect ke halaman lain
         return view('quiz_result_page', ['answers' => $quizAnswers]);
