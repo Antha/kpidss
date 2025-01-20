@@ -759,8 +759,8 @@
                                                                         <td class="text-center"><?php echo $row['level_competition'] ?></td>
                                                                         <td class="text-center"><?php echo $row['city_war_profile'] ?></td>
     
-                                                                        <td class="text-center"><?php echo $row['final_ach'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['runrate'] ?></td>
+                                                                        <td class="text-center"><?php echo $row['final_ach'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['runrate'] ?>%</td>
                                                                         <td class="text-center"><?php echo $row['class_may_23'] ?></td>
                                                                         <td class="text-center"><?php echo $row['class_jun_23'] ?></td>
     
@@ -770,50 +770,50 @@
                                                                         <td class="text-center"><?php echo $row['so_actual'] ?></td>
                                                                         <td class="text-center"><?php echo $row['so_prepaid'] ?></td>
                                                                         <td class="text-center"><?php echo $row['so_byu'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['so_ach'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['so_runrate'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['so_bobot'] ?></td>
+                                                                        <td class="text-center"><?php echo $row['so_ach'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['so_runrate'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['so_bobot'] ?>%</td>
     
                                                                         <td class="text-center"><?php echo $row['imei_target'] ?></td>
                                                                         <td class="text-center"><?php echo $row['imei_actual'] ?></td>
                                                                         <td class="text-center"><?php echo $row['imei_prepaid'] ?></td>
                                                                         <td class="text-center"><?php echo $row['imei_byu'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['imei_ach'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['imei_runrate'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['imei_bobot'] ?></td>
+                                                                        <td class="text-center"><?php echo $row['imei_ach'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['imei_runrate'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['imei_bobot'] ?>%</td>
     
                                                                         <td class="text-center"><?php echo $row['dt_target'] ?></td>
                                                                         <td class="text-center"><?php echo $row['dt_actual'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['dt_ach'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['dt_runrate'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['dt_bobot'] ?></td>
+                                                                        <td class="text-center"><?php echo $row['dt_ach'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['dt_runrate'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['dt_bobot'] ?>%</td>
     
                                                                         <td class="text-center"><?php echo $row['mni_target'] ?></td>
                                                                         <td class="text-center"><?php echo $row['mni_actual'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['mni_ach'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['mni_runrate'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['mni_bobot'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['pb_sub_bobot'] ?></td>
+                                                                        <td class="text-center"><?php echo $row['mni_ach'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['mni_runrate'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['mni_bobot'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['pb_sub_bobot'] ?>%</td>
     
                                                                         <td class="text-center"><?php echo $row['rsc_target'] ?></td>
                                                                         <td class="text-center"><?php echo $row['rsc_actual'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['rsc_ach'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['rsc_runrate'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['rsc_bobot'] ?></td>
+                                                                        <td class="text-center"><?php echo $row['rsc_ach'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['rsc_runrate'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['rsc_bobot'] ?>%</td>
     
                                                                         <td class="text-center"><?php echo $row['ep_plan'] ?></td>
                                                                         <td class="text-center"><?php echo $row['ep_target'] ?></td>
                                                                         <td class="text-center"><?php echo $row['ep_actual'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['ep_ach'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['ep_runrate'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['ep_bobot'] ?></td>
+                                                                        <td class="text-center"><?php echo $row['ep_ach'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['ep_runrate'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['ep_bobot'] ?>%</td>
     
                                                                         <td class="text-center"><?php echo $row['cs_target'] ?></td>
                                                                         <td class="text-center"><?php echo $row['cs_actual'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['cs_ach'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['cs_runrate'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['cs_bobot'] ?></td>
-                                                                        <td class="text-center"><?php echo $row['ob_sub_bobot'] ?></td>
+                                                                        <td class="text-center"><?php echo $row['cs_ach'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['cs_runrate'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['cs_bobot'] ?>%</td>
+                                                                        <td class="text-center"><?php echo $row['ob_sub_bobot'] ?>%</td>
                                                                     </tr>
                                                                 <?php $i++;} ?>
                                                                 
