@@ -70,7 +70,7 @@
                                                                 <p class="card-text float-end product-stock">Stocks <?php echo $rows['product_stock']; ?></p>
                                                             </div>
                                                             <div style="clear: both;"></div>
-                                                            <input type="button" id="btn_submit_redeem_<?php echo $rows['id'];?>" name="btn_submit_redeem" value="REDEEM" class="mt-3 btn submit_btn redeem-btn float-end border_rad1"></input>
+                                                            <input data-image = "<?php echo base_url('/uploads/loyalty/').$rows["product_image"]?>" type="button" id="btn_submit_redeem_<?php echo $rows['id'];?>" name="btn_submit_redeem" value="REDEEM" class="mt-3 btn submit_btn redeem-btn float-end border_rad1"></input>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -121,7 +121,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-6 p-3">
-                                <img class="img-fluid" src ="<?php echo base_url('/img/prize1.jpg')?>">
+                                <img class="img-fluid" id="img-preview-redeem" src ="<?php echo base_url('/img/prize1.jpg')?>">
                             </div>
                             <div class="col-sm-6 p-3 modal-body-info" style="
                                         border-top-right-radius: 8px;
@@ -196,6 +196,12 @@
     
     $(".redeem-btn").on("click",function(){
         let productId = $(this).attr("id").split("btn_submit_redeem_");
+
+
+        // Menyeting src gambar target dengan src gambar sumber
+        $('#img-preview-redeem').attr('src', $(this).data("image"));
+
+
         $.ajax({
           type:"post",
           url :"<?php echo base_url(); ?>/loyalty/cek_redeem_point",

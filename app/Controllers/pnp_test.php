@@ -22,7 +22,7 @@ class Pnp_test extends Controller
             return view('pnp_test_admin_page', ['resumeResults' => $resumeResults,'lastUpdateData' => $lastUpdateData,'displayPeriode' => $displayPeriode]);
         }
         else{
-            return view('forbidden_page');
+            return redirect()->to('/camera');
         }
     }
 }

@@ -62,6 +62,31 @@ public function insertData($data)
         }
     }
 
+    function getPoint($user_id){
+        $sql = "SELECT
+            point.num - ifnull(redeem.num,0) AS point_now
+            FROM
+            (
+                SELECT 
+                SUM(`point`) `num`
+                FROM `users_points` WHERE user_id = 3 AND periode >= ( SELECT DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 3 MONTH),\"%Y%m\") FROM DUAL )
+            ) `point`
+            JOIN
+            (
+                SELECT
+                SUM(redeem) `num` FROM `users_redeem` WHERE user_id = 3
+            ) AS `redeem`
+            ";
+        $query = $this->db_con->query($sql);
+        if($query){
+            return $query->getResultArray();
+        }else{
+            return $this->db_con->error();
+        }
+    }
+
+  
+
     function get_product_point($product_id){
         $id = $this->db_con->escape($product_id);
         $sql = "SELECT product_point,product_name,product_stock FROM product_redeem WHERE id = $id";
@@ -75,10 +100,12 @@ public function insertData($data)
         }
     }
 
-    function redeem_process_product($product_id){
+    function redeem_process_product($product_id,$user_id,$redeem){
         $id = $this->db_con->escape($product_id);
-        $sql = "UPDATE product_redeem SET product_stock = product_stock -1 WHERE id = $id";
+        $sql = "UPDATE product_redeem SET product_stock = product_stock - 1 WHERE id = $id";
+        $this->db_con->query($sql);
 
+        $sql = "INSERT INTO users_redeem(user_id,redeem) values ($user_id,$redeem) ";
         $this->db_con->query($sql);
     }
 

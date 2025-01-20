@@ -27,6 +27,11 @@ class Dashboard extends Controller
         writeLogToFile("UQI ". json_encode($unfinishedQuiz));
         $session->set("unfinishedQuiz",$unfinishedQuiz);
 
+        $recentFinishedQuiz = $this->userQuizModel->getRecentFinishedQuiz($userId);
+        $session->set("recentFinishedQuiz",$recentFinishedQuiz);
+
         return view('dashboard_page',["unfinishedQuiz" => $unfinishedQuiz]);
     }
+
+    
 }
