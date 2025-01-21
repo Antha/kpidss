@@ -116,10 +116,10 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-6 p-3">
+                            <div class="col-6 p-3">
                                 <img class="img-fluid" id="img-preview-redeem" src ="<?php echo base_url('/img/prize1.jpg')?>">
                             </div>
-                            <div class="col-sm-6 p-3 modal-body-info" style="
+                            <div class="col-6 p-3 modal-body-info" style="
                                         border-top-right-radius: 8px;
                                         border-bottom-right-radius: 8px;">
                                 <h5 class="modal-title mb-5" id="exampleModalLongTitle">Redeem Confirmation</h5>
