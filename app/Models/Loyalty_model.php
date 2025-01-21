@@ -107,5 +107,11 @@ public function insertData($data)
         $this->db_con->query($sql);
     }
 
+    function add_stock_product_redeem_history($product_id,$product_stock,$admin_id){
+        $id = $this->db_con->escape($product_id);
+        
+        $sql = "INSERT INTO product_redeem_stock_history(product_id,quantity,admin_id) values ($product_id,$product_stock,$admin_id) ";
+        $this->db_con->query($sql);
+    }
 
 }

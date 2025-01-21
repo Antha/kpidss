@@ -40,7 +40,7 @@
 
                                     <div class="point-info">
                                         <div class="row mt-3">
-                                            <div class="col-10 col-sm-4 mt-2">
+                                            <div class="col-10 col-sm-6 mt-2">
                                                 <div class="d-inline-block p-3 rounded point-info-user">
                                                     <i class="fa-solid fa-coins icon-point d-inline-block" style="margin-right: 5px;color:#efba50;"></i>
                                                     <h6 class="dark-blue-text d-inline-block">POINT ANDA : <?php echo $display_user_point; ?> point</h6>
@@ -56,7 +56,7 @@
                                     <div class="product-redeem mt-4">
                                         <div class="row">
                                             <?php foreach($display_all_product as $rows){ ?>
-                                                <div class="col-md-3 mb-4">
+                                                <div class="col-md-3 col-sm-6 mb-4">
                                                     <div class="card">
                                                         <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/uploads/loyalty/').$rows["product_image"]?>" alt="prize-redeem">
                                                         <div class="card-body">

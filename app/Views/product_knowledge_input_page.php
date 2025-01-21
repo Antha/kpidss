@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-xs-12 border rounded mb-2 mb-md-5">
                             <div class="content-wrapper">
-                                <h3>ADD PRODUCT REDEEM</h3>
+                                <h3>ADD PRODUCT KNOWLEDGE</h3>
                                 <?php if (session()->getFlashdata('success')): ?>
                                     <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
                                 <?php endif; ?>
@@ -42,12 +42,9 @@
                                         <input type="text" class="form-control" id="productName" name="product_name" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="productPoint" class="form-label">Product Point</label>
-                                        <input type="number" class="form-control" id="productPoint" name="product_point" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="productStock" class="form-label">Product Stock</label>
-                                        <input type="number" class="form-control" id="productStock" name="product_stock" required>
+                                        <label for="productDetail" class="form-label">Product Detail</label>
+                                        <textarea class="form-control" id="productDetail" rows="3" required></textarea>
+                                        <!--<input type="testarea" class="form-control" id="productDetail" name="product_detail" required>-->
                                     </div>
                                     <div class="mb-3">
                                         <label for="photoInput" class="form-label">Choose Image</label>
@@ -72,7 +69,7 @@
                             </div> 
                         </div>
 
-                        <div class="col-xs-12 border rounded">
+                        <!--<div class="col-xs-12 border rounded">
                             <div class="content-wrapper">
                                 <h3>EDIT PRODUCT REDEEM</h3>
                                 <?php if (session()->getFlashdata('success')): ?>
@@ -88,20 +85,13 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Separated link</a>
                                     </div>
-
-                                    <!-- Preview hasil crop -->
-                                    <!-- <div class="text-center mt-3">
-                                        <h6>Preview Cropped Image</h6>
-                                        <img id="croppedPreview" class="img-fluid" style="display: none; max-height: 300px; border: 1px solid #ddd;">
-                                    </div> -->
-
                                     <div class="text-center mt-3">
                                         <button type="button" id="editButton" class="btn btn-primary" style="display: none;">Crop & Edit Data</button>
                                     </div>
                                 </form>
 
                             </div> 
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -179,8 +169,7 @@
             const formData = new FormData();
             formData.append('croppedImage', blob);
             formData.append('product_name', document.getElementById('productName').value);
-            formData.append('product_point', document.getElementById('productPoint').value);
-            formData.append('product_stock', document.getElementById('productStock').value);
+            formData.append('product_detail', document.getElementById('productDetail').value);
 
             // Preview the cropped image
             //const croppedPreview = document.getElementById('croppedPreview');
@@ -189,7 +178,7 @@
             // croppedPreview.style.display = 'block';
 
             // Upload to server
-            fetch('/loyalty_upload', {
+            fetch('/product_knowledge_upload', {
                 method: 'POST',
                 body: formData,
             })
