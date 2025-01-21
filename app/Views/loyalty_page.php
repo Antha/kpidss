@@ -39,8 +39,8 @@
                                 <div class="point-content">
 
                                     <div class="point-info">
-                                        <div class="row mt-3">
-                                            <div class="col-10 col-sm-6 mt-2">
+                                        <div class="row mt-2 justify-content-center">
+                                            <div class="col-10 col-sm-6 mt-2 text-center">
                                                 <div class="d-inline-block p-3 rounded point-info-user">
                                                     <i class="fa-solid fa-coins icon-point d-inline-block" style="margin-right: 5px;color:#efba50;"></i>
                                                     <h6 class="dark-blue-text d-inline-block">POINT ANDA : <?php echo $display_user_point; ?> point</h6>
@@ -49,11 +49,7 @@
                                         </div>
                                     </div>
 
-                                    <div style="display: none;" id="alert-not-enough-point" class="alert alert-danger mt-3" role="alert">
-                                        Poin Anda Tidak Cukup
-                                    </div>
-
-                                    <div class="product-redeem mt-4">
+                                    <div class="product-redeem container mt-4">
                                         <div class="row">
                                             <?php foreach($display_all_product as $rows){ ?>
                                                 <div class="col-md-3 col-sm-6 mb-4">

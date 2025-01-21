@@ -36,6 +36,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/loyalty_example', 'Loyalty::index_example');
     $routes->post('/loyalty/cek_redeem_point', 'Loyalty::cek_redeem_point');
     $routes->post('/loyalty/redeem_process', 'Loyalty::redeem_process');
+    $routes->post('/loyalty/get_product_stock', 'Loyalty::get_product_stock');
 
     $routes->get('/product_knowledge', 'Product_knowledge::index');
     $routes->get('/product_knowledge_input', 'Product_knowledge::input_data');

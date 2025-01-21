@@ -9,8 +9,12 @@ class Login extends Controller
 {
     public function index()
     {
-        //echo "hai";
-        return view('login_page');
+        $session = session();
+        if($session->get("isLoggedIn") == TRUE){
+            return redirect()->to(base_url('/dashboard'));
+        }else{
+            return view('login_page'); 
+        }
     }
 
     public function authenticate()

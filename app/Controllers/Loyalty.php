@@ -35,7 +35,9 @@ class Loyalty extends Controller
     {
         $session = session();
         if($session->get("user_level") == 'admin'){
-            return view('loyalty_input_page');
+            $data['display_all_product'] =  $this->loyalty_model->display_all_product();
+
+            return view('loyalty_input_page',$data);
         }else{
             return redirect()->to(base_url('/dashboard')); 
         }
@@ -81,6 +83,14 @@ class Loyalty extends Controller
         $this->loyalty_model->redeem_process_product($product_id, $userId, $get_product_point[0]['product_point']);
         //belum dengan dikurangi user-point - product-point
         echo "success";
+    }
+
+    function get_product_stock(){
+        $product_id = $_POST['product_id'];
+        $get_product_point = $this->loyalty_model->get_product_point($product_id);
+        
+        $parse_value = array('info' => 'sucess','product_stock' => $get_product_point[0]['product_stock']);
+        echo json_encode($parse_value);
     }
 
     public function index_example()
