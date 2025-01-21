@@ -36,8 +36,32 @@
                                     <h4 class="dark-blue-text float-end">LOYALTY</h4>
                                     <div style="clear: both;"></div>
                                 </div>
+                                <div>
+                                    <!-- Table -->
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col" class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($product_redeems as $redeem): ?>
+                                                <tr>
+                                                    <td>You Just Reedem <b><?= esc($redeem->product_name) ?></b></td> <!-- Adjust the field names as necessary -->
+                                                    <td class="text-center">
+                                                        <span>Have you received it?</span>
+                                                        <div class="d-flex justify-content-center mt-2">
+                                                            <button class="btn btn-success me-2">Yes</button>
+                                                            <button class="btn btn-danger">No</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="point-content">
-
                                     <div class="point-info">
                                         <div class="row mt-3">
                                             <div class="col-10 col-sm-4 mt-2">

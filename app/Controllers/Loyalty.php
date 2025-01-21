@@ -29,6 +29,8 @@ class Loyalty extends Controller
         $results= $this->loyalty_model->getPoint($session->get("user_id"));
 
         //display user point
+         // Fetch the product redeems for user_id = 6
+        $data['product_redeems'] = $this->loyalty_model->getProductRedeemsByUser($session->get("user_id"));
         $data['display_user_point'] = $results[0]["point_now"];
         $data['display_all_product'] = $this->loyalty_model->display_all_product();
 

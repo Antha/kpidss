@@ -107,5 +107,23 @@ public function insertData($data)
         $this->db_con->query($sql);
     }
 
+    // Fetch product details where user_id = 6
+    public function getProductRedeemsByUser($user_id)
+    {
+        $query = "
+            SELECT 
+                pr.* 
+            FROM 
+                users_redeem ur 
+            JOIN
+                product_redeem pr
+            ON 
+                ur.product_id = pr.id
+            WHERE 
+                ur.user_id = ?
+        ";
 
+        // Execute the raw query and pass the user_id as a parameter
+        return $this->db_con->query($query, [$user_id])->getResult();
+    }
 }

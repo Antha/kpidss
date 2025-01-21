@@ -35,4 +35,9 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/loyalty_example', 'Loyalty::index_example');
     $routes->post('/loyalty/cek_redeem_point', 'Loyalty::cek_redeem_point');
     $routes->post('/loyalty/redeem_process', 'Loyalty::redeem_process');
+
+    $routes->get('/questions', 'QuestionController::index');
+    $routes->post('/questions/import', 'QuestionController::import');
+    $routes->get('/questions/sample-csv', 'QuestionController::sampleCsv');
+
 });
