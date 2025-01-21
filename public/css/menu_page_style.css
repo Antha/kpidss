@@ -7,6 +7,14 @@ body {
   background-color: #fff;
 }
 
+.page_height {
+  min-height: 100vh;
+}
+
+.admin-cms-page {
+  min-height: 100vh;
+}
+
 .user-name-ses-display {
   color: #003057;
 }
@@ -430,6 +438,31 @@ body {
 
 #confirmationModal .modal-footer {
   padding: 0px;
+}
+
+.detail-title {
+  font-size: 16px !important;
+}
+
+.detail-btn {
+  font-size: 14px;
+}
+
+.product-knowledge .card-body {
+  background-color: #003057;
+  color: #fff;
+  height: 100px !important;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  overflow: hidden;
+}
+
+.product-knowledge a {
+  text-decoration: none;
+}
+
+.product-knowledge .detail-title {
+  text-transform: uppercase;
 }
 
 @media screen and (max-width: 575px) {

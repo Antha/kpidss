@@ -13,6 +13,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/logout', 'Login::logout');
     $routes->get('/dashboard', 'Dashboard::index');
     $routes->get('/pnp_test', 'Pnp_test::index');
+    $routes->post('/pnp_test/download_test_result', 'Pnp_test::download_test_result');
 
     $routes->get('camera', 'Camera::index');
     $routes->post('camera/save', 'Camera::save');
@@ -40,4 +41,11 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/questions/import', 'QuestionController::import');
     $routes->get('/questions/sample-csv', 'QuestionController::sampleCsv');
 
+    $routes->get('/product_knowledge', 'Product_knowledge::index');
+    $routes->get('/product_knowledge_input', 'Product_knowledge::input_data');
+    $routes->post('/product_knowledge_upload', 'Product_knowledge::upload_data');
+    $routes->post('/product_knowledge_upload_photo', 'Product_knowledge::upload_photo');
+
+
+    $routes->post('/editor/upload', 'EditorController::upload');
 });

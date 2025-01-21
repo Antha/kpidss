@@ -126,4 +126,12 @@ public function insertData($data)
         // Execute the raw query and pass the user_id as a parameter
         return $this->db_con->query($query, [$user_id])->getResult();
     }
+
+    function add_stock_product_redeem_history($product_id,$product_stock,$admin_id){
+        $id = $this->db_con->escape($product_id);
+        
+        $sql = "INSERT INTO product_redeem_stock_history(product_id,quantity,admin_id) values ($product_id,$product_stock,$admin_id) ";
+        $this->db_con->query($sql);
+    }
+
 }

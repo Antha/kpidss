@@ -10,7 +10,7 @@
 <style>
     /* Gaya CSS untuk ukuran peta */
     #map {
-        height: 400px;
+        height: 458px;
         width: 100%;
     }
 </style>
@@ -18,16 +18,7 @@
 <body>
     <div class="dashboard-page">
         
-        <div class="sidebar w3-bar-block w3-card animate-left" style="display:none" id="mySidebar">
-            <div class="close-nav-btn-wrapper">
-                <button class="btn close-nav-btn" onclick="w3_close()">&times;</button>
-            </div>
-            <nav class="nav flex-column">
-                <a class="nav-link active" aria-current="page" href="#">PNP TEST</a>
-                <a class="nav-link" href="#">KPI</a>
-                <a class="nav-link" href="#">LOYALTY</a>
-            </nav>  
-        </div>
+        <?php echo $this->include('partials/include_sidebar') ?>
 
         <div id="main">
             <div class="header-top">
@@ -62,24 +53,25 @@
                                                 </div>
                                                 <?php } else if(!is_array(session('unfinishedQuiz'))) { ?>
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <h5 class="card-title">Camera Capture</h5>
-                                                        <button id="capture" class="btn btn-primary mt-3 mb-3">Capture</button>
+                                                    <div class="col-md-6 col-12 mb-5 mb-md-3">
+                                                        <h6 class="card-title">AMBIL FOTO SELFIE</h6>
+                                                        <button id="capture" class="btn btn-primary submit_btn mt-2 mb-3" style="font-size: 12px;">Capture</button>
                                                         <div class="d-flex justify-content-center align-items-center">
                                                             <video id="video" autoplay class="border rounded" style="max-width: 100%; height: auto;"></video>
                                                         </div>
                                                         <canvas id="canvas" class="mt-3 border rounded" style="max-width: 100%; display: none;"></canvas>
-                                                        <form id="saveForm" method="POST" action="/camera/save" class="mt-4 text-center">
+                                                    </div>
+                                                    <div class="col-md-6 col-12 mb-5 mb-md-3">
+                                                        <h6 class="card-title">AKTIFKAN LOKASI</h6>
+                                                        <button class="btn btn-info mt-2 mb-3 submit_btn" id="getLocationBtn" style="font-size: 12px;">Activate My Location</button>
+                                                        <div id="map"></div>
+                                                    </div>
+                                                    <form id="saveForm" method="POST" action="/camera/save" class="mt-4 text-center">
                                                             <input type="hidden" name="imageData" id="imageData">
                                                             <input type="hidden" name="mylong" id="mylong">
                                                             <input type="hidden" name="mylat" id="mylat">
-                                                            <button type="submit" id="saveButton" class="btn btn-success" disabled>Save</button>
+                                                            <button type="submit" id="saveButton" class="btn btn-success submit_btn"  disabled>SAVE</button>
                                                         </form>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <button class="btn btn-info mb-2" id="getLocationBtn">Activate My Location</button>
-                                                        <div id="map"></div>
-                                                    </div>
                                                 </div>
                                                 <?php } else { ?>
                                                     <div class="alert alert-danger text-center mt-4">
@@ -228,13 +220,25 @@
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
-        document.getElementById("main").style.marginLeft = "25%";
-        document.getElementById("mySidebar").style.width = "25%";
-        document.getElementById("mySidebar").style.display = "block";
+        $('#main').removeClass('main-sidebar-close');
+        $('#main').addClass('main-sidebar-open');
+        $('#footer').removeClass('main-sidebar-close');
+        $('#footer').addClass('main-sidebar-open');
+        $('#mySidebar').removeClass('sidebar-close');
+        $('#mySidebar').addClass('sidebar-open');
+        $('.dashboard-menu').addClass('main-sidebar-open');
+        $('.dashboard-menu').removeClass('main-sidebar-close');
         document.getElementById("openNav").style.display = 'none';
     }
     function w3_close() {
-        document.getElementById("main").style.marginLeft = "0%";
+        $('#main').removeClass('main-sidebar-open');
+        $('#main').addClass('main-sidebar-close');
+        $('#footer').addClass('main-sidebar-close');
+        $('#footer').removeClass('main-sidebar-open');
+        $('#mySidebar').removeClass('sidebar-open');
+        $('#mySidebar').addClass('sidebar-close');
+        $('.dashboard-menu').removeClass('main-sidebar-open');
+        $('.dashboard-menu').addClass('main-sidebar-close');
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("openNav").style.display = "inline-block";
     }
