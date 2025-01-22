@@ -22,6 +22,7 @@ class Dashboard extends Controller
         
         $session = session();
         $userId = $session->get('user_id');
+        $user_level = $session->get('user_level');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
 
         writeLogToFile("UQI ". json_encode($unfinishedQuiz));
@@ -30,7 +31,7 @@ class Dashboard extends Controller
         $recentFinishedQuiz = $this->userQuizModel->getRecentFinishedQuiz($userId);
         $session->set("recentFinishedQuiz",$recentFinishedQuiz);
 
-        return view('dashboard_page',["unfinishedQuiz" => $unfinishedQuiz]);
+        return view('dashboard_page',["unfinishedQuiz" => $unfinishedQuiz,'user_level' => $user_level]);
     }
 
     

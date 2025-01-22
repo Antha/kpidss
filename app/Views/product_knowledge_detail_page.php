@@ -40,7 +40,7 @@
                                     <div class="container-fluid product-knowledge mt-4">
                                         <div class="row justify-content-center">
                                             <div class="col-12">
-                                                <img class="img-fluid" src="<?php echo base_url('/uploads/product_knowledge/').$detail[0]["product_main_image"]; ?>">
+                                                <img class="img-fluid" style="width: 100%;height:250px;" src="<?php echo base_url('/uploads/product_knowledge/').$detail[0]["product_main_image"]; ?>">
                                             </div>
                                         </div>
                                         <div class="row">
