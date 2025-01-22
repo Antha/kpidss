@@ -53,7 +53,7 @@
                                 </div>
     
                                 <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
-                                    <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/loyalty')?>">
+                                    <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/product_knowledge')?>">
                                         <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" src="<?= base_url('/img/icon-info-product-dark-blue.png') ?>">
                                         <img class="img-fluid menu-icon-light-blue cstm-main-menu-img" src="<?= base_url('/img/icon-info-product-white.png') ?>">
                                         <h5 class="card-title cstm-main-menu-card-title">PRODUCT KNOWLEDGE</h5>
