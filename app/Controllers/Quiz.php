@@ -35,7 +35,11 @@ class Quiz extends BaseController
 
         if (!session()->has('question_number')) {
             session()->set('question_number', 1);
-        } 
+        } else{
+            session()->set('question_number',  session()->get('question_number') + 1);
+        }
+
+        
 
         $userId = $session->get('user_id');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
@@ -130,8 +134,8 @@ class Quiz extends BaseController
         }else{
             if($unfinishedQuiz){
                 $reslutsMQB = $this->questionAnswerModel->getMaxQuestionIdByUserId($userId, (int) $quizId);
-                $questionNumber = (int) $reslutsMQB["max_qid"];
-                session()->set('question_number',  (int) $reslutsMQB["no"]);
+                $questionNumber = (int) $reslutsMQB->max_qid + 1;
+                session()->set('question_number',  (int) $reslutsMQB->no);
             }
 
             // Ambil pertanyaan saat ini
