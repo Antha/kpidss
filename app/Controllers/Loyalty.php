@@ -192,6 +192,21 @@ class Loyalty extends Controller
         }
     }
 
+    function edit_product_redeem_detail(){
+        $session = session();
+
+        $admin_id = $session->get('user_id');
+        $product_id = $_POST['product_id'];
+        $product_name = $_POST['product_name'];
+        $product_stock = $_POST['product_stock'];
+        $product_point = $_POST['product_point'];
+        
+        //edit product detail
+        $this->loyalty_model->edit_product_detail($product_id,$product_name,$product_stock,$product_point,$admin_id);
+        
+        echo "success";
+    }
+
     public function update_redeem_status()
     {
         $redeemID = $this->request->getPost("redeemID");
@@ -212,20 +227,6 @@ class Loyalty extends Controller
         }
         
     }
-    
-    function edit_product_redeem_detail(){
-        $session = session();
 
-        $admin_id = $session->get('user_id');
-        $product_id = $_POST['product_id'];
-        $product_name = $_POST['product_name'];
-        $product_stock = $_POST['product_stock'];
-        $product_point = $_POST['product_point'];
-        
-        //edit product detail
-        $this->loyalty_model->edit_product_detail($product_id,$product_name,$product_stock,$product_point,$admin_id);
-        
-        echo "success";
-    }
 
 }

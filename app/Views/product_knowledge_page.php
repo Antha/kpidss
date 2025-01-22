@@ -38,14 +38,15 @@
                                 </div>
                                 <div class="point-content">
 
-                                    <div class="container product-knowledge mt-4">
+                                    <div class="container-fluid product-knowledge mt-4">
                                         <div class="row">
                                             <?php foreach($display_all_product as $rows){ ?>
                                                 <div class="col-md-3 col-sm-6 mb-4">
-                                                    <a class="card" href="#" style="width: 100%;">
+                                                    <a class="card" href="<?php echo base_url("/product_knowledge/detail")."?product_id=".$rows["id"]?>" style="width: 100%;">
                                                         <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/uploads/product_knowledge/').$rows["product_image"]?>" alt="prize-redeem">
                                                         <div class="card-body">
                                                             <h5 class="card-title detail-title"><?php echo ucwords($rows['product_name']); ?></h5>
+                                                            <span style="color: #888;" class="subtitle-detail">2025-01-12</span>
                                                         </div>
                                                     </a>
                                                 </div>

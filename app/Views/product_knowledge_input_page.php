@@ -56,6 +56,12 @@
                                         <label for="photoMainInput" class="form-label">Choose Main Image</label>
                                         <input type="file" class="form-control" id="photoMainInput" accept="image/*">
                                     </div>
+                                    <!-- Preview hasil crop -->
+                                    <!-- <div class="text-center mt-3">
+                                        <h6>Preview Cropped Image</h6>
+                                        <img id="croppedPreview" class="img-fluid" style="display: none; max-height: 300px; border: 1px solid #ddd;">
+                                    </div> -->
+                                    <input type="hidden" id="hidden_dt_now" style="display: none;" value="<?php echo $dt_now; ?>"></input>
                                     <div class="text-center mt-3 mb-3">
                                         <button type="button" id="cropButton" class="btn btn-primary">Crop & Upload Data</button>
                                     </div>
@@ -93,6 +99,34 @@
 
         <?php echo $this->include('partials/include_footer'); ?>
         
+        <!--modal-->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="background-color: transparent">
+                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                        <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-success.png')?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3 style="font-size: 20px;margin-top:15px;"><span id="success-info"></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!--modal-->
     </div>
 </body>
 
@@ -254,7 +288,8 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    alert('Upload successful!');
+                    $("#successModal").modal('show');
+                    $("#success-info").text("Data Berhasil diupload");
                     console.log(data.file_name); // Tampilkan nama file yang diupload
                 } else {
                     alert('Upload failed: ' + data.message);
