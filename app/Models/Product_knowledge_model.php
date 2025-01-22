@@ -22,7 +22,7 @@ class Product_knowledge_model extends Model
     public function insertData($data)
     {
         // Check if the data is valid
-        if (empty($data['product_name']) || empty($data['product_detail']) || empty($data['product_image'])) {
+        if (empty($data['product_name']) || empty($data['product_detail']) || empty($data['product_image']) ) {
             log_message('error', 'Data for insert is incomplete: ' . json_encode($data));
             return false;
         }
@@ -35,7 +35,7 @@ class Product_knowledge_model extends Model
         $binds = [
             'product_name' => $data['product_name'],
             'product_detail' => $data['product_detail'],
-            'product_image' => $data['product_image'],
+            'product_image' => $data['product_image']
         ];
 
         // Execute the raw query

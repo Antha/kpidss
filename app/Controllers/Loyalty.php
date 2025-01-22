@@ -25,6 +25,8 @@ class Loyalty extends Controller
         $results= $this->loyalty_model->getPoint($session->get("user_id"));
 
         //display user point
+         // Fetch the product redeems for user_id = 6
+        $data['product_redeems'] = $this->loyalty_model->getProductRedeemsByUser($session->get("user_id"));
         $data['display_user_point'] = $results[0]["point_now"];
         $data['display_all_product'] = $this->loyalty_model->display_all_product();
 
@@ -205,4 +207,24 @@ class Loyalty extends Controller
         echo "success";
     }
 
+    public function update_redeem_status()
+    {
+        $redeemID = $this->request->getPost("redeemID");
+        try {
+            if ($this->loyalty_model->update_redeem_status($redeemID)) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'message' => 'Redeem status changed successfully',
+                ]);
+            } else {
+                throw new \Exception('No rows affected');
+            }
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        
+    }
 }

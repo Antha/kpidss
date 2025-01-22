@@ -36,8 +36,34 @@
                                     <h4 class="dark-blue-text float-end">LOYALTY</h4>
                                     <div style="clear: both;"></div>
                                 </div>
+                                <div>
+                                    <!-- Table -->
+                                    <?php if($product_redeems) { ?>
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col" class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($product_redeems as $redeem): ?>
+                                                <tr>
+                                                    <td>You Just Reedem <b><?= esc($redeem->product_name) ?></b></td> <!-- Adjust the field names as necessary -->
+                                                    <td class="text-center">
+                                                        <span>Have you received it?</span>
+                                                        <div class="d-flex justify-content-center mt-2">
+                                                            <button class="btn btn-success me-2" id="reedem_yes" data-id="<?= $redeem->id_redeem ?>">Yes</button>
+                                                            <button class="btn btn-danger">No</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                    <?php } ?>
+                                </div>
                                 <div class="point-content">
-
                                     <div class="point-info">
                                         <div class="row mt-2 justify-content-center">
                                             <div class="col-10 col-sm-6 mt-2 text-center">
@@ -270,6 +296,23 @@
             }else{
                 console.error();
             }
+          }
+        });
+    });
+
+    $("#reedem_yes").on("click", function(){
+        let redeemID = $(this).data("id");
+      
+        $.ajax({
+          type:"post",
+          url :"<?php echo base_url(); ?>/loyalty/update_redeem_status",
+          data: {
+            redeemID
+          },
+          cache: false,
+          success: function (data) 
+          {
+            window.location.reload();
           }
         });
     });

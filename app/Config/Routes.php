@@ -24,6 +24,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/quiz/timer/save', 'Quiz::saveRemainingTime');
     $routes->get('/quiz/timer/get', 'Quiz::getRemainingTime');
 
+    $routes->post('/editor/upload', 'EditorController::upload');
+
     $routes->get('/kpi', 'Kpi::index');
     $routes->post('/kpi', 'Kpi::index');
     $routes->post('/kpi/download_data_agent_branch', 'Kpi::download_data_agent_branch');
@@ -36,6 +38,11 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/loyalty_example', 'Loyalty::index_example');
     $routes->post('/loyalty/cek_redeem_point', 'Loyalty::cek_redeem_point');
     $routes->post('/loyalty/redeem_process', 'Loyalty::redeem_process');
+    $routes->post('/loyalty/update_redeem_status', 'Loyalty::update_redeem_status');
+
+    $routes->get('/questions', 'QuestionController::index');
+    $routes->post('/questions/import', 'QuestionController::import');
+    $routes->get('/questions/sample-csv', 'QuestionController::sampleCsv');
     $routes->post('/loyalty/get_product_stock', 'Loyalty::get_product_stock');
     $routes->post('/loyalty/edit_product_redeem_detail', 'Loyalty::edit_product_redeem_detail');
 

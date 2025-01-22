@@ -97,6 +97,7 @@ class Product_knowledge extends Controller
         $productName = $this->request->getPost('product_name');
         $productDetail = $this->request->getPost('product_detail');
         $imageFile = $this->request->getFile('croppedImage');
+        //$description = $this->request->getPost('description');
 
         writeLogToFile("imageFile : ".$imageFile);
 
@@ -116,7 +117,7 @@ class Product_knowledge extends Controller
         $data = [
             'product_name' => $productName,
             'product_detail' => $productDetail,
-            'product_image' => $imageName, // Simpan nama file gambar ke kolom 'image'
+            'product_image' => $imageName// Simpan nama file gambar ke kolom 'image'
         ];
 
         writeLogToFile(json_encode($data));
