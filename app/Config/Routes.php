@@ -50,4 +50,5 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/product_knowledge_input', 'Product_knowledge::input_data');
     $routes->post('/product_knowledge_upload', 'Product_knowledge::upload_data');
     $routes->post('/product_knowledge_upload_photo', 'Product_knowledge::upload_photo');
+    $routes->get('/product_knowledge/detail', 'Product_knowledge::detail');
 });

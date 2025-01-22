@@ -28,8 +28,11 @@ class Product_knowledge extends Controller
     public function input_data()
     {
         $session = session();
+        $datetime_now = date("Y-m-d H:i:s");
+        $data['dt_now'] = $datetime_now;
+
         if($session->get("user_level") == 'admin'){
-            return view('product_knowledge_input_page');
+            return view('product_knowledge_input_page',$data);
         }else{
             return redirect()->to(base_url('/dashboard')); 
         }
@@ -136,4 +139,14 @@ class Product_knowledge extends Controller
         }
     }
 
+    function detail(){
+        $uri = current_url(true);
+        $get_url_query = $uri->getQuery();
+        $exp = explode('product_id=',$get_url_query);
+        $product_id = $exp[1];
+
+        $data['detail'] = $this->product_knowledge_model->get_product_detail($product_id);
+        
+        return view('product_knowledge_detail_page',$data);
+    }
 }

@@ -39,28 +39,32 @@
                                 <div>
                                     <!-- Table -->
                                     <?php if($product_redeems) { ?>
-                                    <table class="table table-bordered table-striped table-hover">
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col" class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($product_redeems as $redeem): ?>
-                                                <tr>
-                                                    <td>You Just Reedem <b><?= esc($redeem->product_name) ?></b></td> <!-- Adjust the field names as necessary -->
-                                                    <td class="text-center">
-                                                        <span>Have you received it?</span>
-                                                        <div class="d-flex justify-content-center mt-2">
-                                                            <button class="btn btn-success me-2" id="reedem_yes" data-id="<?= $redeem->id_redeem ?>">Yes</button>
-                                                            <button class="btn btn-danger">No</button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
+                                        <h6 class="mt-4" style="font-style: italic;color:#313131">REDEEM SUMMARY</h6>
+                                        <div class="table-wrapper-scroll-y-redeem-summary table-scroll-y">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped table-hover table-sm">
+                                                    <thead>
+                                                        <tr class="text-center bg-tb-blue" style="color: #fff;">
+                                                            <th scope="col">ITEM</th>
+                                                            <th scope="col" class="text-center">SUDAH DITERIMA ?</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($product_redeems as $redeem): ?>
+                                                            <tr>
+                                                                <td class="align-middle" style="padding-left: 10px;">Redeem <b><?= esc($redeem->product_name) ?></b></td> <!-- Adjust the field names as necessary -->
+                                                                <td class="text-center">
+                                                                    <div class="d-flex justify-content-center mt-2 redeem-summary-wrap-btn">
+                                                                        <button class="btn btn-success me-2" id="reedem_yes" data-id="<?= $redeem->id_redeem ?>">Yes</button>
+                                                                        <button class="btn btn-danger">No</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     <?php } ?>
                                 </div>
                                 <div class="point-content">
@@ -196,7 +200,7 @@
                             <div class="container">
                                 <div class="row justify-content-center">
                                     <div class="col-4">
-                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-fail.png')?>">
+                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-success.png')?>">
                                     </div>
                                 </div>
                                 <div class="row">

@@ -449,8 +449,8 @@ body {
 }
 
 .product-knowledge .card-body {
-  background-color: #003057;
-  color: #fff;
+  background-color: #f5f5f5;
+  color: #313131;
   height: 100px !important;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -463,6 +463,19 @@ body {
 
 .product-knowledge .detail-title {
   text-transform: uppercase;
+}
+
+.subtitle-detail {
+  font-size: 12px;
+}
+
+.redeem-summary-wrap-btn {
+  font-size: 14px;
+  padding: 5px 10px;
+}
+
+.table-wrapper-scroll-y-redeem-summary {
+  height: 200px;
 }
 
 @media screen and (max-width: 575px) {
