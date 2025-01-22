@@ -65,8 +65,8 @@
                                 </div>
                                 <div class="point-content">
                                     <div class="point-info">
-                                        <div class="row mt-3">
-                                            <div class="col-10 col-sm-6 mt-2">
+                                        <div class="row mt-2 justify-content-center">
+                                            <div class="col-10 col-sm-6 mt-2 text-center">
                                                 <div class="d-inline-block p-3 rounded point-info-user">
                                                     <i class="fa-solid fa-coins icon-point d-inline-block" style="margin-right: 5px;color:#efba50;"></i>
                                                     <h6 class="dark-blue-text d-inline-block">POINT ANDA : <?php echo $display_user_point; ?> point</h6>
@@ -75,11 +75,7 @@
                                         </div>
                                     </div>
 
-                                    <div style="display: none;" id="alert-not-enough-point" class="alert alert-danger mt-3" role="alert">
-                                        Poin Anda Tidak Cukup
-                                    </div>
-
-                                    <div class="product-redeem mt-4">
+                                    <div class="product-redeem container mt-4">
                                         <div class="row">
                                             <?php foreach($display_all_product as $rows){ ?>
                                                 <div class="col-md-3 col-sm-6 mb-4">
@@ -146,10 +142,10 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-6 p-3">
+                            <div class="col-6 p-3">
                                 <img class="img-fluid" id="img-preview-redeem" src ="<?php echo base_url('/img/prize1.jpg')?>">
                             </div>
-                            <div class="col-sm-6 p-3 modal-body-info" style="
+                            <div class="col-6 p-3 modal-body-info" style="
                                         border-top-right-radius: 8px;
                                         border-bottom-right-radius: 8px;">
                                 <h5 class="modal-title mb-5" id="exampleModalLongTitle">Redeem Confirmation</h5>

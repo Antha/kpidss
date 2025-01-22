@@ -75,20 +75,22 @@
                         <div class="col-xs-12 border rounded">
                             <div class="content-wrapper">
                                 <h3>EDIT PRODUCT REDEEM</h3>
-                                <?php if (session()->getFlashdata('success')): ?>
-                                    <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
-                                <?php endif; ?>
-
+                                <span class="mt-2 mb-2" style="font-style: italic;">Agar produk tidak tampil, ganti stock produk menjadi 0</span>
                                 <form id="editForm">
                                     <?php csrf_field() ?>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Separated link</a>
+                                    <div class="mb-3 mt-3">
+                                        <label for="productStockEdit" class="form-label">Product Name</label>
+                                        <select name='product_redeem_filter' id='product_redeem_filter' class="select_filter" title="Area Type" style="width:100%;">
+                                            <option value="" selected disabled>PRODUCT NAME</option>
+                                            <?php foreach($display_all_product as $rows){ ?>
+                                                <option value="<?php echo $rows['id']?>"><?php echo $rows['product_name']; ?></option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
-
+                                    <div class="mb-3" id="productStockWrap" style="display: none;">
+                                        <label for="productStockEdit" class="form-label">Product Stock</label>
+                                        <input type="number" class="form-control" id="productStockEdit" name="product_stock_edit" required>
+                                    </div>
                                     <!-- Preview hasil crop -->
                                     <!-- <div class="text-center mt-3">
                                         <h6>Preview Cropped Image</h6>
@@ -198,6 +200,7 @@
                 if (data.status === 'success') {
                     alert('Upload successful!');
                     console.log(data.file_name); // Tampilkan nama file yang diupload
+                    window.location.reload();
                 } else {
                     alert('Upload failed: ' + data.message);
                 }
@@ -205,6 +208,26 @@
             .catch(error => {
                 console.error('Upload failed:', error);
             });
+        });
+    });
+
+    $('#product_redeem_filter').on("change",function(){
+        let productId = $(this).val();
+        $.ajax({
+            type:"post",
+          url :"<?php echo base_url(); ?>/loyalty/get_product_stock",
+          data: {
+            product_id : productId
+          },
+          dataType: "json",
+          cache: false,
+          success: function (data) 
+          {
+            if(data.info == 'sucess'){
+                $('#productStockEdit').val(data.product_stock);
+                $('#productStockWrap').show();
+            }
+          }
         });
     });
 </script>
