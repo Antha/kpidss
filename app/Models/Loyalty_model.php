@@ -112,7 +112,7 @@ public function insertData($data)
     {
         $query = "
             SELECT 
-                pr.* 
+                pr.*, ur.id id_redeem
             FROM 
                 users_redeem ur 
             JOIN
@@ -120,7 +120,7 @@ public function insertData($data)
             ON 
                 ur.product_id = pr.id
             WHERE 
-                ur.user_id = ?
+                ur.user_id = ? AND status != 'A'
         ";
 
         // Execute the raw query and pass the user_id as a parameter
@@ -131,6 +131,13 @@ public function insertData($data)
         $id = $this->db_con->escape($product_id);
         
         $sql = "INSERT INTO product_redeem_stock_history(product_id,quantity,admin_id) values ($product_id,$product_stock,$admin_id) ";
+        $this->db_con->query($sql);
+    }
+
+    function update_redeem_status($redeem_id){
+        $id = $this->db_con->escape($redeem_id);
+        
+        $sql = " UPDATE users_redeem SET status = 'A' where id = $id ";
         $this->db_con->query($sql);
     }
 

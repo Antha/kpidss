@@ -182,4 +182,24 @@ class Loyalty extends Controller
         }
     }
 
+    public function update_redeem_status()
+    {
+        $redeemID = $this->request->getPost("redeemID");
+        try {
+            if ($this->loyalty_model->update_redeem_status($redeemID)) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'message' => 'Redeem status changed successfully',
+                ]);
+            } else {
+                throw new \Exception('No rows affected');
+            }
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+            ], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        
+    }
 }

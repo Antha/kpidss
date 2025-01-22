@@ -38,6 +38,7 @@
                                 </div>
                                 <div>
                                     <!-- Table -->
+                                    <?php if($product_redeems) { ?>
                                     <table class="table table-bordered table-striped table-hover">
                                         <thead class="table-dark">
                                             <tr>
@@ -52,7 +53,7 @@
                                                     <td class="text-center">
                                                         <span>Have you received it?</span>
                                                         <div class="d-flex justify-content-center mt-2">
-                                                            <button class="btn btn-success me-2">Yes</button>
+                                                            <button class="btn btn-success me-2" id="reedem_yes" data-id="<?= $redeem->id_redeem ?>">Yes</button>
                                                             <button class="btn btn-danger">No</button>
                                                         </div>
                                                     </td>
@@ -60,6 +61,7 @@
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
+                                    <?php } ?>
                                 </div>
                                 <div class="point-content">
                                     <div class="point-info">
@@ -271,6 +273,23 @@
             }else{
                 console.error();
             }
+          }
+        });
+    });
+
+    $("#reedem_yes").on("click", function(){
+        let redeemID = $(this).data("id");
+      
+        $.ajax({
+          type:"post",
+          url :"<?php echo base_url(); ?>/loyalty/update_redeem_status",
+          data: {
+            redeemID
+          },
+          cache: false,
+          success: function (data) 
+          {
+            window.location.reload();
           }
         });
     });

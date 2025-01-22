@@ -33,7 +33,7 @@
                                     <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
                                 <?php endif; ?>
 
-                                <form id="uploadForm">
+                                <form id="uploadForm"  enctype="multipart/form-data">
                                     <?php csrf_field() ?>
                                     <div class="mb-3">
                                         <label for="productName" class="form-label">Product Name</label>
@@ -41,15 +41,12 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="productDetail" class="form-label">Product Detail</label>
-                                        <textarea class="form-control" id="productDetail" rows="3" required></textarea>
+                                        <div class="form-control" id="productDetail" rows="3" required style=""></div>
                                         <!--<input type="testarea" class="form-control" id="productDetail" name="product_detail" required>-->
                                     </div>
                                     <div class="mb-3">
                                         <label for="photoInput" class="form-label">Choose Image</label>
                                         <input type="file" class="form-control" id="photoInput" accept="image/*">
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea id="content_desc" name="content"></textarea>
                                     </div>
                                     <div class="text-center">
                                         <img id="image" class="img-fluid" style="display: none; max-height: 300px;">
@@ -62,7 +59,7 @@
                                         <img id="croppedPreview" class="img-fluid" style="display: none; max-height: 300px; border: 1px solid #ddd;">
                                     </div> -->
                                     <div class="text-center mt-3 mb-3">
-                                        <button type="button" id="cropButton" class="btn btn-primary" style="display: none;">Crop & Upload Data</button>
+                                        <button type="button" id="cropButton" class="btn btn-primary">Crop & Upload Data</button>
                                     </div>
                                 </form>
                             </div> 
@@ -101,15 +98,73 @@
     </div>
 </body>
 
-<script src="https://cdn.tiny.cloud/1/y9n3mhqjrokcqs4b1ecqb5yl156xjbhrsizsbszjft65iap7/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<!-- 
+<script src="script/quill/modules/DisplaySize.js"></script>
+<script src="script/quill/modules/BaseModule.js"></script>
+<script src="script/quill/modules/Resize.js"></script>
+<script src="script/quill/modules/Toolbar.js"></script> -->
+
 <script>
-    tinymce.init({
-        selector: '#content_desc', // ID textarea
-        plugins: 'image code link table lists',
-        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | image link',
-        images_upload_url: '/editor/upload', // Endpoint upload gambar
-        automatic_uploads: true,
-    });
+    // Pastikan Quill sudah didefinisikan sebelumnya
+    // //Quill.register('modules/imageDrop', QuillImageDrop);
+    // Quill.register('modules/imageResize', window.ImageResize);
+    // Quill.register('modules/imageDrop', window.ImageDrop);
+
+    // Initialize Quill editor
+    var quill = new Quill('#productDetail', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': '1'}, { 'header': '2'}, { 'font': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['bold', 'italic', 'underline'],
+                    ['link', 'image'], // Add image button
+                ],
+                imageDrop: true,
+                imageResize: {
+                    modules: ['Resize', 'DisplaySize', 'Toolbar'], // Enable resizing
+                }
+            }
+        });
+
+        // Custom image upload handler
+        const imageHandler = () => {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.click();
+
+            input.addEventListener('change', () => {
+                const file = input.files[0];
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('upload', file);
+
+                    // Replace with your image upload endpoint
+                    fetch('/editor/upload', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.location) {
+                            const range = quill.getSelection();
+                            const imageUrl = data.location; // Assuming your server returns the image URL
+                            quill.insertEmbed(range.index, 'image', imageUrl);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error uploading image:', error);
+                    });
+                }
+            });
+        };
+
+        // Add the custom image handler to the toolbar
+        const toolbar = quill.getModule('toolbar');
+        toolbar.addHandler('image', imageHandler);
 </script>
 
 <!-- Cropper.js JS -->
@@ -179,9 +234,8 @@
             const formData = new FormData();
             formData.append('croppedImage', blob);
             formData.append('product_name', document.getElementById('productName').value);
-            formData.append('product_detail', document.getElementById('productDetail').value);
-            formData.append('descriptioon', document.getElementById('content_desc').value);
-
+            formData.append('product_detail', document.getElementById('productDetail').innerHTML);
+       
             // Preview the cropped image
             //const croppedPreview = document.getElementById('croppedPreview');
             const croppedURL = URL.createObjectURL(blob);
