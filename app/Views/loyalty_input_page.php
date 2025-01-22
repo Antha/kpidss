@@ -87,6 +87,14 @@
                                             <?php } ?>
                                         </select>
                                     </div>
+                                    <div class="mb-3" id="productNameWrap" style="display: none;">
+                                        <label for="productNameEdit" class="form-label">Product Name</label>
+                                        <input type="text" class="form-control" id="productNameEdit" name="product_name_edit">
+                                    </div>
+                                    <div class="mb-3" id="productPointWrap" style="display: none;">
+                                        <label for="productPointEdit" class="form-label">Product Point</label>
+                                        <input type="number" class="form-control" id="productPointEdit" name="product_point_edit" required>
+                                    </div>
                                     <div class="mb-3" id="productStockWrap" style="display: none;">
                                         <label for="productStockEdit" class="form-label">Product Stock</label>
                                         <input type="number" class="form-control" id="productStockEdit" name="product_stock_edit" required>
@@ -97,8 +105,8 @@
                                         <img id="croppedPreview" class="img-fluid" style="display: none; max-height: 300px; border: 1px solid #ddd;">
                                     </div> -->
 
-                                    <div class="text-center mt-3">
-                                        <button type="button" id="editButton" class="btn btn-primary" style="display: none;">Crop & Edit Data</button>
+                                    <div class="text-center mt-3 mb-3">
+                                        <button type="button" id="editButton" class="btn btn-primary" style="display: none;">Edit Data</button>
                                     </div>
                                 </form>
 
@@ -111,6 +119,34 @@
 
         <?php echo $this->include('partials/include_footer'); ?>
         
+        <!--modal-->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="background-color: transparent">
+                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                        <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-success.png')?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3 style="font-size: 20px;margin-top:15px;"><span id="success-info"></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!--modal-->
     </div>
 </body>
 
@@ -223,12 +259,50 @@
           cache: false,
           success: function (data) 
           {
-            if(data.info == 'sucess'){
+            if(data.info == 'success'){
+                $('#productNameEdit').val(data.product_name);
+                $('#productPointEdit').val(data.product_point);
                 $('#productStockEdit').val(data.product_stock);
+
+                $('#productNameWrap').show();
+                $('#productPointWrap').show();
                 $('#productStockWrap').show();
+                $('#editButton').show();
             }
           }
         });
+    });
+
+    console.log($('#product_redeem_filter:option selected').text());
+
+    $('#editButton').on("click",function(){
+        let productId =  $('#product_redeem_filter').val();
+        let productNameEdit = $('#productNameEdit').val();
+        let productPointEdit = $('#productPointEdit').val();
+        let productStockEdit = $('#productStockEdit').val();
+
+        $.ajax({
+            type:"post",
+          url :"<?php echo base_url(); ?>/loyalty/edit_product_redeem_detail",
+          data: {
+            product_id : productId,
+            product_name : productNameEdit,
+            product_point : productPointEdit,
+            product_stock : productStockEdit
+          },
+          cache: false,
+          success: function (data) 
+          {
+            if(data == 'success'){
+                $("#successModal").modal('show');
+                $("#success-info").text("Data Berhasil diubah");
+            }
+          }
+        });
+    });
+
+    $('#btn-finish-modal').on("click",function(){
+        window.location.reload();
     });
 </script>
 

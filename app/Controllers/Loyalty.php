@@ -91,7 +91,7 @@ class Loyalty extends Controller
         $product_id = $_POST['product_id'];
         $get_product_point = $this->loyalty_model->get_product_point($product_id);
         
-        $parse_value = array('info' => 'sucess','product_stock' => $get_product_point[0]['product_stock']);
+        $parse_value = array('info' => 'success','product_stock' => $get_product_point[0]['product_stock'],'product_name' => $get_product_point[0]['product_name'],'product_point' => $get_product_point[0]['product_point']);
         echo json_encode($parse_value);
     }
 
@@ -212,4 +212,20 @@ class Loyalty extends Controller
         }
         
     }
+    
+    function edit_product_redeem_detail(){
+        $session = session();
+
+        $admin_id = $session->get('user_id');
+        $product_id = $_POST['product_id'];
+        $product_name = $_POST['product_name'];
+        $product_stock = $_POST['product_stock'];
+        $product_point = $_POST['product_point'];
+        
+        //edit product detail
+        $this->loyalty_model->edit_product_detail($product_id,$product_name,$product_stock,$product_point,$admin_id);
+        
+        echo "success";
+    }
+
 }

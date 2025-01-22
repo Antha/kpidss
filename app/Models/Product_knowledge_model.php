@@ -28,14 +28,15 @@ class Product_knowledge_model extends Model
         }
 
         // Prepare the SQL query
-        $sql = "INSERT INTO product_knowledge (product_name, product_detail, product_image)
-                VALUES (:product_name:, :product_detail:, :product_image:)";
+        $sql = "INSERT INTO product_knowledge (product_name, product_detail, product_image, product_main_image)
+                VALUES (:product_name:, :product_detail:, :product_image:, :product_main_image:)";
 
         // Bind parameters
         $binds = [
             'product_name' => $data['product_name'],
             'product_detail' => $data['product_detail'],
-            'product_image' => $data['product_image']
+            'product_image' => $data['product_image'],
+            'product_main_image' => $data['product_main_image']
         ];
 
         // Execute the raw query

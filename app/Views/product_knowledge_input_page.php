@@ -191,7 +191,7 @@
     
     let cropper;
     const photoInput = document.getElementById('photoInput');
-    const photoMainPinut = document.getElementById('photoMainInput');
+    const photoMainInput = document.getElementById('photoMainInput');
     const image = document.getElementById('image');
     const cropButton = document.getElementById('cropButton');
 
@@ -219,6 +219,13 @@
         }
     });
 
+
+    let photoMainInputFiles;
+    photoMainInput.addEventListener('change', (event) => {
+        photoMainInputFiles = event.target.files[0];
+    });
+
+
     cropButton.addEventListener('click', () => {
         const croppedCanvas = cropper.getCroppedCanvas({
             width: 200, // Output width
@@ -231,6 +238,7 @@
             formData.append('croppedImage', blob);
             formData.append('product_name', document.getElementById('productName').value);
             formData.append('product_detail', document.getElementById('productDetail').innerHTML);
+            formData.append('photoMainInputFiles', photoMainInputFiles); 
        
             // Preview the cropped image
             //const croppedPreview = document.getElementById('croppedPreview');
