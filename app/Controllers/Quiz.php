@@ -29,6 +29,18 @@ class Quiz extends BaseController
     public function index($questionNumber = 1)
     {
         $session = session();
+        
+        //Earlier Question Number
+        $questionNumber = $this->questionModel->get_min_id_on_status();
+
+        if (!session()->has('question_number')) {
+            session()->set('question_number', 1);
+        } else{
+            session()->set('question_number',  session()->get('question_number') + 1);
+        }
+
+        
+
         $userId = $session->get('user_id');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
         $fileName = "";
@@ -113,12 +125,17 @@ class Quiz extends BaseController
 
         }
 
+
+        writeLogToFile("Min Question Number : ".$questionNumber);
+        writeLogToFile("CountALl :".$this->questionModel->countAll());
         // Jika pertanyaan terakhir selesai, arahkan ke halaman hasil
         if ($questionNumber > $this->questionModel->countAll()) {
             return redirect()->to('/quiz/result');
         }else{
             if($unfinishedQuiz){
-                $questionNumber = $this->questionAnswerModel->getMaxQuestionIdByUserId($userId, (int) $quizId);
+                $reslutsMQB = $this->questionAnswerModel->getMaxQuestionIdByUserId($userId, (int) $quizId);
+                $questionNumber = (int) $reslutsMQB->max_qid + 1;
+                session()->set('question_number',  (int) $reslutsMQB->no);
             }
 
             // Ambil pertanyaan saat ini

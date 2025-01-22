@@ -9,18 +9,35 @@ class QuestionAnswerModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = ['user_id', 'quiz_id', 'question_id', 'answer'];
 
-    public function getMaxQuestionIdByUserId(int $userId, int $quizId): ?int
+    public function getMaxQuestionIdByUserId(int $userId, int $quizId)
     {
-        $query = $this->db->table($this->table)
-                          ->selectMax('question_id', 'max_qid')
-                          ->where('user_id', $userId)
-                          ->where('quiz_id', $quizId)
-                          ->get();
-
+        $sql = "
+                SELECT 
+                    * 
+                FROM 
+                    (
+                        SELECT 
+                            question_id, 
+                            question_id AS max_qid 
+                        FROM 
+                            `quiz_answers` 
+                        WHERE 
+                            user_id = ? 
+                            AND quiz_id = ? 
+                        ORDER BY 
+                            question_id DESC 
+                        LIMIT 1
+                    ) AS qa
+                JOIN 
+                    `questions` q 
+                ON 
+                    qa.question_id = q.id
+                ";
+        
+        $query = $this->db->query($sql, [$userId, $quizId]);
         $result = $query->getRow();
-
         // Return nilai max_qid jika ada hasil, jika tidak return null
-        return $result ? (int) $result->max_qid + 1 : null;
+        return $result;
     }
 
 

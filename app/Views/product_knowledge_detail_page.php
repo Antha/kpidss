@@ -37,11 +37,10 @@
                                     <div style="clear: both;"></div>
                                 </div>
                                 <div class="point-content">
-
                                     <div class="container-fluid product-knowledge mt-4">
                                         <div class="row justify-content-center">
                                             <div class="col-12">
-                                                <img class="img-fluid" src="<?php echo base_url('/uploads/product_knowledge/').$detail[0]["product_image"]; ?>">
+                                                <img class="img-fluid" src="<?php echo base_url('/uploads/product_knowledge/').$detail[0]["product_main_image"]; ?>">
                                             </div>
                                         </div>
                                         <div class="row">

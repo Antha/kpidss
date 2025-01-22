@@ -10,7 +10,7 @@ class Loyalty_model extends Model
 
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['product_name', 'product_point', 'product_stock', 'product_image'];
+    protected $allowedFields = ['product_name', 'product_point', 'product_stock', 'product_image','product_main_image'];
 
     function __construct()
     {
@@ -107,10 +107,6 @@ class Loyalty_model extends Model
         $this->db_con->query($sql);
     }
 
-    function edit_product_detail($product_id,$product_name,$product_stock,$product_point,$admin_id){
-        $product_name = $this->db_con->escape($product_name);
-        $sql = "UPDATE product_redeem SET product_stock = $product_stock, product_name = $product_name, product_point = $product_point WHERE id = $product_id";
-    }
     // Fetch product details where user_id = 6
     public function getProductRedeemsByUser($user_id)
     {
@@ -133,8 +129,19 @@ class Loyalty_model extends Model
 
     function add_stock_product_redeem_history($product_id,$product_name,$product_stock,$admin_id){
         $id = $this->db_con->escape($product_id);
-        
         $sql = "INSERT INTO product_redeem_stock_history(product_id,quantity,admin_id) values ($product_id,$product_stock,$admin_id) ";
+        $this->db_con->query($sql);
+    }
+
+    function update_redeem_status($redeem_id){
+        $id = $this->db_con->escape($redeem_id);
+        $sql = " UPDATE users_redeem SET status = 'A' where id = $id ";
+        $this->db_con->query($sql);
+    }
+
+    function edit_product_detail($product_id,$product_name,$product_stock,$product_point,$admin_id){
+        $product_name = $this->db_con->escape($product_name);
+        $sql = "UPDATE product_redeem SET product_stock = $product_stock, product_name = $product_name, product_point = $product_point WHERE id = $product_id";
         $this->db_con->query($sql);
 
         $sql_insert = "INSERT INTO product_redeem_edit_history(product_id,product_name,quantity,admin_id) VALUES ($product_id,$product_name,$product_stock,$admin_id)";

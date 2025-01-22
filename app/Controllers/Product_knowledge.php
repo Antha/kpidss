@@ -81,6 +81,7 @@ class Product_knowledge extends Controller
                 'message' => 'Invalid request method'
             ], ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
         }
+        
 
         // Validasi data yang dikirim
         $rules = [
@@ -100,9 +101,16 @@ class Product_knowledge extends Controller
         $productName = $this->request->getPost('product_name');
         $productDetail = $this->request->getPost('product_detail');
         $imageFile = $this->request->getFile('croppedImage');
-        //$description = $this->request->getPost('description');
 
-        writeLogToFile("imageFile : ".$imageFile);
+
+        $filePhotoMainInput = $this->request->getFile('photoMainInputFiles');
+        if ($filePhotoMainInput->isValid() && !$filePhotoMainInput->hasMoved()) {
+            // Tentukan nama file baru dan pindahkan ke direktori tujuan
+            $newNameMainPhoto = $filePhotoMainInput->getRandomName();
+            $filePhotoMainInput->move(FCPATH . 'uploads/product_knowledge', $newNameMainPhoto);
+        }
+     
+        writeLogToFile("newNameMainPhoto : ".$newNameMainPhoto);
 
         // Proses upload file gambar
         if ($imageFile->isValid() && !$imageFile->hasMoved()) {
@@ -120,7 +128,8 @@ class Product_knowledge extends Controller
         $data = [
             'product_name' => $productName,
             'product_detail' => $productDetail,
-            'product_image' => $imageName// Simpan nama file gambar ke kolom 'image'
+            'product_image' => $imageName,
+            'product_main_image' => $newNameMainPhoto// Simpan nama file gambar ke kolom 'image'
         ];
 
         writeLogToFile(json_encode($data));

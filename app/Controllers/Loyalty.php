@@ -227,4 +227,6 @@ class Loyalty extends Controller
         }
         
     }
+
+
 }

@@ -45,14 +45,17 @@
                                         <!--<input type="testarea" class="form-control" id="productDetail" name="product_detail" required>-->
                                     </div>
                                     <div class="mb-3">
-                                        <label for="photoInput" class="form-label">Choose Image</label>
+                                        <label for="photoInput" class="form-label">Choose Thumbnail Image</label>
                                         <input type="file" class="form-control" id="photoInput" accept="image/*">
                                     </div>
                                     <div class="text-center">
                                         <img id="image" class="img-fluid" style="display: none; max-height: 300px;">
                                     </div>
                                     <div class="preview text-center"></div>
-
+                                    <div class="mb-3">
+                                        <label for="photoMainInput" class="form-label">Choose Main Image</label>
+                                        <input type="file" class="form-control" id="photoMainInput" accept="image/*">
+                                    </div>
                                     <!-- Preview hasil crop -->
                                     <!-- <div class="text-center mt-3">
                                         <h6>Preview Cropped Image</h6>
@@ -151,10 +154,7 @@
                     ['bold', 'italic', 'underline'],
                     ['link', 'image'], // Add image button
                 ],
-                imageDrop: true,
-                imageResize: {
-                    modules: ['Resize', 'DisplaySize', 'Toolbar'], // Enable resizing
-                }
+                imageDrop: true
             }
         });
 
@@ -225,6 +225,7 @@
     
     let cropper;
     const photoInput = document.getElementById('photoInput');
+    const photoMainInput = document.getElementById('photoMainInput');
     const image = document.getElementById('image');
     const cropButton = document.getElementById('cropButton');
 
@@ -252,6 +253,13 @@
         }
     });
 
+
+    let photoMainInputFiles;
+    photoMainInput.addEventListener('change', (event) => {
+        photoMainInputFiles = event.target.files[0];
+    });
+
+
     cropButton.addEventListener('click', () => {
         const croppedCanvas = cropper.getCroppedCanvas({
             width: 200, // Output width
@@ -264,6 +272,7 @@
             formData.append('croppedImage', blob);
             formData.append('product_name', document.getElementById('productName').value);
             formData.append('product_detail', document.getElementById('productDetail').innerHTML);
+            formData.append('photoMainInputFiles', photoMainInputFiles); 
        
             // Preview the cropped image
             //const croppedPreview = document.getElementById('croppedPreview');
