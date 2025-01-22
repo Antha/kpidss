@@ -21,15 +21,21 @@ class QuestionController extends Controller
             $fileHandle = fopen($filePath, 'r');
 
             $questionModel = new QuestionModel();
+            $questionModel->updateStatusToOff();
             $header = fgetcsv($fileHandle); // Ambil header CSV
+
             while (($row = fgetcsv($fileHandle)) !== false) {
+                writeLogToFile("row[0] = ".$row[0]);
+
                 $data = [
-                    'question' => $row[0],
-                    'option_a'      => $row[1],
-                    'option_b'      => $row[2],
-                    'option_c'      => $row[3],
-                    'option_d'      => $row[4],
-                    'correct_option' => $row[5],
+                    'no' => $row[0],
+                    'question' => $row[1],
+                    'option_a'      => $row[2],
+                    'option_b'      => $row[3],
+                    'option_c'      => $row[4],
+                    'option_d'      => $row[5],
+                    'correct_option' => $row[6],
+                    'status' => "On"
                 ];
                 $questionModel->insert($data);
             }

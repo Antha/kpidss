@@ -13,6 +13,7 @@ class QuestionAnswerModel extends Model
     {
         $query = $this->db->table($this->table)
                           ->selectMax('question_id', 'max_qid')
+                          ->select('no')  // Menambahkan kolom no
                           ->where('user_id', $userId)
                           ->where('quiz_id', $quizId)
                           ->get();
@@ -20,7 +21,7 @@ class QuestionAnswerModel extends Model
         $result = $query->getRow();
 
         // Return nilai max_qid jika ada hasil, jika tidak return null
-        return $result ? (int) $result->max_qid + 1 : null;
+        return $result;
     }
 
 

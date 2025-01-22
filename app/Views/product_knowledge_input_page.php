@@ -45,19 +45,17 @@
                                         <!--<input type="testarea" class="form-control" id="productDetail" name="product_detail" required>-->
                                     </div>
                                     <div class="mb-3">
-                                        <label for="photoInput" class="form-label">Choose Image</label>
+                                        <label for="photoInput" class="form-label">Choose Thumbnail Image</label>
                                         <input type="file" class="form-control" id="photoInput" accept="image/*">
                                     </div>
                                     <div class="text-center">
                                         <img id="image" class="img-fluid" style="display: none; max-height: 300px;">
                                     </div>
                                     <div class="preview text-center"></div>
-
-                                    <!-- Preview hasil crop -->
-                                    <!-- <div class="text-center mt-3">
-                                        <h6>Preview Cropped Image</h6>
-                                        <img id="croppedPreview" class="img-fluid" style="display: none; max-height: 300px; border: 1px solid #ddd;">
-                                    </div> -->
+                                    <div class="mb-3">
+                                        <label for="photoMainInput" class="form-label">Choose Main Image</label>
+                                        <input type="file" class="form-control" id="photoMainInput" accept="image/*">
+                                    </div>
                                     <div class="text-center mt-3 mb-3">
                                         <button type="button" id="cropButton" class="btn btn-primary">Crop & Upload Data</button>
                                     </div>
@@ -122,10 +120,7 @@
                     ['bold', 'italic', 'underline'],
                     ['link', 'image'], // Add image button
                 ],
-                imageDrop: true,
-                imageResize: {
-                    modules: ['Resize', 'DisplaySize', 'Toolbar'], // Enable resizing
-                }
+                imageDrop: true
             }
         });
 
@@ -196,6 +191,7 @@
     
     let cropper;
     const photoInput = document.getElementById('photoInput');
+    const photoMainPinut = document.getElementById('photoMainInput');
     const image = document.getElementById('image');
     const cropButton = document.getElementById('cropButton');
 
