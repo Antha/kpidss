@@ -62,7 +62,7 @@
 
                                 <?php if($user_level == 'admin'){ ?>
                                     <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
-                                        <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/product_loyalty_input')?>">
+                                        <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/loyalty_input_page')?>">
                                             <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" src="<?= base_url('/img/icon-setting-dark-blue.png') ?>">
                                             <img class="img-fluid menu-icon-light-blue cstm-main-menu-img" src="<?= base_url('/img/icon-setting-white.png') ?>">
                                             <h5 class="card-title cstm-main-menu-card-title">SET PRODUCT REDEEM</h5>
