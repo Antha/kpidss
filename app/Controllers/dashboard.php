@@ -25,13 +25,13 @@ class Dashboard extends Controller
         $user_level = $session->get('user_level');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
 
-        writeLogToFile("UQI ". json_encode($unfinishedQuiz));
-        $session->set("unfinishedQuiz",$unfinishedQuiz);
+        // writeLogToFile("UQI ". json_encode($unfinishedQuiz));
+        // $session->set("unfinishedQuiz",$unfinishedQuiz);
 
-        $recentFinishedQuiz = $this->userQuizModel->getRecentFinishedQuiz($userId);
-        $session->set("recentFinishedQuiz",$recentFinishedQuiz);
+        // $recentFinishedQuiz = $this->userQuizModel->getRecentFinishedQuiz($userId);
+        // $session->set("recentFinishedQuiz",$recentFinishedQuiz);
 
-        return view('dashboard_page',["unfinishedQuiz" => $unfinishedQuiz,'user_level' => $user_level]);
+        return view('dashboard_page',['user_level' => $user_level]);
     }
 
     

@@ -1,12 +1,29 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\UserQuizModel;
 
 class Camera extends BaseController
 {
+    protected $userQuizModel;
+
+    public function __construct()
+    {
+        $this->userQuizModel = new UserQuizModel();
+    }
+
     public function index()
     {
         $session = session();
+        $userId = $session->get('user_id');
+        
+        $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
+        // writeLogToFile("UQI ". json_encode($unfinishedQuiz));
+        $session->set("unfinishedQuiz",$unfinishedQuiz);
+        
+        $recentFinishedQuiz = $this->userQuizModel->getRecentFinishedQuiz($userId);
+        $session->set("recentFinishedQuiz",$recentFinishedQuiz);
+
         return view('camera_page');
         
     }

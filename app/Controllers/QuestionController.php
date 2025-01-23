@@ -19,14 +19,24 @@ class QuestionController extends Controller
         if ($file && $file->isValid() && !$file->hasMoved()) {
             $filePath = $file->getTempName();
             $fileHandle = fopen($filePath, 'r');
-
+    
             $questionModel = new QuestionModel();
             $questionModel->updateStatusToOff();
-            $header = fgetcsv($fileHandle); // Ambil header CSV
-
-            while (($row = fgetcsv($fileHandle)) !== false) {
+    
+            // Deteksi delimiter secara otomatis
+            $firstLine = fgets($fileHandle); // Ambil baris pertama
+            fclose($fileHandle);
+    
+            // Coba deteksi delimiter dengan menghitung kemunculan karakter koma dan titik koma
+            $delimiter = (substr_count($firstLine, ';') > substr_count($firstLine, ',')) ? ';' : ',';
+    
+            // Buka ulang file dengan delimiter yang sesuai
+            $fileHandle = fopen($filePath, 'r');
+            $header = fgetcsv($fileHandle, 0, $delimiter); // Ambil header CSV
+    
+            while (($row = fgetcsv($fileHandle, 0, $delimiter)) !== false) {
                 writeLogToFile("row[0] = ".$row[0]);
-
+    
                 $data = [
                     'no' => $row[0],
                     'question' => $row[1],
@@ -40,12 +50,13 @@ class QuestionController extends Controller
                 $questionModel->insert($data);
             }
             fclose($fileHandle);
-
+    
             return redirect()->to('/questions')->with('success', 'Data imported successfully');
         }
-
+    
         return redirect()->to('/questions')->with('error', 'Invalid file upload');
     }
+    
 
     public function sampleCsv()
     {
