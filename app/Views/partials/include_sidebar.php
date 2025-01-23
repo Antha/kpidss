@@ -48,7 +48,7 @@
             </div>
         </a>
         <?php if(session()->get('user_level') == 'admin'){ ?>
-            <a class="nav-link" href="<?php echo base_url('/loyalty_input_page') ?>">
+            <a class="nav-link" href="<?php echo base_url('/loyalty_input') ?>">
                 <div class="row">
                     <div class="col-sm-2 col-3">
                         <img class="img-fluid menu-icon-front" src="<?= base_url('/img/icon-setting-white.png') ?>">

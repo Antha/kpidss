@@ -15,6 +15,15 @@ body {
   min-height: 100vh;
 }
 
+.fac-dark-blue {
+  color: #003057;
+  transition: 0.5s;
+}
+
+.fac-dark-blue:hover {
+  color: #0bb4ed;
+}
+
 .user-name-ses-display {
   color: #003057;
 }
@@ -321,19 +330,25 @@ body {
 }
 
 .point-info-user {
-  background-color: #003057;
-  border: 2px solid #efba50;
+  /*background-color: #003057;*/
+  border: 1px solid #0c7a99;
+  width: 100%;
 }
 
 .point-info-user h6 {
   margin-bottom: 0px !important;
-  color: #efba50;
+  color: #003057;
+  /*color: #ffbd3a;*/
 }
 
 .product-redeem .card-body {
   background-color: #003057;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+.product-redeem .card {
+  border-color: #0c7a99;
 }
 
 .product-redeem .card-title {
@@ -346,7 +361,7 @@ body {
 
 .product-point-group {
   /*color: #ffde23;*/
-  color: #efba50;
+  color: #ffbd3a;
   font-size: 14px;
 }
 
@@ -469,12 +484,13 @@ body {
   font-size: 12px;
 }
 
-.redeem-summary-wrap-btn {
+.redeem-summary-wrap-btn .btn {
   font-size: 14px;
   padding: 5px 10px;
 }
 
 .table-wrapper-scroll-y-redeem-summary {
+  display: none;
   height: 200px;
 }
 
@@ -521,4 +537,8 @@ body {
   /*#col_periode_data {
     margin-bottom: 15px;
   }*/
+
+  .redeem-summary-wrapper h6 {
+    font-size: 12px;
+  }
 }

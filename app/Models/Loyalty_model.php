@@ -112,7 +112,7 @@ class Loyalty_model extends Model
     {
         $query = "
             SELECT 
-                pr.*, ur.id id_redeem
+                pr.*, ur.id id_redeem,ur.datetime date_redeem, ur.status status
             FROM 
                 users_redeem ur 
             JOIN
@@ -120,7 +120,7 @@ class Loyalty_model extends Model
             ON 
                 ur.product_id = pr.id
             WHERE 
-                ur.user_id = ? AND status != 'A'
+                ur.user_id = ? AND status IN('A','NA')
         ";
 
         // Execute the raw query and pass the user_id as a parameter
