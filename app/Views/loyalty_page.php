@@ -36,48 +36,69 @@
                                     <h4 class="dark-blue-text float-end">LOYALTY</h4>
                                     <div style="clear: both;"></div>
                                 </div>
-                                <div>
-                                    <!-- Table -->
-                                    <?php if($product_redeems) { ?>
-                                        <h6 class="mt-4" style="font-style: italic;color:#313131">REDEEM SUMMARY</h6>
-                                        <div class="table-wrapper-scroll-y-redeem-summary table-scroll-y">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered table-striped table-hover table-sm">
-                                                    <thead>
-                                                        <tr class="text-center bg-tb-blue" style="color: #fff;">
-                                                            <th scope="col">ITEM</th>
-                                                            <th scope="col" class="text-center">SUDAH DITERIMA ?</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php foreach ($product_redeems as $redeem): ?>
-                                                            <tr>
-                                                                <td class="align-middle" style="padding-left: 10px;">Redeem <b><?= esc($redeem->product_name) ?></b></td> <!-- Adjust the field names as necessary -->
-                                                                <td class="text-center">
-                                                                    <div class="d-flex justify-content-center mt-2 redeem-summary-wrap-btn">
-                                                                        <button class="btn btn-success me-2" id="reedem_yes" data-id="<?= $redeem->id_redeem ?>">Yes</button>
-                                                                        <button class="btn btn-danger">No</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        <?php endforeach; ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                                </div>
+                               
                                 <div class="point-content">
-                                    <div class="point-info">
+                                    <div class="point-info container">
                                         <div class="row mt-2 justify-content-center">
-                                            <div class="col-10 col-sm-6 mt-2 text-center">
-                                                <div class="d-inline-block p-3 rounded point-info-user">
-                                                    <i class="fa-solid fa-coins icon-point d-inline-block" style="margin-right: 5px;color:#efba50;"></i>
-                                                    <h6 class="dark-blue-text d-inline-block">POINT ANDA : <?php echo $display_user_point; ?> point</h6>
+                                            <div class="col-12 col-sm-12 mt-2">
+                                                <div class="container-fluid rounded point-info-user p-3">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="d-inline-block">
+                                                                <i class="fa-solid fa-coins icon-point d-inline-block" style="margin-right: 5px;color:#ffbd3a;"></i>
+                                                                <h6 class="dark-blue-text d-inline-block"><?php echo $display_user_point; ?> POINT</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 offset-md-3 col-6 text-end">
+                                                            <div class="redeem-summary-wrapper">
+                                                                <h6 class="d-inline-block dark-blue-text" style="padding-right: 10px;">REDEEM SUMMARY</h6>
+                                                                <button id="btn-toggle-redeem-summary" style="background: none;border: 0px;"><i class="fa-solid fa-circle-plus fac-dark-blue" style="font-size: 18px;"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <?php if($product_redeems) { ?>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="table-wrapper-scroll-y-redeem-summary table-scroll-y">
+                                                        <div class="table-responsive rounded">
+                                                            <table class="table table-bordered table-striped table-hover table-sm">
+                                                                <thead>
+                                                                    <tr class="text-center bg-tb-blue" style="color: #fff;">
+                                                                        <th scope="col">ITEM</th>
+                                                                        <th scope="col">REDEEM DATE</th>
+                                                                        <th scope="col" class="text-center">SUDAH DITERIMA ?</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php foreach ($product_redeems as $redeem): ?>
+                                                                        <tr>
+                                                                            <td class="align-middle" style="padding-left: 10px;"><b><?= esc($redeem->product_name) ?></b></td>
+                                                                            <td class="align-middle text-center" style="padding-left: 10px;"><b><?= esc($redeem->date_redeem) ?></b></td> <!-- Adjust the field names as necessary -->
+                                                                            <td class="text-center">
+                                                                                <div class="d-flex justify-content-center redeem-summary-wrap-btn mt-2 mb-2">
+                                                                                    <?php if($redeem->status == 'NA'){ ?>
+                                                                                        <button class="btn btn-success me-2" id="reedem_yes" data-id="<?= $redeem->id_redeem ?>">Yes</button>
+                                                                                    <?php }else{ ?>
+                                                                                        <img class="img-fluid" style="width: 30px;" src="<?php echo base_url("img/icon-success.png")?>">
+                                                                                    <?php } ?>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    <?php endforeach; ?>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
 
                                     <div class="product-redeem container mt-4">
                                         <div class="row">
@@ -328,6 +349,10 @@
     $("#failModal").on("hidden.bs.modal",function(){
         window.location.reload();
     })
+
+    $("#btn-toggle-redeem-summary").on("click",function(){
+        $(".table-wrapper-scroll-y-redeem-summary").slideToggle();
+    });
 </script>
 
 <?php $this->endSection() ?>
