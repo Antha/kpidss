@@ -4,6 +4,7 @@
 <!-- Cropper.js CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css">
 <body>
+
     <div class="admin-cms-page">
         
         <?php echo $this->include('partials/include_sidebar') ?>
