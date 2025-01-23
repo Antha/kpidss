@@ -35,6 +35,9 @@ class QuestionAnswerModel extends Model
                 ";
         
         $query = $this->db->query($sql, [$userId, $quizId]);
+
+        writeLogToFile( $this->db->getLastQuery() );
+
         $result = $query->getRow();
         // Return nilai max_qid jika ada hasil, jika tidak return null
         return $result;
@@ -51,6 +54,7 @@ class QuestionAnswerModel extends Model
                     qa.question_id, 
                     qa.answer, 
                     q.correct_option,
+                    q.no question_no,
                     CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
                     CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
                 FROM 

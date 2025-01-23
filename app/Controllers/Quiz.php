@@ -30,17 +30,6 @@ class Quiz extends BaseController
     {
         $session = session();
         
-        //Earlier Question Number
-        $questionNumber = $this->questionModel->get_min_id_on_status();
-
-        if (!session()->has('question_number')) {
-            session()->set('question_number', 1);
-        } else{
-            session()->set('question_number',  session()->get('question_number') + 1);
-        }
-
-        
-
         $userId = $session->get('user_id');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
         $fileName = "";
@@ -125,25 +114,29 @@ class Quiz extends BaseController
 
         }
 
+        $reslutsMQB = $this->questionAnswerModel->getMaxQuestionIdByUserId($userId, (int) $quizId);
+        if($reslutsMQB){
+            $questionNumber = (int) $reslutsMQB->max_qid + 1;
+            $question_no = $reslutsMQB->no + 1;
 
-        writeLogToFile("Min Question Number : ".$questionNumber);
-        writeLogToFile("CountALl :".$this->questionModel->countAll());
-        // Jika pertanyaan terakhir selesai, arahkan ke halaman hasil
+            writeLogToFile("question_no_here : ".$question_no);
+        }else{
+            $questionNumber = $this->questionModel->get_min_id_on_status();
+            $question_no = 1;
+            writeLogToFile("question_no_here : ".$question_no);
+        }
+
         if ($questionNumber > $this->questionModel->countAll()) {
             return redirect()->to('/quiz/result');
         }else{
-            if($unfinishedQuiz){
-                $reslutsMQB = $this->questionAnswerModel->getMaxQuestionIdByUserId($userId, (int) $quizId);
-                $questionNumber = (int) $reslutsMQB->max_qid + 1;
-                session()->set('question_number',  (int) $reslutsMQB->no);
-            }
-
+        
             // Ambil pertanyaan saat ini
             writeLogToFile("questionNumber : ".$questionNumber);
             $question = $this->questionModel->getQuestionByNumber($questionNumber);
 
             return view('quiz_page', [
                 'question' => $question,
+                'question_no' => $question_no,
                 'questionNumber' => $questionNumber
             ]);
         }
@@ -216,7 +209,6 @@ class Quiz extends BaseController
             case 10:
                 $poinVal = 150;
                 break;
-            
         }
 
         $dataPoint = [

@@ -36,7 +36,7 @@
                                                 <P>
                                                     <span id="timer"></span>
                                                 </P>
-                                                <p class="question mb-4"><strong>Question <?= session()->get('question_number') ?>:</strong> <?= $question['question'] ?></p>
+                                                <p class="question mb-4"><strong>Question <?= $question_no ?>:</strong> <?= $question['question'] ?></p>
                                                 <form action="/quiz/<?= $questionNumber + 1 ?>" method="post">
                                                     <?= csrf_field() ?>
                                                     <input type="hidden" name="question_id" value="<?= $question['id'] ?>">
