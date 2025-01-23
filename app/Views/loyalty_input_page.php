@@ -1,14 +1,29 @@
 <?php $this->extend('template_header_menu_page') ?>
-
 <?php $this->section('content') ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- Cropper.js CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css">
+
+<style>
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+</style>
 <body>
-
     <div class="admin-cms-page">
-        
         <?php echo $this->include('partials/include_sidebar') ?>
-
         <div id="main">
             <div class="header-top">
                 <div class="container-fluid">
@@ -252,25 +267,38 @@
         let productId = $(this).val();
         $.ajax({
             type:"post",
-          url :"<?php echo base_url(); ?>/loyalty/get_product_stock",
-          data: {
-            product_id : productId
-          },
-          dataType: "json",
-          cache: false,
-          success: function (data) 
-          {
-            if(data.info == 'success'){
-                $('#productNameEdit').val(data.product_name);
-                $('#productPointEdit').val(data.product_point);
-                $('#productStockEdit').val(data.product_stock);
+            url :"<?php echo base_url(); ?>/loyalty/get_product_stock",
+            data: {
+                product_id : productId
+            },
+            dataType: "json",
+            cache: false,
+            beforeSend:function(){
+                // Tampilkan swal dengan loading
+                Swal.fire({
+                    title: 'Please wait...',
+                    html: '<b>Loading</b> <div class="spinner"></div>', // Tambahkan spinner jika ingin
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading(); // Menampilkan loading animasi bawaan Swal
+                    }
+                });
+            },
+            success: function (data) 
+            {
+                if(data.info == 'success'){
+                    Swal.close(); // Tutup swal setelah AJAX selesai
 
-                $('#productNameWrap').show();
-                $('#productPointWrap').show();
-                $('#productStockWrap').show();
-                $('#editButton').show();
+                    $('#productNameEdit').val(data.product_name);
+                    $('#productPointEdit').val(data.product_point);
+                    $('#productStockEdit').val(data.product_stock);
+
+                    $('#productNameWrap').show();
+                    $('#productPointWrap').show();
+                    $('#productStockWrap').show();
+                    $('#editButton').show();
+                }
             }
-          }
         });
     });
 
