@@ -74,7 +74,7 @@ class Loyalty_model extends Model
             JOIN
             (
                 SELECT
-                SUM(redeem) `num` FROM `users_redeem` WHERE user_id = 3
+                SUM(redeem) `num` FROM `users_redeem` WHERE user_id = $user_id
             ) AS `redeem`
             ";
         $query = $this->db_con->query($sql);
