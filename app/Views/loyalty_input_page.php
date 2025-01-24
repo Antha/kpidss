@@ -106,7 +106,7 @@
                                                         <?php foreach($display_all_product as $rows){ ?>
                                                             <tr class="align-middle">
                                                                 <td class="text-center"><?php echo $rows['id']; ?></td>
-                                                                <td class="text-center"><img style="width: 50px;" src="<?php echo base_url('/uploads/loyalty/').$rows['product_image'];?>"></td>
+                                                                <td class="text-center"><img style="width: 50px;" loading="lazy" src="<?php echo base_url('/uploads/loyalty/').$rows['product_image'];?>"></td>
                                                                 <td><?php echo $rows['product_name']; ?></td>
                                                                 <td class="text-center"><?php echo $rows['product_point']; ?></td>
                                                                 <td class="text-center"><?php echo $rows['product_stock']; ?></td>
@@ -161,7 +161,7 @@
         <?php echo $this->include('partials/include_footer'); ?>
         
         <!--modal-->
-        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="background-color: transparent">
                     <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
@@ -188,7 +188,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="background-color: transparent">
                     <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
@@ -246,6 +246,20 @@
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("openNav").style.display = "inline-block";
     }
+
+    function beforeSendCustom(){
+        Swal.fire({
+            title: 'Please wait...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading(); // Menampilkan loading animasi bawaan Swal
+            }
+        });
+    }
+
+    function afterSendCustom(){
+        Swal.close();
+    }
     
     let cropper;
     const photoInput = document.getElementById('photoInput');
@@ -296,6 +310,7 @@
             // croppedPreview.src = croppedURL;
             // croppedPreview.style.display = 'block';
 
+            beforeSendCustom();
             // Upload to server
             fetch('/loyalty_upload', {
                 method: 'POST',
@@ -304,7 +319,9 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    alert('Upload successful!');
+                    afterSendCustom();
+                    $("#successModal").modal('show');
+                    $("#success-info").text("Data Berhasil diupload");
                     console.log(data.file_name); // Tampilkan nama file yang diupload
                     window.location.reload();
                 } else {

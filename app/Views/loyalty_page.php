@@ -110,7 +110,7 @@
                                                             <h5 class="card-title"><?php echo ucwords($rows['product_name']); ?></h5>
                                                             <div class="product-point-group float-start">
                                                                 <i class="fa-solid fa-coins icon-point"></i>
-                                                                <p class="card-text product-point"><?php echo $rows['product_point']; ?> poin</p>
+                                                                <p class="card-text product-point"><?php echo number_format($rows['product_point']); ?> poin</p>
                                                             </div>
                                                             <div class="product-stock-group float-end">
                                                                 <i class="fa-solid fa-boxes-stacked icon-stock"></i>
@@ -143,7 +143,7 @@
                             <div class="container">
                                 <div class="row justify-content-center">
                                     <div class="col-4">
-                                        <img class="img-fluid" src="<?php echo base_url('/img/icon-fail.png')?>">
+                                        <img style="width: 60px;" class="img-fluid" src="<?php echo base_url('/img/icon-fail.png')?>">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -153,7 +153,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer justify-content-center">
                             <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -168,14 +168,14 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-6 p-3">
-                                <img class="img-fluid" id="img-preview-redeem" src ="<?php echo base_url('/img/prize1.jpg')?>">
+                                <img style="width: 60px;" class="img-fluid" id="img-preview-redeem" src ="<?php echo base_url('/img/prize1.jpg')?>">
                             </div>
                             <div class="col-6 p-3 modal-body-info" style="
                                         border-top-right-radius: 8px;
                                         border-bottom-right-radius: 8px;">
                                 <h5 class="modal-title mb-5" id="exampleModalLongTitle">Redeem Confirmation</h5>
                                 <p class="modal-info-process">Anda akan melakukan proses redeem 1 buah <span id="modal-info-product-name" style="font-weight: bold;"></span> senilai <span id="modal-info-product-point" style="font-weight: bold;"></span> point. Lanjutkan proses?</p>
-                                <div class="modal-footer">
+                                <div class="modal-footer justify-content-center">
                                     <button type="button" class="btn btn-secondary btn-cancel-redeem" data-bs-dismiss="modal">CANCEL</button>
                                     <button type="button" class="btn btn-primary btn-conf-redeem" id="btn-redeem-conf"  data-bs-dismiss="modal">REDEEM</button>
                                 </div>

@@ -74,4 +74,10 @@ class Product_knowledge_model extends Model
         }
     }
 
+    function delete_product_detail($product_id){
+        $sql = "DELETE FROM product_knowledge WHERE id = $product_id";
+
+        $query = $this->db_con->query($sql);
+    }
+
 }

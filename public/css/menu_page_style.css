@@ -5,6 +5,7 @@ body {
   font-optical-sizing: auto;
   font-size: 14px;
   background-color: #fff;
+  transition: opacity 2s;
 }
 
 .page_height {
@@ -79,7 +80,7 @@ body {
 }
 
 .sidebar-title-menu {
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .red-text {

@@ -52,4 +52,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/product_knowledge_upload', 'Product_knowledge::upload_data');
     $routes->post('/product_knowledge_upload_photo', 'Product_knowledge::upload_photo');
     $routes->get('/product_knowledge/detail', 'Product_knowledge::detail');
+    $routes->post('/product_knowledge/get_selected_product', 'Product_knowledge::get_selected_product');
+    $routes->post('/product_knowledge/delete_selected_product', 'Product_knowledge::delete_selected_product');
 });

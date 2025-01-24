@@ -30,6 +30,7 @@ class Product_knowledge extends Controller
         $session = session();
         $datetime_now = date("Y-m-d H:i:s");
         $data['dt_now'] = $datetime_now;
+        $data['display_all_product'] = $this->product_knowledge_model->display_all_product();
 
         if($session->get("user_level") == 'admin'){
             return view('product_knowledge_input_page',$data);
@@ -157,5 +158,29 @@ class Product_knowledge extends Controller
         $data['detail'] = $this->product_knowledge_model->get_product_detail($product_id);
         
         return view('product_knowledge_detail_page',$data);
+    }
+
+    function get_selected_product(){
+        $product_id = $_POST['product_id'];
+
+        //run query for getting product poin
+        $get_product_detail = $this->product_knowledge_model->get_product_detail($product_id);
+
+        $parse_value = array('info' => "success",
+        'parse_product_id' => $get_product_detail[0]['id'], 
+        'parse_product_name' => $get_product_detail[0]['product_name']);
+
+        echo json_encode($parse_value);
+    }
+
+    function delete_selected_product(){
+        $product_id = $_POST['product_id'];
+
+        //run query for getting product poin
+        $this->product_knowledge_model->delete_product_detail($product_id);
+
+        $parse_value = array('info' => "success");
+        
+        echo json_encode($parse_value);
     }
 }
