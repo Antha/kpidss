@@ -37,7 +37,7 @@ class Loyalty extends Controller
     {
         $session = session();
         if($session->get("user_level") == 'admin'){
-            $data['display_all_product'] =  $this->loyalty_model->display_all_product();
+            $data['display_all_product'] =  $this->loyalty_model->display_all_product_with_zero_value();
 
             return view('loyalty_input_page',$data);
         }else{
@@ -228,5 +228,11 @@ class Loyalty extends Controller
         
     }
 
-
+    function delete_product(){
+        $product_id = $_POST['product_id'];
+        $this->loyalty_model->delete_product($product_id);
+        
+        $parse_value = array('info' => 'success');
+        echo json_encode($parse_value);
+    }
 }

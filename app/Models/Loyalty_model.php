@@ -62,6 +62,18 @@ class Loyalty_model extends Model
         }
     }
 
+    function display_all_product_with_zero_value(){
+        $sql = "SELECT * FROM product_redeem order by product_name desc";
+
+        $query = $this->db_con->query($sql);
+
+        if($query){
+            return $query->getResultArray();
+        }else{
+            return $this->db_con->error();
+        }
+    }
+
     function getPoint($user_id){
         $sql = "SELECT
             point.num - ifnull(redeem.num,0) AS point_now
@@ -146,5 +158,11 @@ class Loyalty_model extends Model
 
         $sql_insert = "INSERT INTO product_redeem_edit_history(product_id,product_name,quantity,admin_id) VALUES ($product_id,$product_name,$product_stock,$admin_id)";
         $this->db_con->query($sql_insert);
+    }
+
+    function delete_product($product_id){
+        $product_id = $this->db_con->escape($product_id);
+        $sql = "DELETE FROM product_redeem WHERE id = $product_id";
+        $this->db_con->query($sql);
     }
 }
