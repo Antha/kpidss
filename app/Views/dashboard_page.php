@@ -61,6 +61,8 @@
                                 </div>
 
                                 <?php if($user_level == 'admin'){ ?>
+                                    <div class="w-100 mt-sm-4"></div>
+
                                     <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                         <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/loyalty_input')?>">
                                             <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" src="<?= base_url('/img/icon-setting-dark-blue.png') ?>">
