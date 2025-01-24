@@ -45,10 +45,13 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/questions/sample-csv', 'QuestionController::sampleCsv');
     $routes->post('/loyalty/get_product_stock', 'Loyalty::get_product_stock');
     $routes->post('/loyalty/edit_product_redeem_detail', 'Loyalty::edit_product_redeem_detail');
+    $routes->post('/loyalty/delete_product', 'Loyalty::delete_product');
 
     $routes->get('/product_knowledge', 'Product_knowledge::index');
     $routes->get('/product_knowledge_input', 'Product_knowledge::input_data');
     $routes->post('/product_knowledge_upload', 'Product_knowledge::upload_data');
     $routes->post('/product_knowledge_upload_photo', 'Product_knowledge::upload_photo');
     $routes->get('/product_knowledge/detail', 'Product_knowledge::detail');
+    $routes->post('/product_knowledge/get_selected_product', 'Product_knowledge::get_selected_product');
+    $routes->post('/product_knowledge/delete_selected_product', 'Product_knowledge::delete_selected_product');
 });
