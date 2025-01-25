@@ -52,35 +52,29 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group col-md-2 col-3 no-pad-right" id="wrap_kip_filter_cluster">
+                                                        <div class="form-group col-md-2 col-5 no-pad-right" id="wrap_kip_filter_cluster">
                                                             <select name='kpi_filter_cluster_agent' id='kpi_filter_cluster_agent' class="select_filter" title="Area Type" style="width:100%;">
                                                             </select>
                                                         </div>
-                                                        <div class="col-md-2 col-2">			
+                                                        <div class="col-md-2 col-3">			
                                                             <input type="submit" id="btn_submit_periode_kip" name="btn_submit_periode_kpi_agent" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
                                                         </div>
-                                                        <p class="flashdata_error"><?= session()->getFlashdata('table_not_exists'); ?></p> 
+                                                        <?php if($show_fd == 1){ ?>
+                                                        <p class="flashdata_error"><?= session()->getFlashdata('table_not_exists'); ?></p>
+                                                         <?php } ?>
                                                         
                                                         <div style="clear: both;"></div>
                                                     </div>
                                                 </form>
                                             <?php } ?>
                                         </div>
-                                        <!--<div class="col-lg-3 col-sm-3 col-md-3 col-3">
-                                            <div class="input-group">
-                                                <input required type="text" id="search" class="form-control txt-input-data" placeholder="Search...">
-                                                <div class="input-group-addon">
-                                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                                </div>
-                                            </div>
-                                        </div>-->
                                     </div>
                                 </div>
                                 <div class="table-group-wrapper">
 
-                                    <div class="container-fluid p-0">
+                                    <div class="container-fluid p-0 mt-3">
                                         <div class="row">
-                                            <div class="col-md-3 mb-4">
+                                            <div class="col-lg-3 mb-4">
                                                 <h6>LEADERBOARD</h6>
                                                 <div class="row">
                                                     <div class="col-12" style="padding-bottom: 16px;">
@@ -121,14 +115,14 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-md-9">
+                                            <div class="col-lg-9">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <h6 class="mb-0">SUMMARY</h6>
                                                     </div>
                                                     <div class="col-12 mb-2">
                                                         <div class="row">
-                                                        <div style="display: inline-block;padding-top: 10px;" class="col-8">
+                                                        <div class="col-lg-7 col-md-6 col-sm-12 mb-3 mb-md-0" style="padding-top: 10px;">
                                                             <span class="sub-title-table">
                                                                 <?php if($user_level == 'agent_branch'){ ?>
                                                                     <?php if($hidden_cluster == NULL){ ?>
@@ -142,31 +136,50 @@
                                                             </span>
                                                         </div>
                                                         
-                                                        <div style="display: inline-block;text-align:right;" class="col-4">
-                                                            <?php if($user_level == 'agent_branch'){ ?>
-                                                                <form method="post" action="<?php echo base_url()."kpi/download_data_agent_branch"; ?>" enctype="multipart/form-data">
-                                                                    <div style="padding-right:0px;">
-                                                                        <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
-                                                                        <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
-                                                                        <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
+                                                        <div class="d-inline-block col-lg-5 col-md-6 col-sm-12 text-end">
+                                                            <div class="row">
+                                                                <div class="col-8">
+                                                                    <div class="input-group">
+                                                                        <input required type="text" id="searchInput" class="form-control txt-input-data" placeholder="Search..."  onkeyup="filterTable()">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                                                        </div>
                                                                     </div>
-                                                                </form>
-                                                            <?php }else{ ?>
-                                                                <form method="post" action="<?php echo base_url()."kpi/download_data_agent_cluster"; ?>" enctype="multipart/form-data">
-                                                                    <div style="padding-right:0px;">
-                                                                        <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1"></input>
-                                                                        <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
-                                                                        <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
-                                                                    </div>
-                                                                </form>
-                                                            <?php } ?>
+                                                                </div>
+                                                                <div class="col-4" style="padding-left: 0px;">
+                                                                    <button id="exportCsv" class="submit_btn border_rad1" style="width: 100%;">DOWNLOAD</button>
+                                                                </div>
+                                                                <!--<div class="col-4" style="padding-left: 0px;">
+                                                                    <?php if($user_level == 'agent_branch'){ ?>
+                                                                        <form method="post" action="<?php echo base_url()."kpi/download_data_agent_branch"; ?>" enctype="multipart/form-data">
+                                                                            <div style="padding-right:0px;">
+                                                                                <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1" style="width: 100%;"></input>
+                                                                                <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
+                                                                                <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
+                                                                            </div>
+                                                                        </form>
+                                                                    <?php }else{ ?>
+                                                                        <form method="post" action="<?php echo base_url()."kpi/download_data_agent_cluster"; ?>" enctype="multipart/form-data">
+                                                                            <div style="padding-right:0px;">
+                                                                                <input type="submit" id="btn_dl_data_agent" name="btn_dl_data_agent" value="download" class="submit_btn border_rad1" style="width: 100%;"></input>
+                                                                                <input type="hidden" name="hidden_cluster" style="display: none;" value="<?php echo $hidden_cluster; ?>"></input>
+                                                                                <input type="hidden" name="hidden_periode_kpi" style="display: none;" value="<?php echo $display_periode; ?>"></input>
+                                                                            </div>
+                                                                        </form>
+                                                                    <?php } ?>
+                                                                </div>-->
+                                                            </div>
                                                         </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                               
                                                 <div class="table-wrapper-scroll-y table-scroll-y">
+                                                    <div class="table-top-scroll">
+                                                        <div class="table-scroll-bar"></div>
+                                                    </div>
                                                     <div class="table-responsive">
-                                                        <table class="table table-bordered table-hover table-custom">
+                                                        <table id="dataTable" class="table table-bordered table-hover table-custom">
                                                             <thead>
                                                                 <tr><th class="bg-tb-blue" rowspan="3" scope="col">No</th>
                                                                     <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Regional</th>
@@ -190,7 +203,6 @@
                                                                     <th class="table-grey" rowspan="3" scope="col">Sub Bobot (70%)</th>
                                                                     <th class="bg-tb-blue" colspan="15" scope="col">Operational Based</th>
                                                                     <th class="table-grey" rowspan="3" scope="col">Sub Bobot (30%)</th>
-                                                                    
                                                                 </tr>
                                                                 <tr>
                                                                     <th class="table-grey" rowspan="2" scope="col">New Sales</th>
@@ -234,6 +246,30 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <tr style="visibility: collapse;">
+                                                                    <th scope="col">No</th>
+                                                                    <th scope="col">Regional</th>
+                                                                    <th scope="col">Branch</th>
+                                                                    <th scope="col">Cluster</th>
+                                                                    <th scope="col">City</th>
+                                                                    <th scope="col">Agent ID</th>
+                                                                    <th scope="col">LinkAja</th>
+                                                                    <th scope="col">DSS Name</th>
+                                                                    <th scope="col">Digipos ID</th>
+                                                                    <th scope="col">Active Date</th>
+                                                                    <th scope="col">Inactive Date</th>
+                                                                    <th scope="col">Level Competition</th>
+                                                                    <th scope="col">City War Profile</th>
+                                                                    <th scope="col">Final ACH</th>
+                                                                    <th scope="col">Runrate</th>
+                                                                    <th scope="col">Class May'23</th>
+                                                                    <th scope="col">Class Jun'23</th>
+                                                                    <th scope="col">Class</th>
+                                                                    <th scope="col">Performance Based</th>
+                                                                    <th scope="col">Sub Bobot (70%)</th>
+                                                                    <th scope="col">Operational Based</th>
+                                                                    <th scope="col">Sub Bobot (30%)</th>
+                                                                </tr>
                                                                 <?php $i=1;foreach($kpi_data as $row){?>
                                                                     <tr <?php if($agent_id == $row['agent_id']){ ?>style="background-color: #e5e5e5;"<?php } ?>>
                                                                         <td class="text-center"><?php echo $i; ?></td>
@@ -442,6 +478,74 @@
         $('#kpi_filter_cluster_agent').append('<option value="MADURA">MADURA</option>');
     }
 
+    function filterTable() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById("dataTable");
+        const rows = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName("td");
+            let match = false;
+            
+            for (let j = 0; j < cells.length; j++) {
+                if (cells[j]) {
+                    const textValue = cells[j].textContent || cells[j].innerText;
+                    if (textValue.toLowerCase().indexOf(filter) > -1) {
+                        match = true;
+                        break;
+                    }
+                }
+            }
+            
+            rows[i].style.display = match ? "" : "none";
+        }
+    }
+
+    $('#exportCsv').click(function () {
+        // Function to export table to CSV
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = $('#dataTable tbody').find('tr');
+
+            rows.each(function () {
+                var row = [];
+                $(this).find('th, td').each(function () {
+                    // Wrap content in double quotes to handle commas within cells
+                    row.push('"' + $(this).text().trim() + '"');
+                });
+                csv.push(row.join(','));
+            });
+
+            // Create a blob with the CSV content
+            var csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+
+            // Create a download link
+            var downloadLink = document.createElement('a');
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = 'none';
+
+            // Append the link and trigger the download
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        // Call the function with a file name
+        exportTableToCSV('table_export.csv');
+    });
+
+    $('.table-scroll-bar').width($('#dataTable').outerWidth());
+
+    // Synchronize scrolling
+    $('.table-top-scroll').on('scroll', function () {
+        $('.table-responsive').scrollLeft($(this).scrollLeft());
+    });
+
+    $('.table-responsive').on('scroll', function () {
+        $('.table-top-scroll').scrollLeft($(this).scrollLeft());
+    });
 </script>
 
 <?php $this->endSection() ?>

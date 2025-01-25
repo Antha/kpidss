@@ -39,18 +39,35 @@
                                 <div class="point-content">
 
                                     <div class="container-fluid product-knowledge mt-4">
-                                        <div class="row">
-                                            <?php foreach($display_all_product as $rows){ ?>
-                                                <div class="col-md-3 col-sm-6 mb-4">
-                                                    <a class="card" href="<?php echo base_url("/product_knowledge/detail")."?product_id=".$rows["id"]?>" style="width: 100%;">
-                                                        <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/uploads/product_knowledge/').$rows["product_image"]?>" alt="prize-redeem">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title detail-title"><?php echo ucwords($rows['product_name']); ?></h5>
-                                                            <span style="color: #888;" class="subtitle-detail">2025-01-12</span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            <?php } ?>
+
+                                        <div class="container-fluid product-knowledge mt-4">
+                                            <!-- Filter Section -->
+                                            <div class="filter-section mb-4 justify-content-end">
+                                                <label for="dateFilter" class="form-label" style="margin-top: 5px;color:#505f77">Filter by Date:</label>
+                                                <input type="date" id="dateFilter" style="color:#505f77;" class="form-control w-25 d-inline">
+                                            </div>
+
+                                            <!-- Product Grid -->
+                                            <div class="row" id="productContainer">
+                                                <?php foreach ($display_all_product as $rows) { ?>
+                                                    <div class="col-md-3 col-sm-6 mb-4 product-card" data-date="<?php echo $rows['created_date']; ?>">
+                                                        <a class="card" href="<?php echo base_url("/product_knowledge/detail") . "?product_id=" . $rows["id"]; ?>" style="width: 100%;">
+                                                            <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/uploads/product_knowledge/') . $rows["product_image"]; ?>" alt="prize-redeem">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title detail-title"><?php echo ucwords($rows['product_name']); ?></h5>
+                                                                <span style="color: #888;" class="subtitle-detail"><?php echo $rows['created_date'];; ?></span>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+
+                                            <!-- Pagination -->
+                                            <div class="pagination-controls mt-4 text-center">
+                                                <button id="prevPage" class="btn btn-primary" disabled>Previous</button>
+                                                <span id="currentPage" class="mx-3">1</span>
+                                                <button id="nextPage" class="btn btn-primary">Next</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -139,6 +156,69 @@
           }
         });
     });
+
+    const itemsPerPage = 8; // Number of items per page
+    let currentPage = 1;
+
+    // Function to render products based on the current page
+    function renderProducts() {
+        const productCards = $(".product-card");
+        const totalItems = productCards.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        // Hide all products first
+        productCards.hide();
+
+        // Show products for the current page
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = currentPage * itemsPerPage;
+        productCards.slice(startIndex, endIndex).show();
+
+        // Update pagination controls
+        $("#currentPage").text(currentPage);
+        $("#prevPage").prop("disabled", currentPage === 1);
+        $("#nextPage").prop("disabled", currentPage === totalPages);
+    }
+
+    // Filter products by date
+    $("#dateFilter").on("change", function () {
+        const selectedDate = $(this).val();
+        
+        $(".product-card").each(function () {
+            const productDate = $(this).data("date");
+            console.log(productDate);
+            if (productDate === selectedDate || selectedDate === "") {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+
+        // Reset pagination after filtering
+        currentPage = 1;
+        renderProducts();
+    });
+
+    // Pagination controls
+    $("#prevPage").on("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            renderProducts();
+        }
+    });
+
+    $("#nextPage").on("click", function () {
+        const totalItems = $(".product-card:visible").length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderProducts();
+        }
+    });
+
+    // Initial render
+    renderProducts();
 </script>
 
 <?php $this->endSection() ?>

@@ -51,7 +51,7 @@
                                                         </div>
                                                         <div class="col-md-3 offset-md-3 col-6 text-end">
                                                             <div class="redeem-summary-wrapper">
-                                                                <h6 class="d-inline-block dark-blue-text" style="padding-right: 10px;">REDEEM SUMMARY</h6>
+                                                                <h6 class="d-inline-block dark-blue-text" style="padding-right: 10px;">HISTORY</h6>
                                                                 <button id="btn-toggle-redeem-summary" style="background: none;border: 0px;"><i class="fa-solid fa-circle-plus fac-dark-blue" style="font-size: 18px;"></i></button>
                                                             </div>
                                                         </div>
@@ -101,11 +101,21 @@
                                     <?php } ?>
 
                                     <div class="product-redeem container mt-4">
+                                        <!-- Filter Section -->
+                                        <div class="filter-section mb-4 justify-content-end">
+                                            <label for="pointFilter" class="form-label" style="margin-top: 5px;color:#505f77">Filter By Points:</label>
+                                            <select id="pointFilter" class="form-select w-25" style="color: #505f77;">
+                                                <option value="all">All</option>
+                                                <option value="low">Below 1,000 Points</option>
+                                                <option value="medium">1,000 - 5,000 Points</option>
+                                                <option value="high">Above 5,000 Points</option>
+                                            </select>
+                                        </div>
                                         <div class="row">
                                             <?php foreach($display_all_product as $rows){ ?>
-                                                <div class="col-md-3 col-sm-6 mb-4">
+                                                <div class="col-md-3 col-sm-6 mb-4 product-card" data-points="<?php echo $rows['product_point']; ?>">
                                                     <div class="card">
-                                                        <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/uploads/loyalty/').$rows["product_image"]?>" alt="prize-redeem">
+                                                        <img class="card-img-top img-fluid redeem-product-img p-2" src="<?php echo base_url('/uploads/loyalty/').$rows["product_image"]?>" alt="prize-redeem">
                                                         <div class="card-body">
                                                             <h5 class="card-title"><?php echo ucwords($rows['product_name']); ?></h5>
                                                             <div class="product-point-group float-start">
@@ -352,6 +362,22 @@
 
     $("#btn-toggle-redeem-summary").on("click",function(){
         $(".table-wrapper-scroll-y-redeem-summary").slideToggle();
+    });
+
+    $("#pointFilter").on("change", function () {
+        var selectedValue = $(this).val();
+        $(".product-card").show(); // Show all products initially
+
+        $(".product-card").each(function () {
+            var points = parseInt($(this).data("points"));
+            if (
+                (selectedValue === "low" && points >= 1000) ||
+                (selectedValue === "medium" && (points < 1000 || points > 5000)) ||
+                (selectedValue === "high" && points <= 5000)
+            ) {
+                $(this).hide(); // Hide products that don't match the filter
+            }
+        });
     });
 </script>
 

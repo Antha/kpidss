@@ -110,12 +110,14 @@ class Kpi extends Controller
                 
                 if($get_table_info == 0){
                     $data['kpi_data'] = $this->kpi_model->get_kpi_data($periode_default,"");
+                    $data['show_fd'] = 1;
                     $this->session_user->setFlashdata('table_not_exists','data periode '.$periode.' tidak ditemukan');
 
                     $data['kpi_leaderboard'] = $this->kpi_model->get_kpi_lb_branch($periode_default,$agent_branch);
                     $periode_used = $periode_default;
                     $periode_display = $periode_default_display;
                 }else{
+                    $data['show_fd'] = 0;
                     $periode_used = $periode_submit;
                     $periode_display = $periode;
                 }
@@ -136,6 +138,7 @@ class Kpi extends Controller
                 $data['kpi_data'] = $this->kpi_model->get_kpi_data($periode_used,$where_var);
                 $data['kpi_leaderboard'] = $this->kpi_model->get_kpi_lb_branch($periode_used,$agent_branch);
             }else{
+                $data['show_fd'] = 0;
                 $data['last_update_date'] = $raw_update_date;
                 $data['display_periode'] = $exp_update_date[0]."".$exp_update_date[1];
                 $data['hidden_cluster'] = "";
@@ -164,15 +167,18 @@ class Kpi extends Controller
                 
                 if($get_table_info == 0){
                     $data['kpi_data'] = $this->kpi_model->get_kpi_data($periode_default,"");
+                    $data['show_fd'] = 1;
                     $this->session_user->setFlashdata('table_not_exists','data periode '.$periode.' tidak ditemukan');
 
                     $data['kpi_leaderboard'] = $this->kpi_model->get_kpi_lb_branch($periode_default,$agent_branch);
                     $periode_used = $periode_default;
                     $periode_display = $periode_default_display;
                 }else{
+                    $data['show_fd'] = 0;
                     $periode_used = $periode_submit;
                     $periode_display = $periode;
                 }
+                d($get_table_info);
 
                 $branch = $agent_branch;
                 $where_var = "AND cluster = '".$agent_cluster."'";
@@ -188,6 +194,7 @@ class Kpi extends Controller
                 $data['display_periode'] = $exp_update_date[0]."".$exp_update_date[1];
                 $data['hidden_cluster'] = $agent_cluster;
                 $where_var = "AND cluster = '".$agent_cluster."'";
+                $data['show_fd'] = 0;
 
                 $data['kpi_data'] = $this->kpi_model->get_kpi_data($periode_default,$where_var);
                 $data['kpi_leaderboard'] = $this->kpi_model->get_kpi_lb_branch($periode_default,$agent_branch);

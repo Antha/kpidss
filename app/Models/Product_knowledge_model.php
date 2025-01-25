@@ -51,7 +51,7 @@ class Product_knowledge_model extends Model
 
 
     function display_all_product(){
-        $sql = "SELECT * FROM product_knowledge ORDER BY id desc";
+        $sql = "SELECT id,product_name,product_detail,product_image,DATE_FORMAT(created_date,'%Y-%m-%d') created_date,product_main_image FROM product_knowledge ORDER BY id desc";
 
         $query = $this->db_con->query($sql);
 
