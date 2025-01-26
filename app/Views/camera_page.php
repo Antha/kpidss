@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="content-wrapper">
-                                <div class="row w-100">
+                                <div class="row">
                                     <div class="col-md-6 offset-md-3 text-center">
                                         <div class="card shadow">
                                             <div class="card-body">

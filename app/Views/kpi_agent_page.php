@@ -544,6 +544,34 @@
 
     $('#exportCsv').click(function () {
         // Function to export table to CSV
+        // function exportTableToCSV(filename) {
+        //     var csv = [];
+        //     var rows = $('#dataTable tbody').find('tr');
+
+        //     rows.each(function () {
+        //         var row = [];
+        //         $(this).find('th, td').each(function () {
+        //             // Wrap content in double quotes to handle commas within cells
+        //             row.push('"' + $(this).text().trim() + '"');
+        //         });
+        //         csv.push(row.join(','));
+        //     });
+
+        //     // Create a blob with the CSV content
+        //     var csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+
+        //     // Create a download link
+        //     var downloadLink = document.createElement('a');
+        //     downloadLink.download = filename;
+        //     downloadLink.href = window.URL.createObjectURL(csvFile);
+        //     downloadLink.style.display = 'none';
+
+        //     // Append the link and trigger the download
+        //     document.body.appendChild(downloadLink);
+        //     downloadLink.click();
+        //     document.body.removeChild(downloadLink);
+        // }
+
         function exportTableToCSV(filename) {
             var csv = [];
             var rows = $('#dataTable tbody').find('tr');
@@ -551,29 +579,68 @@
             rows.each(function () {
                 var row = [];
                 $(this).find('th, td').each(function () {
-                    // Wrap content in double quotes to handle commas within cells
+                    // Bungkus isi sel dengan tanda kutip ganda untuk menangani koma dalam sel
                     row.push('"' + $(this).text().trim() + '"');
                 });
                 csv.push(row.join(','));
             });
 
-            // Create a blob with the CSV content
-            var csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+            var csvContent = csv.join("\n");
+            var blob = new Blob([csvContent], { type: "text/csv" });
 
-            // Create a download link
-            var downloadLink = document.createElement('a');
-            downloadLink.download = filename;
-            downloadLink.href = window.URL.createObjectURL(csvFile);
-            downloadLink.style.display = 'none';
+            // Deteksi apakah dijalankan di Android atau browser
+            if (window.Android && typeof window.Android.downloadCSV === 'function') {
+                // Android: Kirim data melalui JavaScriptInterface
+                var reader = new FileReader();
+                reader.onload = function () {
+                    window.Android.downloadCSV(reader.result, filename);
+                };
+                reader.readAsText(blob);
+            } else {
+                // Browser: Gunakan mekanisme unduh standar
+                var downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = filename;
+                downloadLink.style.display = 'none';
 
-            // Append the link and trigger the download
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
         }
 
+        // function exportTableToCSV(filename) {
+        //     var csv = [];
+        //     var rows = document.querySelectorAll("#dataTable tbody tr");
+
+        //     rows.forEach(function (row) {
+        //         var rowData = [];
+        //         row.querySelectorAll("th, td").forEach(function (cell) {
+        //             rowData.push('"' + cell.textContent.trim() + '"');
+        //         });
+        //         csv.push(rowData.join(","));
+        //     });
+
+        //     var csvContent = csv.join("\n");
+
+        //     // Buat Blob
+        //     var blob = new Blob([csvContent], { type: "text/csv" });
+
+        //     // Gunakan Fetch API untuk mengunduh
+        //     fetch(URL.createObjectURL(blob))
+        //         .then((res) => res.blob())
+        //         .then((blob) => {
+        //             // Simpan Blob ke Android menggunakan JavaScriptInterface
+        //             window.Android.downloadCSV(blob, filename);
+        //         });
+        // }
+
+
         // Call the function with a file name
-        exportTableToCSV('KPI Data.csv');
+        const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // Format YYYYMMDDHHMMSS
+        const exported_fname = `table_export_${dateformat}.csv`;
+        exportTableToCSV(exported_fname);
+
     });
 
     $('.table-scroll-bar').width($('#dataTable').outerWidth());

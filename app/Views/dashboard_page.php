@@ -1,6 +1,7 @@
 <?php $this->extend('template_header_main_page') ?>
 
 <?php $this->section('content') ?>
+
 <body>
     <div class="dashboard-page">
         <div id="main" class="main-content-dashboard">
@@ -90,5 +91,17 @@
            
     </div>
 </body>
+
+<script>
+    // Page load animation
+    window.onload = function () {
+        const loaderOverlay = document.getElementById('loader-overlay');
+        const dashboardPage = document.querySelector('.dashboard-page');
+
+        // Hide the loader and show the content
+        loaderOverlay.style.display = 'none';
+        dashboardPage.style.display = 'block';
+    };
+</script>
 
 <?php $this->endSection() ?>

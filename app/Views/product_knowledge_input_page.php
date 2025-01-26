@@ -179,6 +179,33 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="background-color: transparent">
+                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                        <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-4">
+                                        <img style="width: 60px;" class="img-fluid" src="<?php echo base_url('/img/icon-fail.png')?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h3 style="font-size: 20px;margin-top:15px;"><span id="fail-info"></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
         <!--modal-->
     </div>
 </body>
@@ -363,7 +390,10 @@
                     console.log(data.file_name); // Tampilkan nama file yang diupload
                     window.location.reload();
                 } else {
-                    alert('Upload failed: ' + data.message);
+                    afterSendCustom();
+                    $("#failModal").modal('show');
+                    $("#fail-info").text('Upload failed: ' + data.message);
+                    window.location.reload();
                 }
             })
             .catch(error => {
