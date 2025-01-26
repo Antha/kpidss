@@ -186,7 +186,7 @@
         
         $(".product-card").each(function () {
             const productDate = $(this).data("date");
-            console.log(productDate);
+            console.log(productDate === selectedDate);
             if (productDate === selectedDate || selectedDate === "") {
                 $(this).show();
             } else {

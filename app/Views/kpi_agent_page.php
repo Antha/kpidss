@@ -245,7 +245,7 @@
                                                                     <?php } ?>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody id="dataTable_body_filter">
                                                                 <tr style="visibility: collapse;">
                                                                     <th scope="col">No</th>
                                                                     <th scope="col">Regional</th>
@@ -265,8 +265,48 @@
                                                                     <th scope="col">Class May'23</th>
                                                                     <th scope="col">Class Jun'23</th>
                                                                     <th scope="col">Class</th>
-                                                                    <th scope="col">Performance Based</th>
-                                                                    <th scope="col">Sub Bobot (70%)</th>
+                                                                    <th scope="col">New Sales SO</th>
+                                                                    <th scope="col">New Sales SO Target</th>
+                                                                    <th scope="col">New Sales SO Actual</th>
+                                                                    <th scope="col">New Sales SO Prepaid</th>
+                                                                    <th scope="col">New Sales SO ByU</th>
+                                                                    <th scope="col">New Sales SO Ach</th>
+                                                                    <th scope="col">New Sales SO Runrate</th>
+                                                                    <th scope="col">New Sales SO Bobot</th>
+                                                                    <th scope="col">New Sales SO</th>
+                                                                    <th scope="col">New Sales New Imei Target</th>
+                                                                    <th scope="col">New Sales New Imei Actual</th>
+                                                                    <th scope="col">New Sales New Imei Prepaid</th>
+                                                                    <th scope="col">New Sales New Imei ByU</th>
+                                                                    <th scope="col">New Sales New Imei Ach</th>
+                                                                    <th scope="col">New Sales New Imei Runrate</th>
+                                                                    <th scope="col">New Sales New Imei Bobot</th>
+                                                                    <th scope="col">Digital Transaction Target</th>
+                                                                    <th scope="col">Digital Transaction Actual</th>
+                                                                    <th scope="col">Digital Transaction Ach</th>
+                                                                    <th scope="col">Digital Transaction Runrate</th>
+                                                                    <th scope="col">Digital Transaction Bobot</th>
+                                                                    <th scope="col">MyTsel New Installer Target</th>
+                                                                    <th scope="col">MyTsel New Installer Actual</th>
+                                                                    <th scope="col">MyTsel New Installer Ach</th>
+                                                                    <th scope="col">MyTsel New Installer Runrate</th>
+                                                                    <th scope="col">MyTsel New Installer Bobot</th>
+                                                                    <th scope="col">Performance based Sub Bobot (70%)</th>
+                                                                    <th scope="col">PJP School Campus Target</th>
+                                                                    <th scope="col">PJP School Campus Actual</th>
+                                                                    <th scope="col">PJP School Campus Ach</th>
+                                                                    <th scope="col">PJP School Campus Runrate</th>
+                                                                    <th scope="col">PJP School Campus Bobot</th>
+                                                                    <th scope="col">Event Productivity Target</th>
+                                                                    <th scope="col">Event Productivity Actual</th>
+                                                                    <th scope="col">Event Productivity Ach</th>
+                                                                    <th scope="col">Event Productivity Runrate</th>
+                                                                    <th scope="col">Event Productivity Bobot</th>
+                                                                    <th scope="col">Campaign Sosmed Target</th>
+                                                                    <th scope="col">Campaign Sosmed Actual</th>
+                                                                    <th scope="col">Campaign Sosmed Ach</th>
+                                                                    <th scope="col">Campaign Sosmed Runrate</th>
+                                                                    <th scope="col">Campaign Sosmed Bobot</th>
                                                                     <th scope="col">Operational Based</th>
                                                                     <th scope="col">Sub Bobot (30%)</th>
                                                                 </tr>
@@ -481,7 +521,7 @@
     function filterTable() {
         const input = document.getElementById("searchInput");
         const filter = input.value.toLowerCase();
-        const table = document.getElementById("dataTable");
+        const table = document.getElementById("dataTable_body_filter");
         const rows = table.getElementsByTagName("tr");
 
         for (let i = 1; i < rows.length; i++) {
@@ -533,7 +573,7 @@
         }
 
         // Call the function with a file name
-        exportTableToCSV('table_export.csv');
+        exportTableToCSV('KPI Data.csv');
     });
 
     $('.table-scroll-bar').width($('#dataTable').outerWidth());

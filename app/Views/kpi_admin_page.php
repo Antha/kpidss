@@ -78,14 +78,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <!--<div class="col-lg-3 col-sm-3 col-md-3 col-3">
-                                            <div class="input-group">
-                                                <input required type="text" id="search" class="form-control txt-input-data" placeholder="Search...">
-                                                <div class="input-group-addon">
-                                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                                </div>
-                                            </div>
-                                        </div>-->
+                                        
                                     </div>
                                 </div>
                                 <div class="table-group-wrapper">
@@ -646,15 +639,24 @@
                                             <div class="col-12" style="margin-top: 15px;">
                                                 <h6>SUMMARY</h6>
                                             </div>
-                                            <div class="col-10">
-                                            <span style="font-size: 12px;" class="sub-title-table sub-title-table">
-                    
-                                                
+                                            <div class="col-4 col-sm-7 col-lg-8">
+                                                <span style="font-size: 12px;margin-top: 10px;display: inline-block;" class="sub-title-table sub-title-table">
                                                     AREA 3
-                                            
-                                            </span>
+                                                </span>
                                             </div>
-                                            <div class="col-2 download-icon-wrapper" style="margin-top: -16px;">
+                                            <div class="col-5 col-sm-3 col-lg-3">
+                                                <div class="input-group">
+                                                    <input required type="text" id="searchInput" class="form-control txt-input-data" placeholder="Search..."  onkeyup="filterTable()">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 col-sm-2 col-lg-1" style="padding-left: 0px;">
+                                                <button id="exportCsv" class="submit_btn border_rad1" style="width: 100%;">DOWNLOAD</button>
+                                            </div>
+                                            
+                                            <!--<div class="col-2 download-icon-wrapper" style="margin-top: -16px;">
                                                 <form class="float-end" method="post" action="<?php echo base_url()."kpi/download_data_admin"; ?>" enctype="multipart/form-data" >
                                                     <div style="float: right;margin-top: -15px;padding-right:0px;padding-top:22px;font-size: 12px">
                                                         <input type="submit" id="btn_dl_data_admin" name="btn_dl_data_admin" value="download" class="submit_btn border_rad1"></input>
@@ -664,7 +666,7 @@
                                                     <input type="hidden" id="branch_hidden" name="branch_hidden" style="display: none;" value="<?php echo $branch_hidden; ?>"></input>
                                                     <input type="hidden" id="cluster_hidden" name="cluster_hidden" style="display: none;" value="<?php echo $cluster_hidden; ?>"></input>
                                                 </form>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
 
@@ -672,8 +674,11 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="table-wrapper-scroll-y table-scroll-y">
+                                                    <div class="table-top-scroll">
+                                                        <div class="table-scroll-bar"></div>
+                                                    </div>
                                                     <div class="table-responsive">
-                                                        <table class="table table-bordered table-hover table-custom">
+                                                        <table id="dataTable"  class="table table-bordered table-hover table-custom">
                                                             <thead>
                                                                 <tr><th class="bg-tb-blue" rowspan="3" scope="col">No</th>
                                                                     <th class="bg-tb-blue custom-width" rowspan="3" scope="col">Regional</th>
@@ -697,7 +702,6 @@
                                                                     <th class="table-grey" rowspan="3" scope="col">Sub Bobot (70%)</th>
                                                                     <th class="bg-tb-blue" colspan="15" scope="col">Operational Based</th>
                                                                     <th class="table-grey" rowspan="3" scope="col">Sub Bobot (30%)</th>
-                                                                    
                                                                 </tr>
                                                                 <tr>
                                                                     <th class="table-grey" rowspan="2" scope="col">New Sales</th>
@@ -740,7 +744,71 @@
                                                                     <?php } ?>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody id="dataTable_body_filter">
+                                                                <tr style="visibility: collapse;">
+                                                                    <th scope="col">No</th>
+                                                                    <th scope="col">Regional</th>
+                                                                    <th scope="col">Branch</th>
+                                                                    <th scope="col">Cluster</th>
+                                                                    <th scope="col">City</th>
+                                                                    <th scope="col">Agent ID</th>
+                                                                    <th scope="col">LinkAja</th>
+                                                                    <th scope="col">DSS Name</th>
+                                                                    <th scope="col">Digipos ID</th>
+                                                                    <th scope="col">Active Date</th>
+                                                                    <th scope="col">Inactive Date</th>
+                                                                    <th scope="col">Level Competition</th>
+                                                                    <th scope="col">City War Profile</th>
+                                                                    <th scope="col">Final ACH</th>
+                                                                    <th scope="col">Runrate</th>
+                                                                    <th scope="col">Class May'23</th>
+                                                                    <th scope="col">Class Jun'23</th>
+                                                                    <th scope="col">Class</th>
+                                                                    <th scope="col">New Sales SO</th>
+                                                                    <th scope="col">New Sales SO Target</th>
+                                                                    <th scope="col">New Sales SO Actual</th>
+                                                                    <th scope="col">New Sales SO Prepaid</th>
+                                                                    <th scope="col">New Sales SO ByU</th>
+                                                                    <th scope="col">New Sales SO Ach</th>
+                                                                    <th scope="col">New Sales SO Runrate</th>
+                                                                    <th scope="col">New Sales SO Bobot</th>
+                                                                    <th scope="col">New Sales SO</th>
+                                                                    <th scope="col">New Sales New Imei Target</th>
+                                                                    <th scope="col">New Sales New Imei Actual</th>
+                                                                    <th scope="col">New Sales New Imei Prepaid</th>
+                                                                    <th scope="col">New Sales New Imei ByU</th>
+                                                                    <th scope="col">New Sales New Imei Ach</th>
+                                                                    <th scope="col">New Sales New Imei Runrate</th>
+                                                                    <th scope="col">New Sales New Imei Bobot</th>
+                                                                    <th scope="col">Digital Transaction Target</th>
+                                                                    <th scope="col">Digital Transaction Actual</th>
+                                                                    <th scope="col">Digital Transaction Ach</th>
+                                                                    <th scope="col">Digital Transaction Runrate</th>
+                                                                    <th scope="col">Digital Transaction Bobot</th>
+                                                                    <th scope="col">MyTsel New Installer Target</th>
+                                                                    <th scope="col">MyTsel New Installer Actual</th>
+                                                                    <th scope="col">MyTsel New Installer Ach</th>
+                                                                    <th scope="col">MyTsel New Installer Runrate</th>
+                                                                    <th scope="col">MyTsel New Installer Bobot</th>
+                                                                    <th scope="col">Performance based Sub Bobot (70%)</th>
+                                                                    <th scope="col">PJP School Campus Target</th>
+                                                                    <th scope="col">PJP School Campus Actual</th>
+                                                                    <th scope="col">PJP School Campus Ach</th>
+                                                                    <th scope="col">PJP School Campus Runrate</th>
+                                                                    <th scope="col">PJP School Campus Bobot</th>
+                                                                    <th scope="col">Event Productivity Target</th>
+                                                                    <th scope="col">Event Productivity Actual</th>
+                                                                    <th scope="col">Event Productivity Ach</th>
+                                                                    <th scope="col">Event Productivity Runrate</th>
+                                                                    <th scope="col">Event Productivity Bobot</th>
+                                                                    <th scope="col">Campaign Sosmed Target</th>
+                                                                    <th scope="col">Campaign Sosmed Actual</th>
+                                                                    <th scope="col">Campaign Sosmed Ach</th>
+                                                                    <th scope="col">Campaign Sosmed Runrate</th>
+                                                                    <th scope="col">Campaign Sosmed Bobot</th>
+                                                                    <th scope="col">Operational Based</th>
+                                                                    <th scope="col">Sub Bobot (30%)</th>
+                                                                </tr>
                                                                 <?php $i=1;foreach($kpi_data as $row){?>
                                                                     <tr>
                                                                         <td class="text-center"><?php echo $i; ?></td>
@@ -982,6 +1050,75 @@
             $('#kpi_filter_cluster_admin').append('<option value="MADURA">MADURA</option>');
         }
         
+    });
+
+    function filterTable() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById("dataTable_body_filter");
+        const rows = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName("td");
+            let match = false;
+            
+            for (let j = 0; j < cells.length; j++) {
+                if (cells[j]) {
+                    const textValue = cells[j].textContent || cells[j].innerText;
+                    if (textValue.toLowerCase().indexOf(filter) > -1) {
+                        match = true;
+                        break;
+                    }
+                }
+            }
+            
+            rows[i].style.display = match ? "" : "none";
+        }
+    }
+
+    $('#exportCsv').click(function () {
+        // Function to export table to CSV
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = $('#dataTable tbody').find('tr');
+
+            rows.each(function () {
+                var row = [];
+                $(this).find('th, td').each(function () {
+                    // Wrap content in double quotes to handle commas within cells
+                    row.push('"' + $(this).text().trim() + '"');
+                });
+                csv.push(row.join(','));
+            });
+
+            // Create a blob with the CSV content
+            var csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+
+            // Create a download link
+            var downloadLink = document.createElement('a');
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = 'none';
+
+            // Append the link and trigger the download
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        // Call the function with a file name
+        exportTableToCSV('KPI Data.csv');
+    });
+
+    $('.table-scroll-bar').width($('#dataTable').outerWidth());
+
+    // Synchronize scrolling
+    $('.table-top-scroll').on('scroll', function () {
+        $('.table-responsive').scrollLeft($(this).scrollLeft());
+    });
+
+    $('.table-responsive').on('scroll', function () {
+        $('.table-top-scroll').scrollLeft($(this).scrollLeft());
     });
 </script>
 

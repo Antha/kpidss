@@ -354,6 +354,11 @@ body {
   /*color: #ffbd3a;*/
 }
 
+.product-card .card-body {
+  height: 160px;
+  overflow: hidden;
+}
+
 .product-redeem .card-body {
   background-color: #003057;
   border-bottom-left-radius: 5px;
@@ -375,31 +380,38 @@ body {
 .product-point-group {
   /*color: #ffde23;*/
   color: #ffbd3a;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .product-redeem .product-point,
 .product-redeem .icon-point {
-  font-weight: bold;
+  font-weight: normal;
   display: inline-block;
   margin-right: 3px;
 }
 
 .product-stock-group {
   color: #eef1f6;
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 20px;
 }
 
 .product-redeem .product-stock,
 .product-redeem .icon-stock {
-  font-weight: bold;
+  font-weight: normal;
   display: inline-block;
   text-transform: uppercase;
 }
 
 .product-redeem .icon-stock {
   margin-right: 5px;
+}
+
+.card-title,
+.product-point-group,
+.product-stock-group {
+  font-size: 14px;
+  font-weight: normal;
 }
 
 /*.product-redeem .redeem-product-img {
@@ -553,6 +565,14 @@ body {
   overflow: hidden;
 }
 
+@media screen and(max-width: 991px) {
+  .card-title,
+  .product-point-group,
+  .product-stock-group {
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
 @media screen and (max-width: 575px) {
   .main-sidebar-open {
     margin-left: 180px;
