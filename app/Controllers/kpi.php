@@ -46,6 +46,7 @@ class Kpi extends Controller
                 $get_table_info = $this->kpi_model->cek_data_kpi_exists($periode_submit);
                 
                 if($get_table_info == 0){
+                    $data['show_fd'] = 1;
                     $this->session_user->setFlashdata('table_not_exists','data periode '.$periode_submit.' tidak ditemukan');
                     $periode_used = $periode_default;
                     $where_var = "";
@@ -53,6 +54,7 @@ class Kpi extends Controller
                     $regional = $this->request->getPost('kpi_filter_regional_admin');
                     $branch = $this->request->getPost('kpi_filter_branch_admin');
                     $cluster = $this->request->getPost('kpi_filter_cluster_admin');
+                    $data['show_fd'] = 0;
 
                     if(!isset($branch) && !isset($cluster) && !isset($regional)){
                         $where_var = "";
@@ -72,6 +74,8 @@ class Kpi extends Controller
                 $branch = "";
                 $cluster = "";
                 $where_var = "";
+
+                $data['show_fd'] = 0;
             }
 
             $data['regional_hidden'] = $regional;
@@ -178,7 +182,6 @@ class Kpi extends Controller
                     $periode_used = $periode_submit;
                     $periode_display = $periode;
                 }
-                d($get_table_info);
 
                 $branch = $agent_branch;
                 $where_var = "AND cluster = '".$agent_cluster."'";

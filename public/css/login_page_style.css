@@ -202,11 +202,6 @@ body {
     display: none;
   }
 
-  .login-inner-form {
-    margin-top: -300px;
-    padding-top: 200px;
-  }
-
   .login-title-section-mobile {
     margin-bottom: 50px;
   }
@@ -225,6 +220,13 @@ body {
 
   .login-inner-form .form-check-label {
     color: #fff;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .login-inner-form {
+    margin-top: -300px;
+    padding-top: 200px;
   }
 }
 

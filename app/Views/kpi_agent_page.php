@@ -30,17 +30,17 @@
                         <div class="col-xs-12">
                             <div class="content-wrapper">
                                 <div class="date-update-wrapper">
-                                    <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
+                                    <a href="<?php echo esc(base_url('dashboard')); ?>" class="back-btn">
                                         <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
                                     </a>
                                     <h4 class="dark-blue-text">KPI</h4>
                                     <div style="clear: both;"></div>
-                                    <span class="sub-title">last update : <?php echo $last_update_date; ?></span>
+                                    <span class="sub-title">last update : <?php echo esc($last_update_date); ?></span>
                                 </div>
                                 <div class="filter_wrapper mt-4">
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-12 mb-3">
-                                            <div id="hidden-value-branch" name="hidden-value-branch" style="display: none;"><?php echo $agent_branch; ?></div>
+                                            <div id="hidden-value-branch" name="hidden-value-branch" style="display: none;"><?php echo esc($agent_branch); ?></div>
                                             <?php if($user_level == 'agent_branch'){ ?>
                                                 <form method="post" action="<?php echo base_url()."kpi"; ?>" enctype="multipart/form-data">
                                                     <div class="row no-gutters">

@@ -30,7 +30,7 @@
                         <div class="col-xs-12">
                             <div class="content-wrapper">
                                 <div class="date-update-wrapper">
-                                    <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
+                                    <a href="<?php echo esc(base_url('dashboard')); ?>" class="back-btn">
                                         <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
                                     </a>
                                     <h4 class="dark-blue-text float-end">PRODUCT KNOWLEDGE</h4>
@@ -42,20 +42,20 @@
 
                                         <div class="container-fluid product-knowledge mt-4">
                                             <!-- Filter Section -->
-                                            <div class="filter-section mb-4 justify-content-end">
+                                           <!-- <div class="filter-section mb-4 justify-content-end">
                                                 <label for="dateFilter" class="form-label" style="margin-top: 5px;color:#505f77">Filter by Date:</label>
                                                 <input type="date" id="dateFilter" style="color:#505f77;" class="form-control w-25 d-inline">
-                                            </div>
+                                            </div>-->
 
                                             <!-- Product Grid -->
                                             <div class="row" id="productContainer">
                                                 <?php foreach ($display_all_product as $rows) { ?>
-                                                    <div class="col-md-3 col-sm-6 mb-4 product-card" data-date="<?php echo $rows['created_date']; ?>">
-                                                        <a class="card" href="<?php echo base_url("/product_knowledge/detail") . "?product_id=" . $rows["id"]; ?>" style="width: 100%;">
-                                                            <img class="card-img-top img-fluid redeem-product-img" src="<?php echo base_url('/uploads/product_knowledge/') . $rows["product_image"]; ?>" alt="prize-redeem">
+                                                    <div class="col-md-3 col-sm-6 mb-4 product-card" data-date="<?php echo esc($rows['created_date']); ?>">
+                                                        <a class="card" href="<?php echo esc(base_url("/product_knowledge/detail") . "?product_id=" . $rows["id"]); ?>" style="width: 100%;">
+                                                            <img class="card-img-top img-fluid redeem-product-img" loading="lazy" src="<?php echo esc(base_url('/uploads/product_knowledge/') . $rows["product_image"]); ?>" alt="product_knowledge">
                                                             <div class="card-body">
-                                                                <h5 class="card-title detail-title"><?php echo ucwords($rows['product_name']); ?></h5>
-                                                                <span style="color: #888;" class="subtitle-detail"><?php echo $rows['created_date'];; ?></span>
+                                                                <h5 class="card-title detail-title"><?php echo esc(ucwords($rows['product_name'])); ?></h5>
+                                                                <span style="color: #888;" class="subtitle-detail"><?php echo esc($rows['created_date']); ?></span>
                                                             </div>
                                                         </a>
                                                     </div>
@@ -87,7 +87,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-6 p-3">
-                                <img class="img-fluid" id="img-preview-redeem" src ="<?php echo base_url('/img/prize1.jpg')?>">
+                                <img class="img-fluid" loading="lazy" id="img-preview-redeem" src ="<?php echo esc(base_url('/img/prize1.jpg')); ?>">
                             </div>
                             <div class="col-sm-6 p-3 modal-body-info" style="
                                         border-top-right-radius: 8px;
@@ -135,14 +135,12 @@
     $(".detail-btn").on("click",function(){
         let productId = $(this).attr("id").split("btn_view_detail_");
 
-
         // Menyeting src gambar target dengan src gambar sumber
         $('#img-preview-redeem').attr('src', $(this).data("image"));
 
-
         $.ajax({
           type:"post",
-          url :"<?php echo base_url(); ?>/loyalty/cek_redeem_point",
+          url :"<?php echo esc(base_url('/loyalty/cek_redeem_point')); ?>",
           data: {
             product_id : productId[1]
           },
@@ -186,11 +184,13 @@
         
         $(".product-card").each(function () {
             const productDate = $(this).data("date");
-            console.log(productDate === selectedDate);
-            if (productDate === selectedDate || selectedDate === "") {
+            const formattedProductDate = productDate.split(" ")[0];
+
+            if (formattedProductDate === selectedDate || selectedDate === "") {
                 $(this).show();
             } else {
                 $(this).hide();
+                console.log("false");
             }
         });
 

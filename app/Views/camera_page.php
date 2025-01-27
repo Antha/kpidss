@@ -16,6 +16,11 @@
 </style>
 
 <body>
+    <div id="loadingSpinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden" style="color: #003057;">Loading...</span>
+        </div>
+    </div>
     <div class="dashboard-page">
         
         <?php echo $this->include('partials/include_sidebar') ?>
@@ -92,6 +97,10 @@
                                     let map;
                                     let userMarker;
                                     let isSetLoc = false;
+                                    
+                                    $("a, form").on("click submit", function () {
+                                        $("#loadingSpinner").fadeIn();
+                                    });
 
                                     $("#saveForm").on("submit",function(e){
                                         e.preventDefault()
@@ -117,6 +126,7 @@
                                         }
 
                                          // All validations passed; submit form normally
+                                        $("#loadingSpinner").fadeIn();
                                         this.submit();
                                     })
 

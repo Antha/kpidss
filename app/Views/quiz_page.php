@@ -3,7 +3,12 @@
 <?php $this->section('content') ?>
 
 <body>
-    <div class="dashboard-page">
+    <div id="loadingSpinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden" style="color: #003057;">Loading...</span>
+        </div>
+    </div>
+    <div class="quiz-page">
         
         <?php echo $this->include('partials/include_sidebar') ?>
 
@@ -95,13 +100,25 @@
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
-        document.getElementById("main").style.marginLeft = "25%";
-        document.getElementById("mySidebar").style.width = "25%";
-        document.getElementById("mySidebar").style.display = "block";
+        $('#main').removeClass('main-sidebar-close');
+        $('#main').addClass('main-sidebar-open');
+        $('#footer').removeClass('main-sidebar-close');
+        $('#footer').addClass('main-sidebar-open');
+        $('#mySidebar').removeClass('sidebar-close');
+        $('#mySidebar').addClass('sidebar-open');
+        $('.dashboard-menu').addClass('main-sidebar-open');
+        $('.dashboard-menu').removeClass('main-sidebar-close');
         document.getElementById("openNav").style.display = 'none';
     }
     function w3_close() {
-        document.getElementById("main").style.marginLeft = "0%";
+        $('#main').removeClass('main-sidebar-open');
+        $('#main').addClass('main-sidebar-close');
+        $('#footer').addClass('main-sidebar-close');
+        $('#footer').removeClass('main-sidebar-open');
+        $('#mySidebar').removeClass('sidebar-open');
+        $('#mySidebar').addClass('sidebar-close');
+        $('.dashboard-menu').removeClass('main-sidebar-open');
+        $('.dashboard-menu').addClass('main-sidebar-close');
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("openNav").style.display = "inline-block";
     }
@@ -116,7 +133,12 @@
 </script>
 
 <script>
-  
+    //spinner
+    document.querySelector('form').addEventListener('submit', function () {
+        // Show the spinner
+        document.getElementById('loadingSpinner').style.display = 'flex';
+    });
+
     let remainingSeconds = 0; // Variabel untuk menyimpan waktu tersisa
     let timerInterval = null;
 

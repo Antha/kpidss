@@ -31,32 +31,30 @@
                             <div class="main-menu-wrapper row justify-content-center mt-5">
                                 <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                     <a class="btn main-menu-btn" href="<?= session()->get('user_level') === 'admin' ? '/pnp_test' : '/camera'; ?>">
-                                        
-                                            <img class="img-fluid menu-icon-dark-blue" src="<?= base_url('/img/icon-quiz-dark-blue.png') ?>">
-                                            <img class="img-fluid menu-icon-light-blue" src="<?= base_url('/img/icon-quiz-white.png') ?>">
-                                            <h5 class="card-title mt-3">PNP TEST</h5> 
-                                        
+                                        <img class="img-fluid menu-icon-dark-blue" loading="lazy" src="<?= base_url('/img/icon-quiz-dark-blue.png') ?>">
+                                        <img class="img-fluid menu-icon-light-blue" loading="lazy" src="<?= base_url('/img/icon-quiz-white.png') ?>">
+                                        <h5 class="card-title mt-3">PNP TEST</h5> 
                                     </a>
                                 </div>
                                 <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                     <a class="btn main-menu-btn" href="<?php echo base_url('/kpi')?>">
-                                        <img class="img-fluid menu-icon-dark-blue" src="<?= base_url('/img/icon-kpi-dark-blue.png') ?>">
-                                        <img class="img-fluid menu-icon-light-blue" src="<?= base_url('/img/icon-kpi-white.png') ?>">
+                                        <img class="img-fluid menu-icon-dark-blue" loading="lazy" src="<?= base_url('/img/icon-kpi-dark-blue.png') ?>">
+                                        <img class="img-fluid menu-icon-light-blue" loading="lazy" src="<?= base_url('/img/icon-kpi-white.png') ?>">
                                         <h5 class="card-title mt-3">KPI</h5> 
                                     </a>
                                 </div>
                                 <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                     <a class="btn main-menu-btn" href="<?php echo base_url('/loyalty')?>">
-                                        <img class="img-fluid menu-icon-dark-blue" src="<?= base_url('/img/icon-loyalty-dark-blue.png') ?>">
-                                        <img class="img-fluid menu-icon-light-blue" src="<?= base_url('/img/icon-loyalty-white.png') ?>">
+                                        <img class="img-fluid menu-icon-dark-blue" loading="lazy" src="<?= base_url('/img/icon-loyalty-dark-blue.png') ?>">
+                                        <img class="img-fluid menu-icon-light-blue" loading="lazy" src="<?= base_url('/img/icon-loyalty-white.png') ?>">
                                         <h5 class="card-title mt-3">LOYALTY</h5>
                                     </a>
                                 </div>
     
                                 <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                     <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/product_knowledge')?>">
-                                        <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" src="<?= base_url('/img/icon-info-product-dark-blue.png') ?>">
-                                        <img class="img-fluid menu-icon-light-blue cstm-main-menu-img" src="<?= base_url('/img/icon-info-product-white.png') ?>">
+                                        <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" loading="lazy" src="<?= base_url('/img/icon-info-product-dark-blue.png') ?>">
+                                        <img class="img-fluid menu-icon-light-blue cstm-main-menu-img" loading="lazy" src="<?= base_url('/img/icon-info-product-white.png') ?>">
                                         <h5 class="card-title cstm-main-menu-card-title">PRODUCT KNOWLEDGE</h5>
                                     </a>
                                 </div>
@@ -66,16 +64,16 @@
 
                                     <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                         <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/loyalty_input')?>">
-                                            <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" src="<?= base_url('/img/icon-setting-dark-blue.png') ?>">
-                                            <img class="img-fluid menu-icon-light-blue cstm-main-menu-img" src="<?= base_url('/img/icon-setting-white.png') ?>">
+                                            <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" loading="lazy" src="<?= base_url('/img/icon-setting-dark-blue.png') ?>">
+                                            <img class="img-fluid menu-icon-light-blue cstm-main-menu-img" loading="lazy" src="<?= base_url('/img/icon-setting-white.png') ?>">
                                             <h5 class="card-title cstm-main-menu-card-title">SET PRODUCT REDEEM</h5>
                                         </a>
                                     </div>
 
                                     <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                         <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/product_knowledge_input')?>">
-                                            <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" src="<?= base_url('/img/icon-setting-dark-blue.png') ?>">
-                                            <img class="img-fluid menu-icon-light-blue cstm-main-menu-img" src="<?= base_url('/img/icon-setting-white.png') ?>">
+                                            <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" loading="lazy" src="<?= base_url('/img/icon-setting-dark-blue.png') ?>">
+                                            <img class="img-fluid menu-icon-light-blue cstm-main-menu-img" loading="lazy" src="<?= base_url('/img/icon-setting-white.png') ?>">
                                             <h5 class="card-title cstm-main-menu-card-title">SET PRODUCT KNOWLEDGE</h5>
                                         </a>
                                     </div>
