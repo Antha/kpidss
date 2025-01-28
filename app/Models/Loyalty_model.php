@@ -99,7 +99,7 @@ class Loyalty_model extends Model
 
     function get_product_point($product_id){
         $id = $this->db_con->escape($product_id);
-        $sql = "SELECT product_point,product_name,product_stock FROM product_redeem WHERE id = $id";
+        $sql = "SELECT product_point,product_name,product_stock,product_image FROM product_redeem WHERE id = $id";
 
         $query = $this->db_con->query($sql);
 

@@ -91,7 +91,7 @@ class Loyalty extends Controller
         $product_id = $_POST['product_id'];
         $get_product_point = $this->loyalty_model->get_product_point($product_id);
         
-        $parse_value = array('info' => 'success','product_stock' => $get_product_point[0]['product_stock'],'product_name' => $get_product_point[0]['product_name'],'product_point' => $get_product_point[0]['product_point']);
+        $parse_value = array('info' => 'success','product_stock' => $get_product_point[0]['product_stock'],'product_name' => $get_product_point[0]['product_name'],'product_point' => $get_product_point[0]['product_point'],'product_image' => $get_product_point[0]['product_image']);
         echo json_encode($parse_value);
     }
 
@@ -192,7 +192,77 @@ class Loyalty extends Controller
         }
     }
 
-    function edit_product_redeem_detail(){
+    public function edit_product_redeem_detail()
+    {
+       
+         // Validasi request POST
+         if ($this->request->getMethod() !== 'POST') {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ], ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        // Validasi data yang dikirim
+        $rules = [
+            'product_name' => 'required',
+            'product_point' => 'required|numeric',
+            'product_stock' => 'required|numeric',
+            'croppedImage' => 'uploaded[croppedImage]|is_image[croppedImage]|mime_in[croppedImage,image/jpg,image/jpeg,image/png]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $this->validator->getErrors(),
+            ], ResponseInterface::HTTP_BAD_REQUEST);
+        }
+
+        // Ambil data dari request
+        $productName = $this->request->getPost('product_name');
+        $productPoint = $this->request->getPost('product_point');
+        $productStock = $this->request->getPost('product_stock');
+        $imageFile = $this->request->getFile('croppedImage');
+
+        writeLogToFile("imageFile : ".$imageFile);
+
+        // Proses upload file gambar
+        if ($imageFile->isValid() && !$imageFile->hasMoved()) {
+            $imageName = $imageFile->getRandomName(); // Buat nama file unik
+            $imageFile->move(FCPATH  . 'uploads/loyalty', $imageName); // Simpan file ke folder uploads
+            writeLogToFile("imageName : ".$imageName);
+        } else {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Failed to upload image'
+            ], ResponseInterface::HTTP_BAD_REQUEST);
+        }
+
+        // Simpan data ke database
+        $data = [
+            'product_name' => $productName,
+            'product_point' => $productPoint,
+            'product_stock' => $productStock,
+            'product_image' => $imageName, // Simpan nama file gambar ke kolom 'image'
+        ];
+
+        writeLogToFile(json_encode($data));
+
+        if ($this->loyalty_model->insertData($data)) {
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => 'Product added successfully',
+                'data' => $data,
+            ]);
+        } else {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Failed to save data to database',
+            ], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    function edit_product_redeem_detailxx(){
         $session = session();
 
         $admin_id = $session->get('user_id');

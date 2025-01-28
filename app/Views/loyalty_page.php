@@ -120,7 +120,7 @@
                                                             <h5 class="card-title"><?php echo ucwords($rows['product_name']); ?></h5>
                                                             <div class="product-point-group float-start">
                                                                 <i class="fa-solid fa-coins icon-point"></i>
-                                                                <p class="card-text product-point"><?php echo number_format($rows['product_point']); ?> poin</p>
+                                                                <p class="card-text product-point"><?php echo number_format($rows['product_point']); ?> Poin</p>
                                                             </div>
                                                             <div class="product-stock-group float-end">
                                                                 <i class="fa-solid fa-boxes-stacked icon-stock"></i>

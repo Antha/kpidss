@@ -96,8 +96,6 @@
     </div>
 </body>
 
-<link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
-<script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
         $('#main').removeClass('main-sidebar-close');
@@ -122,14 +120,6 @@
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("openNav").style.display = "inline-block";
     }
-
-    $('#periode_data').datepicker({
-        format: "yyyymm",
-        startView: 1,
-        minViewMode:1,
-        autoclose: true,
-        todayHighlight: true
-    });
 </script>
 
 <script>

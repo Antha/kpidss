@@ -40,15 +40,16 @@
                                     <div class="container-fluid product-knowledge mt-4">
                                         <div class="row justify-content-center">
                                             <div class="col-12">
-                                                <img class="img-fluid" style="width: 100%;height:250px;" src="<?php echo base_url('/uploads/product_knowledge/').$detail[0]["product_main_image"]; ?>">
+                                                <!--<img class="img-fluid" loading="lazy " style="width: 100%;height:250px;" src="<?php echo base_url('/uploads/product_knowledge/').$detail[0]["product_main_image"]; ?>">-->
+                                                <img class="img-fluid" loading="lazy " style="width: 100%;height:350px;" src="<?php echo base_url('/img/test-banner.jpg'); ?>">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12 text-start mt-4 mb-2">
-                                                <h3><?php echo $detail[0]['product_name']; ?></h3>
+                                                <h3 style="color: #003057;"><?php echo $detail[0]['product_name']; ?></h3>
                                             </div>
                                             <div class="col-12 mb-1">
-                                                <h6 class="fst-italic" style="color: #a0a0a0;">2025-01-22</h6>
+                                                <h6 class="fst-italic" style="color: #0c7a99;"><?php echo $detail[0]['created_date']; ?></h6>
                                             </div> 
                                             <div class="col-12 product-detail-wrapper">
                                                 <span><?php echo $detail[0]['product_detail']; ?></span>

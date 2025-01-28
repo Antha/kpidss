@@ -88,6 +88,7 @@ class Product_knowledge extends Controller
         $rules = [
             'product_name' => 'required',
             'product_detail' => 'required',
+            'periode_data' =>'required',
             'croppedImage' => 'uploaded[croppedImage]|is_image[croppedImage]|mime_in[croppedImage,image/jpg,image/jpeg,image/png]',
         ];
 
@@ -101,8 +102,8 @@ class Product_knowledge extends Controller
         // Ambil data dari request
         $productName = $this->request->getPost('product_name');
         $productDetail = $this->request->getPost('product_detail');
+        $periodeData = $this->request->getPost('periode_data');
         $imageFile = $this->request->getFile('croppedImage');
-
 
         $filePhotoMainInput = $this->request->getFile('photoMainInputFiles');
         if ($filePhotoMainInput->isValid() && !$filePhotoMainInput->hasMoved()) {
@@ -130,6 +131,7 @@ class Product_knowledge extends Controller
             'product_name' => $productName,
             'product_detail' => $productDetail,
             'product_image' => $imageName,
+            'created_date' => $periodeData,
             'product_main_image' => $newNameMainPhoto// Simpan nama file gambar ke kolom 'image'
         ];
 
