@@ -415,6 +415,7 @@
         croppedCanvas.toBlob((blob) => {
             const formData = new FormData();
             formData.append('croppedImage', blob);
+            formData.append('product_id', document.getElementById('productIdEdit').value);
             formData.append('product_name', document.getElementById('productNameEdit').value);
             formData.append('product_point', document.getElementById('productPointEdit').value);
             formData.append('product_stock', document.getElementById('productStockEdit').value);

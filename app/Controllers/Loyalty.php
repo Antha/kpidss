@@ -194,7 +194,6 @@ class Loyalty extends Controller
 
     public function edit_product_redeem_detail()
     {
-       
          // Validasi request POST
          if ($this->request->getMethod() !== 'POST') {
             return $this->response->setJSON([
@@ -205,6 +204,7 @@ class Loyalty extends Controller
 
         // Validasi data yang dikirim
         $rules = [
+            'product_id' => 'required',
             'product_name' => 'required',
             'product_point' => 'required|numeric',
             'product_stock' => 'required|numeric',
@@ -219,6 +219,7 @@ class Loyalty extends Controller
         }
 
         // Ambil data dari request
+        $productId = $this->request->getPost('product_id');
         $productName = $this->request->getPost('product_name');
         $productPoint = $this->request->getPost('product_point');
         $productStock = $this->request->getPost('product_stock');
@@ -240,6 +241,7 @@ class Loyalty extends Controller
 
         // Simpan data ke database
         $data = [
+            'product_id' => $productId,
             'product_name' => $productName,
             'product_point' => $productPoint,
             'product_stock' => $productStock,
@@ -248,7 +250,7 @@ class Loyalty extends Controller
 
         writeLogToFile(json_encode($data));
 
-        if ($this->loyalty_model->insertData($data)) {
+        if ($this->loyalty_model->edit_product_detail($data)) {
             return $this->response->setJSON([
                 'status' => 'success',
                 'message' => 'Product added successfully',
@@ -257,7 +259,7 @@ class Loyalty extends Controller
         } else {
             return $this->response->setJSON([
                 'status' => 'error',
-                'message' => 'Failed to save data to database',
+                'message' => $this->loyalty_model->error(),
             ], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
