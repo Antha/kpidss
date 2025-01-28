@@ -405,53 +405,64 @@
     });
 
     cropButtonEdit.addEventListener('click', () => {
-      
-        const croppedCanvas = cropperEdit.getCroppedCanvas({
-            width: 200, // Output width
-            height: 200, // Output height
-        });
-        
-        // Convert to Blob for upload
-        croppedCanvas.toBlob((blob) => {
+        if (cropperEdit) {
+            const croppedCanvas = cropperEdit.getCroppedCanvas({
+                width: 200, // Output width
+                height: 200, // Output height
+            });
+
+            // Jika ada gambar yang dicrop, konversi ke Blob
+            croppedCanvas.toBlob((blob) => {
+                const formData = new FormData();
+                formData.append('croppedImage', blob);
+                
+                formData.append('product_id', document.getElementById('productIdEdit').value);
+                formData.append('product_name', document.getElementById('productNameEdit').value);
+                formData.append('product_point', document.getElementById('productPointEdit').value);
+                formData.append('product_stock', document.getElementById('productStockEdit').value);
+
+                uploadFormData(formData);
+            });
+        } else {
+            // Jika tidak ada gambar yang dicrop
             const formData = new FormData();
-            formData.append('croppedImage', blob);
+            formData.append('croppedImage', ''); // Kosongkan nilai croppedImage
+            
             formData.append('product_id', document.getElementById('productIdEdit').value);
             formData.append('product_name', document.getElementById('productNameEdit').value);
             formData.append('product_point', document.getElementById('productPointEdit').value);
             formData.append('product_stock', document.getElementById('productStockEdit').value);
 
-            // Preview the cropped image
-            //const croppedPreview = document.getElementById('croppedPreview');
-            const croppedURL = URL.createObjectURL(blob);
-            // croppedPreview.src = croppedURL;
-            // croppedPreview.style.display = 'block';
-
-            beforeSendCustom();
-            // Upload to server
-            fetch('/loyalty/edit_product_redeem_detail', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    afterSendCustom();
-                    $("#successModal").modal('show');
-                    $("#success-info").text("Data Berhasil diedit");
-                    console.log(data.file_name); // Tampilkan nama file yang diupload
-                    window.location.reload();
-                } else {
-                    afterSendCustom();
-                    $("#failModal").modal('show');
-                    $("#fail-info").text('Upload failed: ' + data.message);
-                    //window.location.reload();
-                }
-            })
-            .catch(error => {
-                console.error('Upload failed:', error);
-            });
-        });
+            uploadFormData(formData);
+        }
     });
+
+    // Fungsi untuk mengunggah data
+    function uploadFormData(formData) {
+        beforeSendCustom();
+        fetch('/loyalty/edit_product_redeem_detail', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                afterSendCustom();
+                $("#successModal").modal('show');
+                $("#success-info").text("Data Berhasil diedit");
+                console.log(data.file_name); // Tampilkan nama file yang diupload
+                window.location.reload();
+            } else {
+                afterSendCustom();
+                $("#failModal").modal('show');
+                $("#fail-info").text('Upload failed: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Upload failed:', error);
+        });
+    }
+
 
 
     $('#btn-finish-modal').on("click",function(){
@@ -519,7 +530,7 @@
         let productNameEdit = $('#productNameEdit').val();
         let productPointEdit = $('#productPointEdit').val();
         let productStockEdit = $('#productStockEdit').val();
-        let productImage = 
+
 
         $.ajax({
             type:"post",

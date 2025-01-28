@@ -152,25 +152,45 @@ class Loyalty_model extends Model
     }
 
     function edit_product_detail($data) {
+        $session = session();
+    
         // Escape all input data
         $product_id = $this->db_con->escape($data["product_id"]);
         $product_name = $this->db_con->escape($data["product_name"]);
         $product_stock = $this->db_con->escape($data["product_stock"]);
         $product_point = $this->db_con->escape($data["product_point"]);
-        $admin_id = $this->db_con->escape($data["admin_id"]);
-
+        $admin_id = $session->get("user_id");
+    
+        // Buat array untuk menyimpan bagian SET dari query
+        $update_fields = [
+            "product_stock = $product_stock",
+            "product_name = $product_name",
+            "product_point = $product_point"
+        ];
+    
+        // Periksa apakah index product_image ada dalam data
+        if (isset($data["product_image"])) {
+            $product_image = $this->db_con->escape($data["product_image"]);
+            $update_fields[] = "product_image = $product_image";
+        }
+    
+        // Gabungkan bagian SET menjadi satu string
+        $update_query = implode(", ", $update_fields);
+    
         // Update product_redeem table
         $sql = "UPDATE product_redeem 
-                SET product_stock = $product_stock, 
-                    product_name = $product_name, 
-                    product_point = $product_point 
+                SET $update_query
                 WHERE id = $product_id";
-
+    
+        writeLogToFile("edt : " . $sql);
+    
         if ($this->db_con->query($sql)) {
             // Log the changes in product_redeem_edit_history table
             $sql_insert = "INSERT INTO product_redeem_edit_history(product_id, product_name, quantity, admin_id) 
                         VALUES ($product_id, $product_name, $product_stock, $admin_id)";
-            
+    
+            writeLogToFile("edt : " . $sql_insert);
+    
             if (!$this->db_con->query($sql_insert)) {
                 // Handle logging failure
                 writeLogToFile("Failed to insert into edit history: " . $this->db_con->error);
@@ -179,8 +199,10 @@ class Loyalty_model extends Model
             // Handle update failure
             writeLogToFile("Failed to update product_redeem: " . $this->db_con->error);
         }
+    
+        return true;
     }
-
+    
 
     function delete_product($product_id){
         $product_id = $this->db_con->escape($product_id);
