@@ -166,6 +166,8 @@ class Loyalty_model extends Model
                     product_point = $product_point 
                 WHERE id = $product_id";
 
+        $this->db_con->query($sql);
+
         if ($this->db_con->query($sql)) {
             // Log the changes in product_redeem_edit_history table
             $sql_insert = "INSERT INTO product_redeem_edit_history(product_id, product_name, quantity, admin_id) 

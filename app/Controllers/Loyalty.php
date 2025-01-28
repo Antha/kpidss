@@ -194,6 +194,10 @@ class Loyalty extends Controller
 
     public function edit_product_redeem_detail()
     {
+        $session = session();
+
+        $admin_id = $session->get('user_id');
+
          // Validasi request POST
          if ($this->request->getMethod() !== 'POST') {
             return $this->response->setJSON([
@@ -225,7 +229,7 @@ class Loyalty extends Controller
         $productStock = $this->request->getPost('product_stock');
         $imageFile = $this->request->getFile('croppedImage');
 
-        writeLogToFile("imageFile : ".$imageFile);
+        //writeLogToFile("imageFile : ".$imageFile);
 
         // Proses upload file gambar
         if ($imageFile->isValid() && !$imageFile->hasMoved()) {
@@ -246,6 +250,7 @@ class Loyalty extends Controller
             'product_point' => $productPoint,
             'product_stock' => $productStock,
             'product_image' => $imageName, // Simpan nama file gambar ke kolom 'image'
+            'admin_id' => $admin_id
         ];
 
         writeLogToFile(json_encode($data));
