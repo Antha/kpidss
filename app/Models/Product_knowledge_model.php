@@ -10,7 +10,7 @@ class Product_knowledge_model extends Model
 
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['product_name', 'product_detail', 'product_image'];
+    protected $allowedFields = ['product_name', 'product_detail','created_date', 'product_image'];
 
     function __construct()
     {
@@ -22,19 +22,19 @@ class Product_knowledge_model extends Model
     public function insertData($data)
     {
         // Check if the data is valid
-        if (empty($data['product_name']) || empty($data['product_detail']) || empty($data['product_image']) ) {
+        if (empty($data['product_name']) || empty($data['product_detail']) || empty($data['created_date']) || empty($data['product_image']) ) {
             log_message('error', 'Data for insert is incomplete: ' . json_encode($data));
             return false;
         }
 
         // Prepare the SQL query
-        $sql = "INSERT INTO product_knowledge (product_name, product_detail, product_image, product_main_image)
-                VALUES (:product_name:, :product_detail:, :product_image:, :product_main_image:)";
-
+        $sql = "INSERT INTO product_knowledge (product_name, product_detail, product_image, created_date, product_main_image)
+                VALUES (:product_name:, :product_detail:, :product_image:, :periode_data:, :product_main_image:)";
         // Bind parameters
         $binds = [
             'product_name' => $data['product_name'],
             'product_detail' => $data['product_detail'],
+            'periode_data' => $data['created_date'],
             'product_image' => $data['product_image'],
             'product_main_image' => $data['product_main_image']
         ];
@@ -42,6 +42,7 @@ class Product_knowledge_model extends Model
         // Execute the raw query
         try {
             $this->db_con->query($sql, $binds);
+           
             return true;
         } catch (\Exception $e) {
             log_message('error', 'Database error while inserting data: ' . $e->getMessage());

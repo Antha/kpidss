@@ -55,7 +55,7 @@
                                                             <img class="card-img-top img-fluid redeem-product-img" loading="lazy" src="<?php echo esc(base_url('/uploads/product_knowledge/') . $rows["product_image"]); ?>" alt="product_knowledge">
                                                             <div class="card-body">
                                                                 <h5 class="card-title detail-title"><?php echo esc(ucwords($rows['product_name'])); ?></h5>
-                                                                <span style="color: #888;" class="subtitle-detail"><?php echo esc($rows['created_date']); ?></span>
+                                                                <span style="color: #efba50;" class="subtitle-detail"><?php echo esc($rows['created_date']); ?></span>
                                                             </div>
                                                         </a>
                                                     </div>
@@ -156,7 +156,7 @@
     });
 
     const itemsPerPage = 8; // Number of items per page
-    let currentPage = 1;
+let currentPage = 1;
 
     // Function to render products based on the current page
     function renderProducts() {
@@ -178,6 +178,28 @@
         $("#nextPage").prop("disabled", currentPage === totalPages);
     }
 
+    // Pagination controls
+    $("#prevPage").on("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            renderProducts();
+        }
+    });
+
+    $("#nextPage").on("click", function () {
+        const productCards = $(".product-card");
+        const totalItems = productCards.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderProducts();
+        }
+    });
+
+    // Initial render
+    renderProducts();
+
     // Filter products by date
     $("#dateFilter").on("change", function () {
         const selectedDate = $(this).val();
@@ -198,27 +220,6 @@
         currentPage = 1;
         renderProducts();
     });
-
-    // Pagination controls
-    $("#prevPage").on("click", function () {
-        if (currentPage > 1) {
-            currentPage--;
-            renderProducts();
-        }
-    });
-
-    $("#nextPage").on("click", function () {
-        const totalItems = $(".product-card:visible").length;
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-        if (currentPage < totalPages) {
-            currentPage++;
-            renderProducts();
-        }
-    });
-
-    // Initial render
-    renderProducts();
 </script>
 
 <?php $this->endSection() ?>

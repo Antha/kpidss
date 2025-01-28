@@ -135,14 +135,14 @@
                                                         <label for="productStockEdit" class="form-label">Product Stock</label>
                                                         <input type="number" class="form-control" id="productStockEdit" name="product_stock_edit" required>
                                                     </div>
-                                                    <!--<div class="mb-3">
-                                                        <label for="photoInput" class="form-label">Choose Image</label>
-                                                        <input type="file" class="form-control" id="photoInput" accept="image/*">
+                                                    <div class="mb-3">
+                                                        <label for="photoEdit" class="form-label">Choose Image</label>
+                                                        <input type="file" class="form-control" id="photoEdit" accept="image/*" required>
                                                     </div>
                                                     <div class="text-center">
-                                                        <img id="image" class="img-fluid" style="display: none; max-height: 300px;">
+                                                        <img id="imageEdit" class="img-fluid" style="display: none; max-height: 300px;">
                                                     </div>
-                                                    <div class="preview text-center"></div>-->
+                                                    <div class="preview text-center"></div>
                                                     <!-- Preview hasil crop -->
                                                     <!-- <div class="text-center mt-3">
                                                         <h6>Preview Cropped Image</h6>
@@ -150,7 +150,7 @@
                                                     </div> -->
                 
                                                     <div class="text-center mt-3 mb-3">
-                                                        <button type="button" id="editButtonSubmit" class="btn btn-primary">Edit Data</button>
+                                                        <button type="button" id="cropButtonEdit" class="btn btn-primary">Edit Data</button>
                                                         <button type="button" id="closeButtonEditForm" class="btn btn-secondary">close</button>
                                                     </div>
                                                 </form>
@@ -301,6 +301,7 @@
     const photoInput = document.getElementById('photoInput');
     const image = document.getElementById('image');
     const cropButton = document.getElementById('cropButton');
+    let blobCrop = "";
 
     photoInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
@@ -334,6 +335,7 @@
 
         // Convert to Blob for upload
         croppedCanvas.toBlob((blob) => {
+            blobCrop = blob;
             const formData = new FormData();
             formData.append('croppedImage', blob);
             formData.append('product_name', document.getElementById('productName').value);
@@ -372,6 +374,85 @@
             });
         });
     });
+
+    let cropperEdit;
+    const photoEdit = document.getElementById('photoEdit');
+    const imageEdit = document.getElementById('imageEdit');
+    const cropButtonEdit = document.getElementById('cropButtonEdit');
+
+    photoEdit.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imageEdit.src = e.target.result;
+                imageEdit.style.display = 'block';
+
+                // Initialize Cropper.js
+                if (cropperEdit) {
+                    cropperEdit.destroy();
+                }
+                cropperEdit = new Cropper(imageEdit, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                });
+
+                // Show the Crop & Upload button
+                //cropButtonEdit.style.display = 'inline-block';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    cropButtonEdit.addEventListener('click', () => {
+      
+        const croppedCanvas = cropperEdit.getCroppedCanvas({
+            width: 200, // Output width
+            height: 200, // Output height
+        });
+        
+        // Convert to Blob for upload
+        croppedCanvas.toBlob((blob) => {
+            const formData = new FormData();
+            formData.append('croppedImage', blob);
+            formData.append('product_id', document.getElementById('productIdEdit').value);
+            formData.append('product_name', document.getElementById('productNameEdit').value);
+            formData.append('product_point', document.getElementById('productPointEdit').value);
+            formData.append('product_stock', document.getElementById('productStockEdit').value);
+
+            // Preview the cropped image
+            //const croppedPreview = document.getElementById('croppedPreview');
+            const croppedURL = URL.createObjectURL(blob);
+            // croppedPreview.src = croppedURL;
+            // croppedPreview.style.display = 'block';
+
+            beforeSendCustom();
+            // Upload to server
+            fetch('/loyalty/edit_product_redeem_detail', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    afterSendCustom();
+                    $("#successModal").modal('show');
+                    $("#success-info").text("Data Berhasil diedit");
+                    console.log(data.file_name); // Tampilkan nama file yang diupload
+                    window.location.reload();
+                } else {
+                    afterSendCustom();
+                    $("#failModal").modal('show');
+                    $("#fail-info").text('Upload failed: ' + data.message);
+                    //window.location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Upload failed:', error);
+            });
+        });
+    });
+
 
     $('#btn-finish-modal').on("click",function(){
         window.location.reload();
@@ -438,6 +519,7 @@
         let productNameEdit = $('#productNameEdit').val();
         let productPointEdit = $('#productPointEdit').val();
         let productStockEdit = $('#productStockEdit').val();
+        let productImage = 
 
         $.ajax({
             type:"post",

@@ -72,11 +72,11 @@
                                                         <div id="map"></div>
                                                     </div>
                                                     <form id="saveForm" method="POST" action="/camera/save" class="mt-4 text-center">
-                                                            <input type="hidden" name="imageData" id="imageData">
-                                                            <input type="hidden" name="mylong" id="mylong">
-                                                            <input type="hidden" name="mylat" id="mylat">
-                                                            <button type="submit" id="saveButton" class="btn btn-success submit_btn"  disabled>SAVE</button>
-                                                        </form>
+                                                        <input type="hidden" name="imageData" id="imageData">
+                                                        <input type="hidden" name="mylong" id="mylong">
+                                                        <input type="hidden" name="mylat" id="mylat">
+                                                        <button type="submit" id="saveButton" class="btn btn-success submit_btn"  disabled>SAVE</button>
+                                                    </form>
                                                 </div>
                                                 <?php } else { ?>
                                                     <div class="alert alert-danger text-center mt-4">
@@ -225,9 +225,6 @@
         </div>
     </div>
 </body>
-
-<link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
-<script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <script>
     function w3_open() {
         $('#main').removeClass('main-sidebar-close');
@@ -252,14 +249,6 @@
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("openNav").style.display = "inline-block";
     }
-
-    $('#periode_data').datepicker({
-        format: "yyyymm",
-        startView: 1,
-        minViewMode:1,
-        autoclose: true,
-        todayHighlight: true
-    });
 </script>
 
 <?php $this->endSection() ?>

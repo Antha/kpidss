@@ -57,6 +57,15 @@
                                                     <div class="form-control" id="productDetail" rows="3" required style=""></div>
                                                     <!--<input type="testarea" class="form-control" id="productDetail" name="product_detail" required>-->
                                                 </div>
+                                                <div class="mb-3" id="col_periode_data">
+                                                    <label for="periode_data" class="form-label">Date</label>
+                                                    <div class="input-group dropdown_input">
+                                                        <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_kpi_agent"/>
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="mb-3">
                                                     <label for="photoInput" class="form-label">Choose Thumbnail Image</label>
                                                     <input type="file" class="form-control" id="photoInput" accept="image/*">
@@ -212,6 +221,8 @@
 
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
+<script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
 <!-- 
 <script src="script/quill/modules/DisplaySize.js"></script>
 <script src="script/quill/modules/BaseModule.js"></script>
@@ -367,8 +378,9 @@
             formData.append('croppedImage', blob);
             formData.append('product_name', document.getElementById('productName').value);
             formData.append('product_detail', document.getElementById('productDetail').innerHTML);
+            formData.append('periode_data', document.getElementById('periode_data').value);
             formData.append('photoMainInputFiles', photoMainInputFiles); 
-       
+            
             // Preview the cropped image
             //const croppedPreview = document.getElementById('croppedPreview');
             const croppedURL = URL.createObjectURL(blob);
@@ -393,7 +405,7 @@
                     afterSendCustom();
                     $("#failModal").modal('show');
                     $("#fail-info").text('Upload failed: ' + data.message);
-                    window.location.reload();
+                    //window.location.reload();
                 }
             })
             .catch(error => {
@@ -487,6 +499,13 @@
                 }
             }
         });
+    });
+
+    $('#periode_data').datepicker({
+        format: "yyyy-mm-dd",
+        startView: 1,
+        autoclose: true,
+        todayHighlight: true
     });
     
 </script>

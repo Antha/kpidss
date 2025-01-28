@@ -42,11 +42,12 @@
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-12 mb-3">
                                             <div id="hidden-value-branch" name="hidden-value-branch" style="display: none;"><?php echo esc($agent_branch); ?></div>
                                             <?php if($user_level == 'agent_branch'){ ?>
-                                                <form method="post" action="<?php echo base_url()."kpi"; ?>" enctype="multipart/form-data">
+                                                <form method="post" action="<?php echo esc(base_url()."kpi"); ?>" enctype="multipart/form-data">
+                                                    <?php csrf_field() ?>
                                                     <div class="row no-gutters">
                                                         <div class="form-group col-md-2 col-4 no-pad-right" id="col_periode_data">
                                                             <div class="input-group dropdown_input">
-                                                                <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_kpi_agent" value="<?php echo $display_periode; ?>" />
+                                                                <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_kpi_agent" value="<?php echo esc($display_periode); ?>" />
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
@@ -307,7 +308,6 @@
                                                                     <th scope="col">Campaign Sosmed Ach</th>
                                                                     <th scope="col">Campaign Sosmed Runrate</th>
                                                                     <th scope="col">Campaign Sosmed Bobot</th>
-                                                                    <th scope="col">Operational Based</th>
                                                                     <th scope="col">Sub Bobot (30%)</th>
                                                                 </tr>
                                                                 <?php $i=1;foreach($kpi_data as $row){?>
