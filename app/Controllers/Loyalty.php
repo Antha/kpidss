@@ -215,6 +215,10 @@ class Loyalty extends Controller
             'croppedImage' => 'uploaded[croppedImage]|is_image[croppedImage]|mime_in[croppedImage,image/jpg,image/jpeg,image/png]',
         ];
 
+        if ($this->request->getFile('croppedImage')) {
+            $rules['croppedImage'] = 'uploaded[croppedImage]|is_image[croppedImage]|mime_in[croppedImage,image/jpg,image/jpeg,image/png]';
+        }
+
         if (!$this->validate($rules)) {
             return $this->response->setJSON([
                 'status' => 'error',
@@ -229,18 +233,12 @@ class Loyalty extends Controller
         $productStock = $this->request->getPost('product_stock');
         $imageFile = $this->request->getFile('croppedImage');
 
-        //writeLogToFile("imageFile : ".$imageFile);
 
-        // Proses upload file gambar
-        if ($imageFile->isValid() && !$imageFile->hasMoved()) {
+        $imageName = null;    
+        // Proses upload file gambar jika ada
+        if ($imageFile && $imageFile->isValid() && !$imageFile->hasMoved()) {
             $imageName = $imageFile->getRandomName(); // Buat nama file unik
-            $imageFile->move(FCPATH  . 'uploads/loyalty', $imageName); // Simpan file ke folder uploads
-            writeLogToFile("imageName : ".$imageName);
-        } else {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Failed to upload image'
-            ], ResponseInterface::HTTP_BAD_REQUEST);
+            $imageFile->move(FCPATH . 'uploads/loyalty', $imageName); // Simpan file ke folder uploads
         }
 
         // Simpan data ke database
@@ -250,21 +248,25 @@ class Loyalty extends Controller
             'product_point' => $productPoint,
             'product_stock' => $productStock,
             'product_image' => $imageName, // Simpan nama file gambar ke kolom 'image'
-            'admin_id' => $admin_id
         ];
-
+    
+        // Tambahkan nama file gambar jika ada
+        if ($imageName) {
+            $data['product_image'] = $imageName;
+        }
+        
         writeLogToFile(json_encode($data));
 
         if ($this->loyalty_model->edit_product_detail($data)) {
             return $this->response->setJSON([
                 'status' => 'success',
-                'message' => 'Product added successfully',
+                'message' => 'Product updated successfully',
                 'data' => $data,
             ]);
         } else {
             return $this->response->setJSON([
                 'status' => 'error',
-                'message' => $this->loyalty_model->error(),
+                'message' => 'Failed to update product',
             ], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
