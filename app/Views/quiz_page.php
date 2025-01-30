@@ -185,7 +185,13 @@
         });
 
     startTimer(30);
+</script>
 
+<script>
+    window.history.pushState(null, "", window.location.href);
+    window.addEventListener("popstate", function () {
+        window.history.pushState(null, "", window.location.href);
+    });
 </script>
 
 <?php $this->endSection() ?>

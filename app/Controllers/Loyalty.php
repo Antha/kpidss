@@ -36,7 +36,7 @@ class Loyalty extends Controller
     public function input_data()
     {
         $session = session();
-        if($session->get("user_level") == 'admin'){
+        if($session->get("user_level") == 'admin' || $session->get("user_level") == 'admin_cms'){
             $data['display_all_product'] =  $this->loyalty_model->display_all_product_with_zero_value();
 
             return view('loyalty_input_page',$data);

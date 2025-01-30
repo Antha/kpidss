@@ -52,9 +52,16 @@
                                         <div class="card shadow">
                                             <div class="card-body">
         
-                                                <?php if (is_array(session('recentFinishedQuiz'))) { ?>
-                                                <div class="alert alert-danger text-center mt-4">
-                                                    <h5 class="card-title text-danger">You Can't Access Quiz After 1 Month Since Last Quiz</h5>
+                                                <?php if (is_array(session('recentFinishedQuiz'))) { 
+                                                     $recentFinishedQuiz = session('recentFinishedQuiz');
+                                                ?>
+                                                <div class="alert alert-danger text-center mt-4 p-4">
+                                                    <h5 class="card-title text-danger fw-bold">
+                                                        <i class="fas fa-exclamation-circle"></i> Access Denied!
+                                                    </h5>
+                                                    <p class="mb-1">You have recently completed a quiz.</p>
+                                                    <p>You can try again on <strong><?= $recentFinishedQuiz["datetime_plus_1_month"] ?></strong>.</p>
+                                                    <p>Your current points: <strong class="text-primary"><?= $display_user_point ?></strong></p>
                                                 </div>
                                                 <?php } else if(!is_array(session('unfinishedQuiz'))) { ?>
                                                 <div class="row">

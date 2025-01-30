@@ -32,7 +32,7 @@ class Product_knowledge extends Controller
         $data['dt_now'] = $datetime_now;
         $data['display_all_product'] = $this->product_knowledge_model->display_all_product();
 
-        if($session->get("user_level") == 'admin'){
+        if($session->get("user_level") == 'admin' || $session->get("user_level") == 'admin_cms'){
             return view('product_knowledge_input_page',$data);
         }else{
             return redirect()->to(base_url('/dashboard')); 

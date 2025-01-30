@@ -29,7 +29,8 @@ class UserQuizModel extends Model
             FROM (
                 SELECT 
                     user_id,
-                    MIN(DATEDIFF(CURDATE(), `datetime`)) AS days_difference
+                    MIN(DATEDIFF(CURDATE(), `datetime`)) AS days_difference,
+                    DATE_ADD(min(datetime), INTERVAL 1 MONTH) as datetime_plus_1_month
                 FROM 
                     `user_quizess`
                 WHERE 
