@@ -2,14 +2,18 @@
 
 namespace App\Controllers;
 use App\Models\UserQuizModel;
+use App\Models\Loyalty_model;
 
 class Camera extends BaseController
 {
     protected $userQuizModel;
+    protected $loyalty_model;
+
 
     public function __construct()
     {
         $this->userQuizModel = new UserQuizModel();
+        $this->loyalty_model = new Loyalty_model();
     }
 
     public function index()
@@ -18,13 +22,15 @@ class Camera extends BaseController
         $userId = $session->get('user_id');
         
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
-        // writeLogToFile("UQI ". json_encode($unfinishedQuiz));
         $session->set("unfinishedQuiz",$unfinishedQuiz);
         
         $recentFinishedQuiz = $this->userQuizModel->getRecentFinishedQuiz($userId);
         $session->set("recentFinishedQuiz",$recentFinishedQuiz);
 
-        return view('camera_page');
+        $results= $this->loyalty_model->getPoint($session->get("user_id"));
+        $data['display_user_point'] = $results[0]["point_now"];
+
+        return view('camera_page',$data);
         
     }
 
