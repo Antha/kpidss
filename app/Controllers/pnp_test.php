@@ -20,6 +20,8 @@ class Pnp_test extends Controller
         
         if($session->get('user_level') == "admin"){
             return view('pnp_test_admin_page', ['resumeResults' => $resumeResults,'lastUpdateData' => $lastUpdateData,'displayPeriode' => $displayPeriode]);
+        }else if($session->get('user_level') == "admin_cms"){
+            return redirect()->to('/dashboard');
         }
         else{
             return redirect()->to('/camera');

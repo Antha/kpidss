@@ -211,8 +211,7 @@ class Loyalty extends Controller
             'product_id' => 'required',
             'product_name' => 'required',
             'product_point' => 'required|numeric',
-            'product_stock' => 'required|numeric',
-            'croppedImage' => 'uploaded[croppedImage]|is_image[croppedImage]|mime_in[croppedImage,image/jpg,image/jpeg,image/png]',
+            'product_stock' => 'required|numeric'
         ];
 
         if ($this->request->getFile('croppedImage')) {

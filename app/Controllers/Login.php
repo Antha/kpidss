@@ -28,6 +28,17 @@ class Login extends Controller
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
+                // Generate a unique session ID
+                $sessionID = bin2hex(random_bytes(32));
+
+                // Check if user is already logged in
+                if (!empty($user['session_id'])) {
+                    return redirect()->back()->with('error', 'You are already logged in on another device.');
+                }
+
+                // Update session ID in the database
+                $model->update($user['id'], ['session_id' => $sessionID]);
+
                 $session->set([
                     'user_id' => $user['id'],
                     'username' => $user['username'],
@@ -37,6 +48,7 @@ class Login extends Controller
                     'regional' => $user['regional'],
                     'branch' => $user['branch'],
                     'cluster' => $user['cluster'],
+                    'session_id' => $sessionID,
                     'isLoggedIn' => true,
                 ]);
 
@@ -55,7 +67,17 @@ class Login extends Controller
 
     public function logout()
     {
-        session()->destroy();
-        return redirect()->to('/login');
+        //session()->destroy();
+        //return redirect()->to('/login');
+
+        $session = session();
+        $userModel = new UserModel();
+
+        if ($session->has('user_id')) {
+            $userModel->update($session->get('user_id'), ['session_id' => null]);
+        }
+
+        $session->destroy();
+        return redirect()->to('/login')->with('success', 'Logged out successfully.');
     }
 }
