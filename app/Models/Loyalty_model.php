@@ -152,6 +152,7 @@ class Loyalty_model extends Model
     }
 
     function edit_product_detail($data) {
+        //--
         $session = session();
     
         // Escape all input data

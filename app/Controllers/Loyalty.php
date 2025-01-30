@@ -1,5 +1,5 @@
 <?php
-
+//--
 namespace App\Controllers;
 
 use App\Models\Loyalty_model;

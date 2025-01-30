@@ -2,7 +2,7 @@
 <?php $this->section('content') ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Cropper.js CSS -->
+<!-- Cropper.js CSS --->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.css">
 
 <body>
