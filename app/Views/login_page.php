@@ -33,7 +33,7 @@
                             <h3>Sign Into Your Account</h3>
 
                             <?php if (session()->getFlashdata('error')): ?>
-                                <p class="error"><?= session()->getFlashdata('error') ?></p>
+                                <p class="error" style="color: #ff1c1c;"><?= session()->getFlashdata('error') ?></p>
                             <?php endif; ?>
 
                             <form action="<?= esc(base_url('/login/authenticate')) ?>" method="POST">

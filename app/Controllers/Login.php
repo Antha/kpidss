@@ -21,8 +21,8 @@ class Login extends Controller
     {
         $session = session();
         $model = new UserModel();
-        $username = $this->request->getVar('email');
-        $password = $this->request->getVar('password');
+        $username = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
 
         $user = $model->where('username', $username)->first();
 
@@ -49,6 +49,7 @@ class Login extends Controller
                     'branch' => $user['branch'],
                     'cluster' => $user['cluster'],
                     'session_id' => $sessionID,
+                    'last_activity' => time(), // Track last activity
                     'isLoggedIn' => true,
                 ]);
 
