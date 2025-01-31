@@ -29,6 +29,7 @@
                         </div>
                         <div class="container-fluid">
                             <div class="main-menu-wrapper row justify-content-center mt-5">
+                                <?php if($user_level == 'admin' || $user_level == 'agent_branch' || $user_level == 'agent_cluster'){ ?>
                                 <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                     <a class="btn main-menu-btn" href="<?= session()->get('user_level') === 'admin' ? '/pnp_test' : '/camera'; ?>">
                                         <img class="img-fluid menu-icon-dark-blue" loading="lazy" src="<?= base_url('/img/icon-quiz-dark-blue.png') ?>">
@@ -58,8 +59,7 @@
                                         <h5 class="card-title cstm-main-menu-card-title">PRODUCT KNOWLEDGE</h5>
                                     </a>
                                 </div>
-
-                                <?php if($user_level == 'admin'){ ?>
+                                <?php }else if($user_level == 'admin' || $user_level == 'admin_cms'){ ?>
                                     <div class="w-100 mt-sm-4"></div>
 
                                     <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">

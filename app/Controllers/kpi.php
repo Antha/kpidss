@@ -209,6 +209,8 @@ class Kpi extends Controller
             $data['user_level'] = $user_level;
 
             return view('kpi_agent_page',$data);
+        }else if($user_level == "admin_cms"){
+            return redirect()->to(base_url('/dashboard')); 
         }
     }
 

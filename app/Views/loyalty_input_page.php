@@ -531,9 +531,8 @@
         let productPointEdit = $('#productPointEdit').val();
         let productStockEdit = $('#productStockEdit').val();
 
-
         $.ajax({
-            type:"post",
+         type:"post",
           url :"<?php echo base_url(); ?>/loyalty/edit_product_redeem_detail",
           data: {
             product_id : productId,

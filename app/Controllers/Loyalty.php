@@ -36,7 +36,7 @@ class Loyalty extends Controller
     public function input_data()
     {
         $session = session();
-        if($session->get("user_level") == 'admin'){
+        if($session->get("user_level") == 'admin' || $session->get("user_level") == 'admin_cms'){
             $data['display_all_product'] =  $this->loyalty_model->display_all_product_with_zero_value();
 
             return view('loyalty_input_page',$data);
@@ -124,6 +124,7 @@ class Loyalty extends Controller
 
     public function upload_data()
     {
+       
          // Validasi request POST
          if ($this->request->getMethod() !== 'POST') {
             return $this->response->setJSON([
@@ -193,55 +194,59 @@ class Loyalty extends Controller
 
     public function edit_product_redeem_detail()
     {
-        // Validasi request POST
-        if ($this->request->getMethod() !== 'POST') {
+        $session = session();
+
+        $admin_id = $session->get('user_id');
+
+         // Validasi request POST
+         if ($this->request->getMethod() !== 'POST') {
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => 'Invalid request method'
             ], ResponseInterface::HTTP_METHOD_NOT_ALLOWED);
         }
-    
+
         // Validasi data yang dikirim
         $rules = [
             'product_id' => 'required',
             'product_name' => 'required',
             'product_point' => 'required|numeric',
-            'product_stock' => 'required|numeric',
+            'product_stock' => 'required|numeric'
         ];
-    
-        // Tambahkan aturan untuk croppedImage hanya jika ada file yang diunggah
+
         if ($this->request->getFile('croppedImage')) {
             $rules['croppedImage'] = 'uploaded[croppedImage]|is_image[croppedImage]|mime_in[croppedImage,image/jpg,image/jpeg,image/png]';
         }
-    
+
         if (!$this->validate($rules)) {
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => $this->validator->getErrors(),
             ], ResponseInterface::HTTP_BAD_REQUEST);
         }
-    
+
         // Ambil data dari request
         $productId = $this->request->getPost('product_id');
         $productName = $this->request->getPost('product_name');
         $productPoint = $this->request->getPost('product_point');
         $productStock = $this->request->getPost('product_stock');
         $imageFile = $this->request->getFile('croppedImage');
-        $imageName = null;
-    
+
+
+        $imageName = null;    
         // Proses upload file gambar jika ada
         if ($imageFile && $imageFile->isValid() && !$imageFile->hasMoved()) {
             $imageName = $imageFile->getRandomName(); // Buat nama file unik
             $imageFile->move(FCPATH . 'uploads/loyalty', $imageName); // Simpan file ke folder uploads
-            writeLogToFile("imageName : " . $imageName);
         }
-    
+
         // Simpan data ke database
         $data = [
             'product_id' => $productId,
             'product_name' => $productName,
             'product_point' => $productPoint,
             'product_stock' => $productStock,
+            'product_image' => $imageName, // Simpan nama file gambar ke kolom 'image'
         ];
     
         // Tambahkan nama file gambar jika ada
@@ -250,7 +255,7 @@ class Loyalty extends Controller
         }
         
         writeLogToFile(json_encode($data));
-    
+
         if ($this->loyalty_model->edit_product_detail($data)) {
             return $this->response->setJSON([
                 'status' => 'success',
@@ -264,7 +269,6 @@ class Loyalty extends Controller
             ], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    
 
     function edit_product_redeem_detailxx(){
         $session = session();
