@@ -29,122 +29,128 @@ class Quiz extends BaseController
     public function index($questionNumber = 1)
     {
         $session = session();
-        if($session->get("user_level") == 'agent_branch' || $session->get("user_level") == 'agent_cluster'){
-            $userId = $session->get('user_id');
-            $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
-            $fileName = "";
-            $quizId = "";
-            if($unfinishedQuiz){
-                $quizId = $unfinishedQuiz["id"];
-                $fileName = $unfinishedQuiz["photo"];
-                $mylong = $unfinishedQuiz["long"];
-                $mylat = $unfinishedQuiz["lat"];
 
-                $session->set('id_quiz', $quizId);
-                $session->set('file_name', $fileName);
-                $session->set('mylong', $mylong);
-                $session->set('mylat', $mylat);
-            }
-            // $stringUN =  json_encode($unfinishedQuiz);
-            // writeLogToFile( $stringUN);
-
-            if ($this->request->getMethod() === 'POST') {
+        if(session()->get('capturedImage')){
+            if($session->get("user_level") == 'agent_branch' || $session->get("user_level") == 'agent_cluster'){
+                $userId = $session->get('user_id');
+                $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
+                $fileName = "";
+                $quizId = "";
                 if($unfinishedQuiz){
                     $quizId = $unfinishedQuiz["id"];
                     $fileName = $unfinishedQuiz["photo"];
                     $mylong = $unfinishedQuiz["long"];
                     $mylat = $unfinishedQuiz["lat"];
-
-                    writeLogToFile("fileName : ".$fileName);
-                    writeLogToFile("ulong : ".$unfinishedQuiz["long"]);
-
-                    // Data yang akan dimasukkan atau di-replace
-                    $data = [
-                        'id' => $quizId,
-                        'user_id' => $userId,
-                        'photo' => $fileName,
-                        'long' => $mylong,
-                        'lat' => $mylat,
-                        'status' => 'unfinished',
-                        'datetime' => date('Y-m-d H:i:s'),
-                    ];
-
-                    // Panggil metode replaceData
-                    $result = $this->userQuizModel->replaceData($data);
-
-                }else{
-                    // Data yang akan dimasukkan atau di-insert
-                    $fileName = $this->saveBase64Image($session->get("capturedImage"), "./uploads/photos");
-                    $mylong = $session->get('mylong');
-                    $mylat = $session->get('mylat');
-                    $data = [
-                        'user_id' => $userId,
-                        'photo' => $fileName,
-                        'long' => $session->get('mylong'),
-                        'lat' => $session->get('mylat'),
-                        'status' => 'unfinished',
-                        'datetime' => date('Y-m-d H:i:s'),
-                    ];
-
-                    // Panggil metode replaceData
-                    $quizId = $this->userQuizModel->insertAndGetId($data);
+    
+                    $session->set('id_quiz', $quizId);
+                    $session->set('file_name', $fileName);
+                    $session->set('mylong', $mylong);
+                    $session->set('mylat', $mylat);
                 }
-
-                $session->set('id_quiz', $quizId);
-                $session->set('file_name', $fileName);
-                $session->set('mylong', $mylong);
-                $session->set('mylat', $mylat);
-
-                //===================Simpan Jawaban
-                // Ambil jawaban dari POST
-                $answer = $this->request->getPost('answer');
-                $questionId = $this->request->getPost('question_id');
-
-                // // Simpan jawaban ke session satu per satu
-                // $answers = $session->get('quiz_answers') ?? [];
-                // $answers[$questionId] = $answer;
-                // $session->set('quiz_answers', $answers);
-
-                $this->questionAnswerModel->save([
-                    'user_id' => $userId,
-                    'quiz_id' => $quizId,
-                    'question_id' => $questionId,
-                    'answer' => $answer,
-                ]);
-
-            }
-
-            $reslutsMQB = $this->questionAnswerModel->getMaxQuestionIdByUserId($userId, (int) $quizId);
-            if($reslutsMQB){
-                $questionNumber = (int) $reslutsMQB->max_qid + 1;
-                $question_no = $reslutsMQB->no + 1;
-
-                writeLogToFile("question_no_here : ".$question_no);
+                // $stringUN =  json_encode($unfinishedQuiz);
+                // writeLogToFile( $stringUN);
+    
+                if ($this->request->getMethod() === 'POST') {
+                    if($unfinishedQuiz){
+                        $quizId = $unfinishedQuiz["id"];
+                        $fileName = $unfinishedQuiz["photo"];
+                        $mylong = $unfinishedQuiz["long"];
+                        $mylat = $unfinishedQuiz["lat"];
+    
+                        writeLogToFile("fileName : ".$fileName);
+                        writeLogToFile("ulong : ".$unfinishedQuiz["long"]);
+    
+                        // Data yang akan dimasukkan atau di-replace
+                        $data = [
+                            'id' => $quizId,
+                            'user_id' => $userId,
+                            'photo' => $fileName,
+                            'long' => $mylong,
+                            'lat' => $mylat,
+                            'status' => 'unfinished',
+                            'datetime' => date('Y-m-d H:i:s'),
+                        ];
+    
+                        // Panggil metode replaceData
+                        $result = $this->userQuizModel->replaceData($data);
+    
+                    }else{
+                        // Data yang akan dimasukkan atau di-insert
+                        $fileName = $this->saveBase64Image($session->get("capturedImage"), "./uploads/photos");
+                        $mylong = $session->get('mylong');
+                        $mylat = $session->get('mylat');
+                        $data = [
+                            'user_id' => $userId,
+                            'photo' => $fileName,
+                            'long' => $session->get('mylong'),
+                            'lat' => $session->get('mylat'),
+                            'status' => 'unfinished',
+                            'datetime' => date('Y-m-d H:i:s'),
+                        ];
+    
+                        // Panggil metode replaceData
+                        $quizId = $this->userQuizModel->insertAndGetId($data);
+                    }
+    
+                    $session->set('id_quiz', $quizId);
+                    $session->set('file_name', $fileName);
+                    $session->set('mylong', $mylong);
+                    $session->set('mylat', $mylat);
+    
+                    //===================Simpan Jawaban
+                    // Ambil jawaban dari POST
+                    $answer = $this->request->getPost('answer');
+                    $questionId = $this->request->getPost('question_id');
+    
+                    // // Simpan jawaban ke session satu per satu
+                    // $answers = $session->get('quiz_answers') ?? [];
+                    // $answers[$questionId] = $answer;
+                    // $session->set('quiz_answers', $answers);
+    
+                    $this->questionAnswerModel->save([
+                        'user_id' => $userId,
+                        'quiz_id' => $quizId,
+                        'question_id' => $questionId,
+                        'answer' => $answer,
+                    ]);
+    
+                }
+    
+                $reslutsMQB = $this->questionAnswerModel->getMaxQuestionIdByUserId($userId, (int) $quizId);
+                if($reslutsMQB){
+                    $questionNumber = (int) $reslutsMQB->max_qid + 1;
+                    $question_no = $reslutsMQB->no + 1;
+    
+                    writeLogToFile("question_no_here : ".$question_no);
+                }else{
+                    $questionNumber = $this->questionModel->get_min_id_on_status();
+                    $question_no = 1;
+                    writeLogToFile("question_no_here : ".$question_no);
+                }
+    
+                if ($questionNumber > $this->questionModel->countAll()) {
+                    return redirect()->to('/quiz/result');
+                }else{
+                
+                    // Ambil pertanyaan saat ini
+                    writeLogToFile("questionNumber : ".$questionNumber);
+                    $question = $this->questionModel->getQuestionByNumber($questionNumber);
+    
+                    return view('quiz_page', [
+                        'question' => $question,
+                        'question_no' => $question_no,
+                        'questionNumber' => $questionNumber
+                    ]);
+                }
+            }else if($session->get("user_level") == 'admin' || $session->get("user_level") == 'admin_cms'){
+                return redirect()->to(base_url('/dashboard')); 
             }else{
-                $questionNumber = $this->questionModel->get_min_id_on_status();
-                $question_no = 1;
-                writeLogToFile("question_no_here : ".$question_no);
+                return redirect()->to(base_url('/login'));
             }
-
-            if ($questionNumber > $this->questionModel->countAll()) {
-                return redirect()->to('/quiz/result');
-            }else{
-            
-                // Ambil pertanyaan saat ini
-                writeLogToFile("questionNumber : ".$questionNumber);
-                $question = $this->questionModel->getQuestionByNumber($questionNumber);
-
-                return view('quiz_page', [
-                    'question' => $question,
-                    'question_no' => $question_no,
-                    'questionNumber' => $questionNumber
-                ]);
-            }
-        }else if($session->get("user_level") == 'admin' || $session->get("user_level") == 'admin_cms'){
-            return redirect()->to(base_url('/dashboard')); 
         }else{
-            return redirect()->to(base_url('/login'));
+            return redirect()->to(base_url('/camera'));
         }
+        
     }
 
 

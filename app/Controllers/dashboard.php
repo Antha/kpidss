@@ -31,6 +31,7 @@ class Dashboard extends Controller
         // $recentFinishedQuiz = $this->userQuizModel->getRecentFinishedQuiz($userId);
         // $session->set("recentFinishedQuiz",$recentFinishedQuiz);
 
+        //var_dump($user_level);
         return view('dashboard_page',['user_level' => $user_level]);
     }
 

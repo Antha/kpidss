@@ -59,7 +59,7 @@
                                         <h5 class="card-title cstm-main-menu-card-title">PRODUCT KNOWLEDGE</h5>
                                     </a>
                                 </div>
-                                <?php }else if($user_level == 'admin' || $user_level == 'admin_cms'){ ?>
+                                <?php } if($user_level == 'admin' || $user_level == 'admin_cms'){ ?>
                                     <div class="w-100 mt-sm-4"></div>
 
                                     <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
