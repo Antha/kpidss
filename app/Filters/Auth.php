@@ -11,53 +11,24 @@ class Auth implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        $session = session();
+        $userModel = new UserModel();
+        
         /*if (!session()->get('isLoggedIn')) {
             return redirect()->to('/login');
         }*/
 
-        $session = session();
-        $userModel = new UserModel();
-        $timeout = 299; // 5 minutes timeout
-        $lastActivity = $session->get('last_activity');
-        d(time(),$lastActivity,time() - $lastActivity,$session->get('user_id'));
+        if ($session->has('user_id')) {
+            $user = $userModel->find($session->get('user_id'));
 
-        if ((time() - $lastActivity >= $timeout)) {
-              
-            echo "test";
-            $sql = "UPDATE user WHERE id='".$session->get('user_id')."' SET session_id = null";
-            echo $sql;            
-            // Remove session_id from database
-            //$userModel->update($session->get('user_id'), ['session_id' => null]);
-
-            // Destroy session
-            //$session->destroy();
-            //return redirect()->to('/login')->with('error', 'Session expired due to inactivity.');
-        }else{
-            return redirect()->to('/login');
-        }
-        //$session->set('last_activity', time());
-
-
-        /*if ($session->has('user_id')) {
-            $lastActivity = $session->get('last_activity');
-            $timeout = 300; // 5 minutes timeout
-
-            // If last activity exceeds timeout, log the user out
-            if ($lastActivity && (time() - $lastActivity > $timeout)) {
-               
-                // Remove session_id from database
-                $userModel->update($session->get('user_id'), ['session_id' => null]);
-
-                // Destroy session
+            // Check if session matches the database
+            if (!$user || $user['session_id'] !== $session->get('session_id')) {
                 $session->destroy();
-                return redirect()->to('/login')->with('error', 'Session expired due to inactivity.');
+                return redirect()->to('/login')->with('error', 'Session expired. Please log in again.');
             }
-
-            // Update last activity timestamp
-            $session->set('last_activity', time());
-        }else {
+        } else {
             return redirect()->to('/login')->with('error', 'You must be logged in to access this page.');
-        }*/
+        }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

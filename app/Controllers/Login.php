@@ -29,33 +29,34 @@ class Login extends Controller
         if ($user) {
             if (password_verify($password, $user['password'])) {
                 // Generate a unique session ID
-                $sessionID = bin2hex(random_bytes(32));
+              
 
                 // Check if user is already logged in
-                if (!empty($user['session_id'])) {
+                if ($user['session_id']) {
                     return redirect()->back()->with('error', 'You are already logged in on another device.');
+                }else{
+                    $sessionID = bin2hex(random_bytes(32));
+                    // Update session ID in the database
+                    $model->update($user['id'], ['session_id' => $sessionID]);
+
+                    $session->set([
+                        'user_id' => $user['id'],
+                        'username' => $user['username'],
+                        'user_level' => $user["level"],
+                        'agent_id' => $user['agent_id'],
+                        'digipos_id' => $user['digipos_id'],
+                        'regional' => $user['regional'],
+                        'branch' => $user['branch'],
+                        'cluster' => $user['cluster'],
+                        'session_id' => $sessionID,
+                        'last_activity' => time(), // Track last activity
+                        'isLoggedIn' => true,
+                    ]);
+
+                    writeLogToFile("user_level : ".$user["level"]);
+                    
+                    return redirect()->to('/dashboard');
                 }
-
-                // Update session ID in the database
-                $model->update($user['id'], ['session_id' => $sessionID]);
-
-                $session->set([
-                    'user_id' => $user['id'],
-                    'username' => $user['username'],
-                    'user_level' => $user["level"],
-                    'agent_id' => $user['agent_id'],
-                    'digipos_id' => $user['digipos_id'],
-                    'regional' => $user['regional'],
-                    'branch' => $user['branch'],
-                    'cluster' => $user['cluster'],
-                    'session_id' => $sessionID,
-                    'last_activity' => time(), // Track last activity
-                    'isLoggedIn' => true,
-                ]);
-
-                writeLogToFile("user_level : ".$user["level"]);
-                
-                return redirect()->to('/dashboard');
             } else {
                 $session->setFlashdata('error', 'Invalid Password');
                 return redirect()->to('/login');
