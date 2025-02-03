@@ -128,7 +128,7 @@ class Quiz extends BaseController
                     writeLogToFile("question_no_here : ".$question_no);
                 }
     
-                if ($questionNumber > $this->questionModel->countAll()) {
+                if ($question_no > $this->questionModel->countAll()) {
                     return redirect()->to('/quiz/result');
                 }else{
                 
