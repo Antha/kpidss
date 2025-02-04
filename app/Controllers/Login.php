@@ -4,9 +4,17 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\UserModel;
+use App\Models\UserHistoriesModel;
 
 class Login extends Controller
 {
+    protected $userHistoriesModel;
+
+    public function __construct()
+    {
+        $this->userHistoriesModel = new UserHistoriesModel();
+    }
+
     public function index()
     {
         $session = session();
@@ -52,6 +60,12 @@ class Login extends Controller
                 //'session_id' => $sessionID,
                     'last_activity' => time(), // Track last activity
                     'isLoggedIn' => true,
+                ]);
+                
+
+                //insert to log history
+                $this->userHistoriesModel->insert([
+                    "id_user" => $user['id']
                 ]);
 
                 writeLogToFile("user_level : ".$user["level"]);
