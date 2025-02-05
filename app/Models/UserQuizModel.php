@@ -71,7 +71,7 @@ class UserQuizModel extends Model
         return $this->insertID();
     }
 
-    public function getSummaryPNP($periode)
+    public function getSummaryPNP($periode,$where_var)
     {
         $db = \Config\Database::connect();
 
@@ -79,7 +79,11 @@ class UserQuizModel extends Model
              SELECT
                 u.agent_id AS `Agent ID`, 
                 u.`digipos_id` `Digipos ID`,
-                u.`dss_name` `DSS Name`, 
+                u.`dss_name` `DSS Name`,
+                u.`branch` `branch`,
+                u.`cluster` `cluster`,
+                u.`city` `city`,
+                u.`role` `role`, 
                 uq.datetime, 
                 ss.num_right,
                 ss.num_wrong,
@@ -110,6 +114,8 @@ class UserQuizModel extends Model
             ) AS ss 
             JOIN `users` u ON ss.user_id = u.id
             JOIN `user_quizess` uq ON ss.quiz_id = uq.id
+            $where_var
+            ORDER BY score DESC
         ");
 
         return $query->getResultArray();
@@ -154,7 +160,21 @@ class UserQuizModel extends Model
             JOIN `users` u ON ss.user_id = u.id
             JOIN `kpi_data` kd ON u.agent_id = kd.agent_id
             JOIN `user_quizess` uq ON ss.quiz_id = uq.id
+            ORDER BY score DESC
         ");
+
+        return $query->getResultArray();
+    }
+
+    function getDsLoginReport(){
+        $db = \Config\Database::connect();
+
+        $query = $db->query("SELECT A.total_user user_login, B.total_user - A.total_user user_belum_login
+                FROM
+                (SELECT 'total' total, IFNULL(COUNT(DISTINCT id_user),0) total_user FROM `user_histories`) A 
+                JOIN
+                (SELECT 'total' total,IFNULL(COUNT(DISTINCT id),0) total_user FROM users)B
+                ON a.total = b.total");
 
         return $query->getResultArray();
     }
