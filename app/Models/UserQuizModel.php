@@ -170,11 +170,15 @@ class UserQuizModel extends Model
         $db = \Config\Database::connect();
 
         $query = $db->query("SELECT A.total_user user_login, B.total_user - A.total_user user_belum_login
-                FROM
-                (SELECT 'total' total, IFNULL(COUNT(DISTINCT id_user),0) total_user FROM `user_histories`) A 
-                JOIN
-                (SELECT 'total' total,IFNULL(COUNT(DISTINCT id),0) total_user FROM users)B
-                ON A.total = B.total");
+                            FROM
+                            (SELECT 'total' total, IFNULL(COUNT(DISTINCT id_user),0) total_user
+                            FROM `user_histories` sub_a
+                            JOIN users sub_b
+                            ON sub_a.id_user = sub_b.id
+                            WHERE sub_b.`level` NOT IN('admin','admin_cms')) A 
+                            JOIN
+                            (SELECT 'total' total,IFNULL(COUNT(DISTINCT id),0) total_user FROM users WHERE `level` NOT IN('admin','admin_cms'))B
+                            ON A.total = B.total");
 
         $isDataExsits = $query->getNumRows();
 
