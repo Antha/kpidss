@@ -657,7 +657,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-3 col-sm-2 col-lg-1" style="padding-left: 0px;">
-                                                <button id="exportCsv" class="submit_btn border_rad1" style="width: 100%;">DOWNLOAD</button>
+                                                <button id="btn_dl_data_admin" class="submit_btn border_rad1" style="width: 100%;">DOWNLOAD</button>
                                             </div>
                                         </div>
                                     </div>
