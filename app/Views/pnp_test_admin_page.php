@@ -100,12 +100,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-1 col-md-2 col-md-2 col-4 download-icon-wrapper">
-                                                <form method="post" action="<?php echo base_url()."pnp_test/download_test_result"; ?>" enctype="multipart/form-data">
+                                                <div class="download-btn-style1" style="padding-right:0px;">
+                                                    <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
+                                                </div>
+                                                <!--<form method="post" action="<?php echo base_url()."pnp_test/download_test_result"; ?>" enctype="multipart/form-data">
                                                     <div class="download-btn-style1" style="padding-right:0px;">
                                                         <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
                                                         <input type="hidden" name="periode_dl" id="periode_dl" value="<?php echo $displayPeriode; ?>">
                                                     </div>
-                                                </form>
+                                                </form>-->
                                             </div>
                                         </div>
                                     </div>
@@ -295,6 +298,51 @@
                 });
             }
         
+        });
+
+        $('#btn_dl_test_result').click(function () {
+            function exportTableToCSV(filename) {
+                var csv = [];
+                var rows = $('#dataTable thead, #dataTable tbody').find('tr');
+
+                rows.each(function () {
+                    var row = [];
+                    $(this).find('th, td').each(function () {
+                        // Bungkus isi sel dengan tanda kutip ganda untuk menangani koma dalam sel
+                        row.push('"' + $(this).text().trim() + '"');
+                    });
+                    csv.push(row.join(','));
+                });
+
+                var csvContent = csv.join("\n");
+                var blob = new Blob([csvContent], { type: "text/csv" });
+
+                // Deteksi apakah dijalankan di Android atau browser
+                if (window.Android && typeof window.Android.downloadCSV === 'function') {
+                    // Android: Kirim data melalui JavaScriptInterface
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        window.Android.downloadCSV(reader.result, filename);
+                    };
+                    reader.readAsText(blob);
+                } else {
+                    // Browser: Gunakan mekanisme unduh standar
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.download = filename;
+                    downloadLink.style.display = 'none';
+
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                }
+            }
+
+            // Call the function with a file name
+            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // Format YYYYMMDDHHMMSS
+            const exported_fname = `table_export_pnp_test_result_${dateformat}.csv`;
+            exportTableToCSV(exported_fname);
+
         });
     });
 </script>
