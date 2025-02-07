@@ -174,9 +174,17 @@ class UserQuizModel extends Model
                 (SELECT 'total' total, IFNULL(COUNT(DISTINCT id_user),0) total_user FROM `user_histories`) A 
                 JOIN
                 (SELECT 'total' total,IFNULL(COUNT(DISTINCT id),0) total_user FROM users)B
-                ON a.total = b.total");
+                ON A.total = B.total");
 
-        return $query->getResultArray();
+        $isDataExsits = $query->getNumRows();
+
+        if($isDataExsits >= 1){
+            $result = $query->getResultArray();
+        }else{
+            $result = 0;
+        }
+
+        return $result;
     }
 }
 ?>
