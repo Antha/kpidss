@@ -13,9 +13,15 @@ class Pnp_test extends Controller
         $session = Session();
         $userQuizModel = new UserQuizModel();
         $getLastUpdateData = $userQuizModel->getLastUpdateData();
-        $lastUpdateData = date("Y-m-d",strtotime($getLastUpdateData['datetime']));
 
-        $displayPeriode = date("Ym",strtotime($getLastUpdateData['datetime']));
+        if(!isset($getLastUpdateData['datetime'])){
+            $lastUpdateData = date('Y-m-d');
+            $displayPeriode = date('Ym');
+        }else{
+            $lastUpdateData = date("Y-m-d",strtotime($getLastUpdateData['datetime']));
+            $displayPeriode = date("Ym",strtotime($getLastUpdateData['datetime']));
+        }
+
         $getDsLoginReport = $userQuizModel->getDsLoginReport();
 
         if($this->request->getPost('submit_periode_data_pnp_test')){
@@ -24,7 +30,7 @@ class Pnp_test extends Controller
             $clusterSubmit = $this->request->getPost('filter_cluster_admin');
             $citySubmit = $this->request->getPost('filter_city_admin');
         }else{
-            $periodeSubmit = $lastUpdateData;
+            $periodeSubmit = $displayPeriode;
             $branchSubmit = NULL;
             $clusterSubmit = NULL;
             $citySubmit = NULL;
@@ -50,9 +56,9 @@ class Pnp_test extends Controller
 
         $where_var = $branch_var.''.$cluster_var.''.$city_var;
 
-        $resumeResults = $userQuizModel->getSummaryPNP($displayPeriode,$where_var);
+        $resumeResults = $userQuizModel->getSummaryPNP($periodeSubmit,$where_var);
 
-        if(!isset($resumeResults)){
+        if(!isset($resumeResults) || !$resumeResults){
             $bestDs = '';
         }else{
             $bestDs = $resumeResults[0]['DSS Name'];

@@ -37,7 +37,7 @@
                                     <span>last update : <?php echo $lastUpdateData; ?></span>
                                 </div>
                                 <div class="filter_wrapper mt-4">
-                                    <div class="container-fluid  ps-0 pe-0">
+                                    <div class="container-fluid">
                                         <form method="post"  action="<?php echo base_url()."pnp_test"; ?>" enctype="multipart/form-data" id="form_submit_date">
                                             <?php csrf_field() ?>
                                             <div class="row">
@@ -81,21 +81,17 @@
                                         <div class="row">
                                             <div class="col-md-2 pt-3">
                                                 <i class="fa-solid fa-circle-info pe-1"></i>
-                                                <span>DS Login : <?= esc($getDsLoginReport[0]['user_login']); ?></span>
+                                                <span>DS Login : <?= $getDsLoginReport[0]['user_login']; ?></span>
                                             </div>
                                             <div class="col-md-2 pt-3">
                                                 <i class="fa-solid fa-circle-info pe-1"></i>
-                                                <span>DS Belum Login : <?= esc($getDsLoginReport[0]['user_belum_login']); ?></span>
+                                                <span>DS Belum Login : <?= $getDsLoginReport[0]['user_belum_login']; ?></span>
                                             </div>
-                                            <div class="col-md-5 pt-3">
+                                            <div class="col-md-2 pt-3">
                                                 <i class="fa-solid fa-circle-info pe-1"></i>
-                                                <span>Best DS : <?= esc($bestDs); ?></span>
+                                                <span>Best DS : </span>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="container-fluid download-search-wrapper">
-                                        <div class="row">
-                                            <div class="offset-lg-7 col-lg-3 col-md-3 col-8 pt-2 pb-2">
+                                            <div class="offset-md-3 col-md-2 col-8 pt-2">
                                                 <div class="input-group">
                                                     <input type="text" id="searchInput" class="form-control txt-input-data" placeholder="Search..."  onkeyup="filterTable()">
                                                     <div class="input-group-addon">
@@ -103,21 +99,68 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-1 col-md-2 col-4 download-table-wrapper">
-                                                <div class="download-btn-style1" style="padding-right:0px;">
-                                                    <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-1 col-md-2 col-4 download-image-wrapper">
-                                                <form method="post" action="<?php echo base_url()."pnp_test/downloadImages"; ?>" enctype="multipart/form-data">
+                                            <div class="col-lg-1 col-md-2 col-md-2 col-4 download-icon-wrapper">
+                                                <form method="post" action="<?php echo base_url()."pnp_test/download_test_result"; ?>" enctype="multipart/form-data">
                                                     <div class="download-btn-style1" style="padding-right:0px;">
-                                                        <input type="submit" id="btn_dl_img" name="btn_dl_img" value="dl image" class="submit_btn border_rad1"></input>
-                                                        <input type="hidden" name="periode_dl_hidden" id="periode_dl_hidden" value="<?php echo $displayPeriode; ?>">
+                                                        <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
+                                                        <input type="hidden" name="periode_dl" id="periode_dl" value="<?php echo $displayPeriode; ?>">
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
+                                    <!--<div class="row">
+                                        <div class="col-lg-2 col-sm-2 col-md-2 col-6">
+                                            <form method="post"  action="<?php echo base_url()."pnp_test"; ?>" enctype="multipart/form-data" id="form_submit_date">
+                                                <div class="row">
+                                                    <div class="form-group col-md-8 col-8 no-pad-right" id="col_periode_data">
+                                                        <div class="input-group dropdown_input">
+                                                            <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_pnp_test" value="<?php echo $displayPeriode; ?>" />
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-2 col-3 no-pad-right mb-3" id="wrap_filter_branch">
+                                                        <select name='filter_branch_admin' id='filter_branch_admin' class="select_filter" title="Area Type" style="width:100%;">
+                                                            <option value="" selected disabled>Branch</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-2 col-3 no-pad-right mb-3" id="wrap_filter_cluster">
+                                                        <select name='filter_cluster_admin' id='filter_cluster_admin' class="select_filter" title="Area Type" style="width:100%;">
+                                                            <option value="" selected disabled>Cluster</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-2 col-3 no-pad-right mb-3" id="wrap_filter_cluster">
+                                                        <select name='filter_cluster_admin' id='filter_cluster_admin' class="select_filter" title="Area Type" style="width:100%;">
+                                                            <option value="" selected disabled>City</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4 col-4">			
+                                                        <input type="submit" id="btn_submit_periode" name="submit_periode_data_pnp_test" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
+                                                    </div>
+                                                    <p style="padding-left:5px;color:#00bd52;"><?= session()->getFlashdata('error_message'); ?></p> 
+                                                    <div style="clear: both;"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-md-2 col-6">
+                                            <div class="input-group">
+                                                <input required type="text" id="searchInput" class="form-control txt-input-data" placeholder="Search..."  onkeyup="filterTable()">
+                                                <div class="input-group-addon">
+                                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-md-2 col-12 offset-lg-10 offset-md-10 download-icon-wrapper">
+                                            <form method="post" action="<?php echo base_url()."pnp_test/download_test_result"; ?>" enctype="multipart/form-data">
+                                                <div class="download-btn-style1" style="padding-right:0px;">
+                                                    <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
+                                                    <input type="hidden" name="periode_dl" id="periode_dl" value="<?php echo $displayPeriode; ?>">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>-->
                                 </div>
                                 <div class="table-wrapper-scroll-y table-scroll-y">
                                     <div class="table-top-scroll">
@@ -139,7 +182,6 @@
                                                     <th scope="col">Score</th>
                                                     <th scope="col">Status</th>
                                                     <th scope="col">Role</th>
-                                                    <th class="d-none" scope="col">Photo</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -148,7 +190,7 @@
                                                         <tr>
                                                             <td class="text-center"><?= $index + 1 ?></td>
                                                             <td><?= esc($result['Agent ID']) ?></td>
-                                                            <td id="ds_name"><?= esc($result['DSS Name']) ?></td>
+                                                            <td><?= esc($result['DSS Name']) ?></td>
                                                             <td><?= esc($result['branch']) ?></td>
                                                             <td><?= esc($result['cluster']) ?></td>
                                                             <td><?= esc($result['city']) ?></td>
@@ -157,8 +199,7 @@
                                                             <td class="text-center"><?= esc($result['num_wrong']) ?></td>
                                                             <td class="text-center"><?= esc($result['score']) ?></td>
                                                             <td><?= esc($result['status']) ?></td>
-                                                            <td><?= esc($result['role']) ?></td>
-                                                            <td class="d-none"><img src="<?= base_url('/uploads/photos/' . $result['photo']) ?>" width="100" alt="<?= $result['photo'] ?>"></td>
+                                                            <td><?= esc($result['status']) ?></td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
@@ -167,49 +208,80 @@
                                                     </tr>
                                                 <?php endif; ?>
                                             </tbody>
-                                            <script>
-                                                function filterTable() {
-                                                        const input = document.getElementById("searchInput");
-                                                        const filter = input.value.toLowerCase();
-                                                        const table = document.getElementById("dataTable");
-                                                        const rows = table.getElementsByTagName("tr");
+                                        </table>
 
-                                                        for (let i = 1; i < rows.length; i++) {
-                                                            const cells = rows[i].getElementsByTagName("td");
-                                                            let match = false;
-                                                            
-                                                            for (let j = 0; j < cells.length; j++) {
-                                                                if (cells[j]) {
-                                                                    const textValue = cells[j].textContent || cells[j].innerText;
-                                                                    if (textValue.toLowerCase().indexOf(filter) > -1) {
-                                                                        match = true;
-                                                                        break;
-                                                                    }
-                                                                }
+                                        <script>
+                                            document.getElementById("form_submit_date").addEventListener("submit", function () {
+                                                event.preventDefault(); // Mencegah refresh halaman
+
+                                                const periode = document.getElementById("periode_data").value;
+                                                const branch = document.getElementById("filter_branch_admin").value;
+                                                const cluster = document.getElementById("filter_cluster_admin").value;
+                                                const city = document.getElementById("filter_city_admin").value;
+
+                                                const table = document.getElementById("dataTable");
+                                                const rows = table.getElementsByTagName("tr");
+                                                //const filter = document.getElementById("periode_data").value; // Value in 'ym' format
+                                                //const table = document.getElementById("dataTable");
+                                                //const rows = table.getElementsByTagName("tr");
+
+                                                for (let i = 1; i < rows.length; i++) { // Skip the header row
+                                                    const cells = rows[i].getElementsByTagName("td");
+                                                    if (cells.length > 0) {
+                                                        const testDate = cells[6]?.textContent.trim() || cells[6]?.innerText.trim();
+                const testDateYM = testDate ? testDate.substring(0, 7).replace("-", "") : "";
+                const rowBranch = cells[3]?.textContent.trim();
+                const rowCluster = cells[4]?.textContent.trim();
+                const rowCity = cells[5]?.textContent.trim();
+
+                                                        // Apply filters
+                                                        const matchPeriode = !periode || testDateYM === periode;
+                                                        const matchBranch = !branch || rowBranch === branch;
+                                                        const matchCluster = !cluster || rowCluster === cluster;
+                                                        const matchCity = !city || rowCity === city;
+
+                                                        // Show row if all conditions match, otherwise hide
+                                                        rows[i].style.display = (matchPeriode && matchBranch && matchCluster && matchCity) ? "" : "none";
+                                                        //const testDate = cells[4]?.textContent || cells[4]?.innerText; // Get 'Test Date' column value
+                                                        //console.log(testDate);
+                                                        //const testDateYM = testDate ? testDate.substring(0, 7).replace("-", "") : ""; // Extract 'ym' format
+
+                                                        // Show row if it matches the filter; otherwise hide it
+                                                        //rows[i].style.display = testDateYM === filter ? "" : "none";
+                                                    }
+                                                }
+                                                
+                                                //isi hidden input dengan nilai dari filter
+                                                //$('#periode_dl').val(filter);
+                                                document.getElementById('periode_dl').value = periode;
+                                            });
+
+                                            function filterTable() {
+                                                const input = document.getElementById("searchInput");
+                                                const filter = input.value.toLowerCase();
+                                                const table = document.getElementById("dataTable");
+                                                const rows = table.getElementsByTagName("tr");
+
+                                                for (let i = 1; i < rows.length; i++) {
+                                                    const cells = rows[i].getElementsByTagName("td");
+                                                    let match = false;
+                                                    
+                                                    for (let j = 0; j < cells.length; j++) {
+                                                        if (cells[j]) {
+                                                            const textValue = cells[j].textContent || cells[j].innerText;
+                                                            if (textValue.toLowerCase().indexOf(filter) > -1) {
+                                                                match = true;
+                                                                break;
                                                             }
-                                                            
-                                                            rows[i].style.display = match ? "" : "none";
                                                         }
                                                     }
-                                            </script>
-                                        </table>
+                                                    
+                                                    rows[i].style.display = match ? "" : "none";
+                                                }
+                                            }
+                                        </script>
                                     </div>
                                 </div>
-
-                                <table class="table table-responsive">
-                                    <thead>
-                                        <td>User ID</td>
-                                        <td>Photo</td>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach($resumeResults as $rows){ ?>
-                                            <tr>
-                                                <td><?= esc($rows['DSS Name']); ?></td>
-                                                <td><img src="<?= base_url('/uploads/photos/' . $rows['photo']) ?>" width="100" alt="<?= $rows['photo'] ?>"></td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
                             </div> 
                         </div>
                     </div>
@@ -225,34 +297,32 @@
 
 <link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script>
-    function w3_open() {
-        $('#main').removeClass('main-sidebar-close');
-        $('#main').addClass('main-sidebar-open');
-        $('#footer').removeClass('main-sidebar-close');
-        $('#footer').addClass('main-sidebar-open');
-        $('#mySidebar').removeClass('sidebar-close');
-        $('#mySidebar').addClass('sidebar-open');
-        $('.dashboard-menu').addClass('main-sidebar-open');
-        $('.dashboard-menu').removeClass('main-sidebar-close');
-        document.getElementById("openNav").style.display = 'none';
-    }
-    function w3_close() {
-        $('#main').removeClass('main-sidebar-open');
-        $('#main').addClass('main-sidebar-close');
-        $('#footer').addClass('main-sidebar-close');
-        $('#footer').removeClass('main-sidebar-open');
-        $('#mySidebar').removeClass('sidebar-open');
-        $('#mySidebar').addClass('sidebar-close');
-        $('.dashboard-menu').removeClass('main-sidebar-open');
-        $('.dashboard-menu').addClass('main-sidebar-close');
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("openNav").style.display = "inline-block";
-    }
-
     $(document).ready(function() {
+        function w3_open() {
+            $('#main').removeClass('main-sidebar-close');
+            $('#main').addClass('main-sidebar-open');
+            $('#footer').removeClass('main-sidebar-close');
+            $('#footer').addClass('main-sidebar-open');
+            $('#mySidebar').removeClass('sidebar-close');
+            $('#mySidebar').addClass('sidebar-open');
+            $('.dashboard-menu').addClass('main-sidebar-open');
+            $('.dashboard-menu').removeClass('main-sidebar-close');
+            document.getElementById("openNav").style.display = 'none';
+        }
+        function w3_close() {
+            $('#main').removeClass('main-sidebar-open');
+            $('#main').addClass('main-sidebar-close');
+            $('#footer').addClass('main-sidebar-close');
+            $('#footer').removeClass('main-sidebar-open');
+            $('#mySidebar').removeClass('sidebar-open');
+            $('#mySidebar').addClass('sidebar-close');
+            $('.dashboard-menu').removeClass('main-sidebar-open');
+            $('.dashboard-menu').addClass('main-sidebar-close');
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("openNav").style.display = "inline-block";
+        }
+
         $('#periode_data').datepicker({
             format: "yyyymm",
             startView: 1,
@@ -325,146 +395,6 @@
             }
         
         });
-
-        $('#btn_dl_test_resultxx').click(function () {
-            function exportTableToCSV(filename) {
-                var csv = [];
-                var rows = $('#dataTable thead, #dataTable tbody').find('tr');
-
-                rows.each(function () {
-                    var row = [];
-                    $(this).find('th, td').each(function () {
-                        // Bungkus isi sel dengan tanda kutip ganda untuk menangani koma dalam sel
-                        row.push('"' + $(this).text().trim() + '"');
-                    });
-                    csv.push(row.join(','));
-                });
-
-                var csvContent = csv.join("\n");
-                var blob = new Blob([csvContent], { type: "text/csv" });
-
-                // Deteksi apakah dijalankan di Android atau browser
-                if (window.Android && typeof window.Android.downloadCSV === 'function') {
-                    // Android: Kirim data melalui JavaScriptInterface
-                    var reader = new FileReader();
-                    reader.onload = function () {
-                        window.Android.downloadCSV(reader.result, filename);
-                    };
-                    reader.readAsText(blob);
-                } else {
-                    // Browser: Gunakan mekanisme unduh standar
-                    var downloadLink = document.createElement('a');
-                    downloadLink.href = URL.createObjectURL(blob);
-                    downloadLink.download = filename;
-                    downloadLink.style.display = 'none';
-
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-                }
-            }
-
-            // Call the function with a file name
-            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // Format YYYYMMDDHHMMSS
-            const exported_fname = `table_export_pnp_test_result_${dateformat}.csv`;
-            exportTableToCSV(exported_fname);
-
-        });
-
-        $('#btn_dl_test_result').click(function () {
-            function exportTableToCSV(filename) {
-        var csv = [];
-        var imageUrls = [];
-        var rows = $('#dataTable thead, #dataTable tbody').find('tr');
-
-        rows.each(function () {
-            var row = [];
-            $(this).find('th, td').each(function () {
-                var cellContent = $(this).text().trim();
-
-                // Check if the cell contains an image
-                var imgTag = $(this).find('img');
-                if (imgTag.length) {
-                    var imgUrl = imgTag.attr('src');
-                    if (imgUrl) {
-                        var absoluteUrl = new URL(imgUrl, window.location.origin).href; // Convert to absolute URL
-                        imageUrls.push({ url: absoluteUrl, name: getFileNameFromUrl(absoluteUrl) });
-                        cellContent = absoluteUrl; // Store image URL in CSV
-                    }
-                }
-
-                row.push('"' + cellContent + '"');
-            });
-            csv.push(row.join(','));
-        });
-
-        var csvContent = csv.join("\n");
-        var blob = new Blob([csvContent], { type: "text/csv" });
-
-        // Download CSV
-        var downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = filename;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-
-        // Download and ZIP images
-        if (imageUrls.length > 0) {
-            downloadAndZipImages(imageUrls);
-        } else {
-            alert("No images found in the table.");
-        }
-    }
-
-    function downloadAndZipImages(imageList) {
-        var zip = new JSZip();
-        var folder = zip.folder("images"); // Create "images" folder in ZIP
-        var promises = [];
-
-        imageList.forEach((img, index) => {
-            var promise = fetchImage(img.url).then(blob => {
-                if (blob) {
-                    folder.file(img.name, blob); // Add image to ZIP
-                }
-            }).catch(error => console.error("Error downloading image:", error));
-
-            promises.push(promise);
-        });
-
-        // Wait for all images to be downloaded
-        Promise.all(promises).then(() => {
-            if (Object.keys(folder.files).length > 0) {
-                zip.generateAsync({ type: "blob" }).then(content => {
-                    saveAs(content, "images.zip");
-                });
-            } else {
-                alert("No images could be downloaded.");
-            }
-        });
-    }
-
-    async function fetchImage(url) {
-        try {
-            const response = await fetch(url, { mode: 'no-cors' }); // Attempt to bypass CORS
-            if (!response.ok) throw new Error(`Failed to fetch ${url}`);
-            return await response.blob();
-        } catch (error) {
-            console.error("Fetch error:", error);
-            return null;
-        }
-    }
-
-    function getFileNameFromUrl(url) {
-        return url.split('/').pop() || `image_${Date.now()}.jpg`;
-    }
-
-    // Generate timestamp for filename
-    const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14);
-    const exported_fname = `table_export_${dateformat}.csv`;
-    exportTableToCSV(exported_fname);
-        });
-
     });
 </script>
 
