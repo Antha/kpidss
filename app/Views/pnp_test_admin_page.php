@@ -91,7 +91,11 @@
                                                 <i class="fa-solid fa-circle-info pe-1"></i>
                                                 <span>Best DS : <?= esc($bestDs); ?></span>
                                             </div>
-                                            <div class="col-md-2 col-8 pt-2 pb-2">
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid download-search-wrapper">
+                                        <div class="row">
+                                            <div class="offset-lg-7 col-lg-3 col-md-3 col-8 pt-2 pb-2">
                                                 <div class="input-group">
                                                     <input type="text" id="searchInput" class="form-control txt-input-data" placeholder="Search..."  onkeyup="filterTable()">
                                                     <div class="input-group-addon">
@@ -99,16 +103,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-1 col-md-2 col-md-2 col-4 download-icon-wrapper">
+                                            <div class="col-lg-1 col-md-2 col-4 download-table-wrapper">
                                                 <div class="download-btn-style1" style="padding-right:0px;">
                                                     <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
                                                 </div>
-                                                <!--<form method="post" action="<?php echo base_url()."pnp_test/download_test_result"; ?>" enctype="multipart/form-data">
+                                            </div>
+                                            <div class="col-lg-1 col-md-2 col-4 download-image-wrapper">
+                                                <form method="post" action="<?php echo base_url()."pnp_test/downloadImages"; ?>" enctype="multipart/form-data">
                                                     <div class="download-btn-style1" style="padding-right:0px;">
-                                                        <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
-                                                        <input type="hidden" name="periode_dl" id="periode_dl" value="<?php echo $displayPeriode; ?>">
+                                                        <input type="submit" id="btn_dl_img" name="btn_dl_img" value="dl image" class="submit_btn border_rad1"></input>
+                                                        <input type="hidden" name="periode_dl_hidden" id="periode_dl_hidden" value="<?php echo $displayPeriode; ?>">
                                                     </div>
-                                                </form>-->
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -133,6 +139,7 @@
                                                     <th scope="col">Score</th>
                                                     <th scope="col">Status</th>
                                                     <th scope="col">Role</th>
+                                                    <th class="d-none" scope="col">Photo</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -141,7 +148,7 @@
                                                         <tr>
                                                             <td class="text-center"><?= $index + 1 ?></td>
                                                             <td><?= esc($result['Agent ID']) ?></td>
-                                                            <td><?= esc($result['DSS Name']) ?></td>
+                                                            <td id="ds_name"><?= esc($result['DSS Name']) ?></td>
                                                             <td><?= esc($result['branch']) ?></td>
                                                             <td><?= esc($result['cluster']) ?></td>
                                                             <td><?= esc($result['city']) ?></td>
@@ -151,6 +158,7 @@
                                                             <td class="text-center"><?= esc($result['score']) ?></td>
                                                             <td><?= esc($result['status']) ?></td>
                                                             <td><?= esc($result['role']) ?></td>
+                                                            <td class="d-none"><img src="<?= base_url('/uploads/photos/' . $result['photo']) ?>" width="100" alt="<?= $result['photo'] ?>"></td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
@@ -187,6 +195,21 @@
                                         </table>
                                     </div>
                                 </div>
+
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <td>User ID</td>
+                                        <td>Photo</td>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($resumeResults as $rows){ ?>
+                                            <tr>
+                                                <td><?= esc($rows['DSS Name']); ?></td>
+                                                <td><img src="<?= base_url('/uploads/photos/' . $rows['photo']) ?>" width="100" alt="<?= $rows['photo'] ?>"></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
                             </div> 
                         </div>
                     </div>
@@ -202,6 +225,8 @@
 
 <link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script>
     function w3_open() {
         $('#main').removeClass('main-sidebar-close');
@@ -226,6 +251,7 @@
         document.getElementById("mySidebar").style.display = "none";
         document.getElementById("openNav").style.display = "inline-block";
     }
+
     $(document).ready(function() {
         $('#periode_data').datepicker({
             format: "yyyymm",
@@ -300,7 +326,7 @@
         
         });
 
-        $('#btn_dl_test_result').click(function () {
+        $('#btn_dl_test_resultxx').click(function () {
             function exportTableToCSV(filename) {
                 var csv = [];
                 var rows = $('#dataTable thead, #dataTable tbody').find('tr');
@@ -344,6 +370,101 @@
             exportTableToCSV(exported_fname);
 
         });
+
+        $('#btn_dl_test_result').click(function () {
+            function exportTableToCSV(filename) {
+        var csv = [];
+        var imageUrls = [];
+        var rows = $('#dataTable thead, #dataTable tbody').find('tr');
+
+        rows.each(function () {
+            var row = [];
+            $(this).find('th, td').each(function () {
+                var cellContent = $(this).text().trim();
+
+                // Check if the cell contains an image
+                var imgTag = $(this).find('img');
+                if (imgTag.length) {
+                    var imgUrl = imgTag.attr('src');
+                    if (imgUrl) {
+                        var absoluteUrl = new URL(imgUrl, window.location.origin).href; // Convert to absolute URL
+                        imageUrls.push({ url: absoluteUrl, name: getFileNameFromUrl(absoluteUrl) });
+                        cellContent = absoluteUrl; // Store image URL in CSV
+                    }
+                }
+
+                row.push('"' + cellContent + '"');
+            });
+            csv.push(row.join(','));
+        });
+
+        var csvContent = csv.join("\n");
+        var blob = new Blob([csvContent], { type: "text/csv" });
+
+        // Download CSV
+        var downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = filename;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        // Download and ZIP images
+        if (imageUrls.length > 0) {
+            downloadAndZipImages(imageUrls);
+        } else {
+            alert("No images found in the table.");
+        }
+    }
+
+    function downloadAndZipImages(imageList) {
+        var zip = new JSZip();
+        var folder = zip.folder("images"); // Create "images" folder in ZIP
+        var promises = [];
+
+        imageList.forEach((img, index) => {
+            var promise = fetchImage(img.url).then(blob => {
+                if (blob) {
+                    folder.file(img.name, blob); // Add image to ZIP
+                }
+            }).catch(error => console.error("Error downloading image:", error));
+
+            promises.push(promise);
+        });
+
+        // Wait for all images to be downloaded
+        Promise.all(promises).then(() => {
+            if (Object.keys(folder.files).length > 0) {
+                zip.generateAsync({ type: "blob" }).then(content => {
+                    saveAs(content, "images.zip");
+                });
+            } else {
+                alert("No images could be downloaded.");
+            }
+        });
+    }
+
+    async function fetchImage(url) {
+        try {
+            const response = await fetch(url, { mode: 'no-cors' }); // Attempt to bypass CORS
+            if (!response.ok) throw new Error(`Failed to fetch ${url}`);
+            return await response.blob();
+        } catch (error) {
+            console.error("Fetch error:", error);
+            return null;
+        }
+    }
+
+    function getFileNameFromUrl(url) {
+        return url.split('/').pop() || `image_${Date.now()}.jpg`;
+    }
+
+    // Generate timestamp for filename
+    const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14);
+    const exported_fname = `table_export_${dateformat}.csv`;
+    exportTableToCSV(exported_fname);
+        });
+
     });
 </script>
 
