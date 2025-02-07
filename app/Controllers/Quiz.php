@@ -107,7 +107,7 @@ class Quiz extends BaseController
                     // $answers[$questionId] = $answer;
                     // $session->set('quiz_answers', $answers);
     
-                    $this->questionAnswerModel->save([
+                    $this->questionAnswerModel->ignore(true)->save([
                         'user_id' => $userId,
                         'quiz_id' => $quizId,
                         'question_id' => $questionId,
