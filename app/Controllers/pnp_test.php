@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\UserQuizModel;
 use CodeIgniter\Controller;
 use Config\Session;
+use ZipArchive;
 
 class Pnp_test extends Controller
 {
@@ -100,4 +101,35 @@ class Pnp_test extends Controller
             exit;
         }
     }*/
+
+    public function downloadImages()
+    {
+        $userQuizModel = new UserQuizModel();
+        
+        $periodeSubmit = $this->request->getPost('periode_dl_hidden');
+        $where_var = '';
+        $users = $userQuizModel->getSummaryPNP($periodeSubmit,$where_var);
+
+        $zip = new ZipArchive();
+        $zipFileName = 'user_photos_'.$periodeSubmit.'.zip';
+        $zipPath = WRITEPATH . $zipFileName;
+
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+            return $this->response->setStatusCode(500)->setBody("Gagal membuat ZIP file.");
+        }
+
+        foreach ($users as $user) {
+            $photoPath = FCPATH . 'uploads/photos/' . $user['photo']; // Path ke foto
+
+            if (file_exists($photoPath)) {
+                $newFileName = $user['DSS Name'] . '.' . pathinfo($photoPath, PATHINFO_EXTENSION);
+                $zip->addFile($photoPath, $newFileName);
+            }
+        }
+
+        $zip->close();
+
+        return $this->response->download($zipPath, null)->setFileName($zipFileName);
+    }
+
 }
