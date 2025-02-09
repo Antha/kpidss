@@ -373,96 +373,125 @@
 
         $('#btn_dl_test_result').click(function () {
             function exportTableToCSV(filename) {
-        var csv = [];
-        var imageUrls = [];
-        var rows = $('#dataTable thead, #dataTable tbody').find('tr');
+                var csv = [];
+                var imageUrls = [];
+                var rows = $('#dataTable thead, #dataTable tbody').find('tr');
 
-        rows.each(function () {
-            var row = [];
-            $(this).find('th, td').each(function () {
-                var cellContent = $(this).text().trim();
+                rows.each(function () {
+                    var row = [];
+                    $(this).find('th, td').each(function () {
+                        var cellContent = $(this).text().trim();
 
-                // Check if the cell contains an image
-                var imgTag = $(this).find('img');
-                if (imgTag.length) {
-                    var imgUrl = imgTag.attr('src');
-                    if (imgUrl) {
-                        var absoluteUrl = new URL(imgUrl, window.location.origin).href; // Convert to absolute URL
-                        imageUrls.push({ url: absoluteUrl, name: getFileNameFromUrl(absoluteUrl) });
-                        cellContent = absoluteUrl; // Store image URL in CSV
-                    }
-                }
+                        var imgTag = $(this).find('img');
+                        if (imgTag.length) {
+                            var imgUrl = imgTag.attr('src');
+                            if (imgUrl) {
+                                imageUrls.push({ url: imgUrl, name: getFileNameFromUrl(imgUrl) });
+                                cellContent = imgUrl; // Store image URL in CSV
+                            }
+                        }
 
-                row.push('"' + cellContent + '"');
-            });
-            csv.push(row.join(','));
-        });
-
-        var csvContent = csv.join("\n");
-        var blob = new Blob([csvContent], { type: "text/csv" });
-
-        // Download CSV
-        var downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = filename;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-
-        // Download and ZIP images
-        if (imageUrls.length > 0) {
-            downloadAndZipImages(imageUrls);
-        } else {
-            alert("No images found in the table.");
-        }
-    }
-
-    function downloadAndZipImages(imageList) {
-        var zip = new JSZip();
-        var folder = zip.folder("images"); // Create "images" folder in ZIP
-        var promises = [];
-
-        imageList.forEach((img, index) => {
-            var promise = fetchImage(img.url).then(blob => {
-                if (blob) {
-                    folder.file(img.name, blob); // Add image to ZIP
-                }
-            }).catch(error => console.error("Error downloading image:", error));
-
-            promises.push(promise);
-        });
-
-        // Wait for all images to be downloaded
-        Promise.all(promises).then(() => {
-            if (Object.keys(folder.files).length > 0) {
-                zip.generateAsync({ type: "blob" }).then(content => {
-                    saveAs(content, "images.zip");
+                        row.push('"' + cellContent + '"');
+                    });
+                    csv.push(row.join(','));
                 });
-            } else {
-                alert("No images could be downloaded.");
+
+                var csvContent = csv.join("\n");
+                var blob = new Blob([csvContent], { type: "text/csv" });
+
+                // Deteksi apakah dijalankan di Android atau browser
+                if (window.Android && typeof window.Android.downloadCSV === 'function') {
+                    // Android: Kirim data melalui JavaScriptInterface
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        window.Android.downloadCSV(reader.result, filename);
+                    };
+                    reader.readAsText(blob);
+                } else {
+                    // Browser: Gunakan mekanisme unduh standar
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.download = filename;
+                    downloadLink.style.display = 'none';
+
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                }
+
+                if (imageUrls.length > 0) {
+                    downloadAndZipImages(imageUrls);
+                } else {
+                    alert("No images found in the table.");
+                }
             }
-        });
-    }
 
-    async function fetchImage(url) {
-        try {
-            const response = await fetch(url, { mode: 'no-cors' }); // Attempt to bypass CORS
-            if (!response.ok) throw new Error(`Failed to fetch ${url}`);
-            return await response.blob();
-        } catch (error) {
-            console.error("Fetch error:", error);
-            return null;
-        }
-    }
+            function downloadAndZipImages(imageList) {
+                var zip = new JSZip();
+                var folder = zip.folder("images");
+                var promises = [];
 
-    function getFileNameFromUrl(url) {
-        return url.split('/').pop() || `image_${Date.now()}.jpg`;
-    }
+                imageList.forEach((img) => {
+                    var promise = fetchImage(img.url).then(blob => {
+                        if (blob) {
+                            folder.file(img.name, blob);
+                        }
+                    }).catch(error => console.error("Error downloading image:", error));
 
-    // Generate timestamp for filename
-    const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14);
-    const exported_fname = `table_export_${dateformat}.csv`;
-    exportTableToCSV(exported_fname);
+                    promises.push(promise);
+                });
+
+                Promise.all(promises).then(() => {
+                    if (Object.keys(folder.files).length > 0) {
+                        zip.generateAsync({ type: "blob" }).then(content => {
+                            saveAs(content, "images.zip");
+                        });
+                    } else {
+                        alert("No images could be downloaded.");
+                    }
+                });
+            }
+
+            async function fetchImage(url) {
+                try {
+                    if (url.startsWith("blob:")) {
+                        return await convertBlobToImage(url);
+                    } else {
+                        const response = await fetch(url);
+                        if (!response.ok) throw new Error(`Failed to fetch ${url}`);
+                        return await response.blob();
+                    }
+                } catch (error) {
+                    console.error("Fetch error:", error);
+                    return null;
+                }
+            }
+
+            async function convertBlobToImage(blobUrl) {
+                return new Promise((resolve, reject) => {
+                    var img = document.querySelector(`img[src="${blobUrl}"]`);
+                    if (!img) return reject("Image not found");
+
+                    var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext("2d");
+                    canvas.width = img.naturalWidth;
+                    canvas.height = img.naturalHeight;
+                    ctx.drawImage(img, 0, 0);
+
+                    canvas.toBlob(blob => {
+                        if (blob) resolve(blob);
+                        else reject("Failed to convert blob to image");
+                    }, "image/jpeg");
+                });
+            }
+
+            function getFileNameFromUrl(url) {
+                return url.split('/').pop() || `image_${Date.now()}.jpg`;
+            }
+
+            const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14);
+            const exported_fname = `table_export_${dateformat}.csv`;
+            exportTableToCSV(exported_fname);
         });
 
     });
