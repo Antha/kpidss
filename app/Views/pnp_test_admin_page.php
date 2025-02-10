@@ -196,7 +196,7 @@
                                     </div>
                                 </div>
 
-                                <table class="table table-responsive">
+                                <table class="table table-responsive d-none">
                                     <thead>
                                         <td>User ID</td>
                                         <td>Photo</td>
