@@ -30,10 +30,11 @@ class Quiz extends BaseController
     {
         $session = session();
 
-        if(session()->get('capturedImage')){
+        $userId = $session->get('user_id');
+        $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
+
+        if(session()->get('capturedImage') || $unfinishedQuiz["photo"]){
             if($session->get("user_level") == 'agent_branch' || $session->get("user_level") == 'agent_cluster'){
-                $userId = $session->get('user_id');
-                $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
                 $fileName = "";
                 $quizId = "";
                 if($unfinishedQuiz){
@@ -75,21 +76,29 @@ class Quiz extends BaseController
                         $result = $this->userQuizModel->replaceData($data);
     
                     }else{
-                        // Data yang akan dimasukkan atau di-insert
-                        $fileName = $this->saveBase64Image($session->get("capturedImage"), "./uploads/photos");
-                        $mylong = $session->get('mylong');
-                        $mylat = $session->get('mylat');
-                        $data = [
-                            'user_id' => $userId,
-                            'photo' => $fileName,
-                            'long' => $session->get('mylong'),
-                            'lat' => $session->get('mylat'),
-                            'status' => 'unfinished',
-                            'datetime' => date('Y-m-d H:i:s'),
-                        ];
-    
-                        // Panggil metode replaceData
-                        $quizId = $this->userQuizModel->insertAndGetId($data);
+                         // Data yang akan dimasukkan atau di-insert
+                         $fileName = $this->saveBase64Image($session->get("capturedImage"), "./uploads/photos");
+                         $mylong = $session->get('mylong');
+                         $mylat = $session->get('mylat');
+ 
+                         //$fileName = 0;
+ 
+                         if($fileName && $fileName === true){
+                             $data = [
+                                 'user_id' => $userId,
+                                 'photo' => $fileName,
+                                 'long' => $session->get('mylong'),
+                                 'lat' => $session->get('mylat'),
+                                 'status' => 'unfinished',
+                                 'datetime' => date('Y-m-d H:i:s'),
+                             ];
+ 
+                             // Panggil metode replaceData
+                             $quizId = $this->userQuizModel->insertAndGetId($data);
+                         }else{
+                             session()->setFlashdata('errors_camera', 'Terjadi kesalahan saat memproses data. Periksa Jaringan Anda');
+                             return redirect()->to(base_url('/camera'));
+                         }
                     }
     
                     $session->set('id_quiz', $quizId);

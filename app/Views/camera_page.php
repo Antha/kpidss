@@ -51,6 +51,11 @@
                                     <div class="col-md-6 offset-md-3 text-center">
                                         <div class="card shadow">
                                             <div class="card-body">
+                                                <?php if (session()->getFlashdata('errors_camera')): ?>
+                                                    <div class="alert alert-danger">
+                                                        <?= session()->getFlashdata('errors_camera'); ?>
+                                                    </div>
+                                                <?php endif; ?>
         
                                                 <?php if (is_array(session('recentFinishedQuiz'))) { 
                                                      $recentFinishedQuiz = session('recentFinishedQuiz');
