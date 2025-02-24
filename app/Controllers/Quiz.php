@@ -33,7 +33,9 @@ class Quiz extends BaseController
         $userId = $session->get('user_id');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
 
-        if(session()->get('capturedImage') || $unfinishedQuiz["photo"]){
+        //writeLogToFile("session()->get('capturedImage') : ".session()->get('capturedImage'));
+
+        if(session()->has('capturedImage') || $unfinishedQuiz["photo"]){
             if($session->get("user_level") == 'agent_branch' || $session->get("user_level") == 'agent_cluster'){
                 $fileName = "";
                 $quizId = "";
@@ -83,7 +85,7 @@ class Quiz extends BaseController
  
                          //$fileName = 0;
  
-                         if($fileName && $fileName === true){
+                         if($fileName && $fileName !== false){
                              $data = [
                                  'user_id' => $userId,
                                  'photo' => $fileName,
@@ -137,12 +139,12 @@ class Quiz extends BaseController
                     writeLogToFile("question_no_here : ".$question_no);
                 }
     
-                if ($question_no > $this->questionModel->countAll()) {
+                if ($question_no > $this->questionModel->countOnStatus()) {
                     return redirect()->to('/quiz/result');
                 }else{
                 
                     // Ambil pertanyaan saat ini
-                    writeLogToFile("questionNumber : ".$questionNumber);
+                    writeLogToFile("Ambil pertanyaan saat ini questionNumber : ".$questionNumber."question_no : ".$question_no);
                     $question = $this->questionModel->getQuestionByNumber($questionNumber);
     
                     return view('quiz_page', [
