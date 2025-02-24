@@ -35,4 +35,9 @@ class QuestionModel extends Model
          return $this->db->table($this->table)
              ->update(['status' => 'Off']); // Update kolom status menjadi 'Off'
      }
+
+    public function countOnStatus()
+    {
+        return $this->where('status', 'On')->countAllResults();
+    }
 }
