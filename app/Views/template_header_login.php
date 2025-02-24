@@ -11,7 +11,12 @@
     <script type="text/javascript" src="<?php echo base_url('/script/jquery-3.7.1.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo base_url('/script/bootstrap.bundle.min.js') ?>"></script>
 
-    <!-- STYLES -->
+    <!--Font Awesome-->
+    <link href="<?php echo base_url('/assets/fontawesome/css/fontawesome.css') ?>" rel="stylesheet" />
+    <link href="<?php echo base_url('/assets/fontawesome/css/brands.css') ?>" rel="stylesheet" />
+    <link href="<?php echo base_url('/assets/fontawesome/css/solid.css') ?>" rel="stylesheet" />
+
+    <!--STYLES-->
     <link rel="stylesheet" href="<?php echo base_url('/css/bootstrap.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('/css/login_page_style.css') ?>">
 </head>
