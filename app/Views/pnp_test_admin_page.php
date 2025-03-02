@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="container-fluid download-search-wrapper">
                                         <div class="row">
-                                            <div class="offset-lg-7 col-lg-3 col-md-3 col-8 pt-2 pb-2">
+                                            <div class="offset-lg-7 col-lg-3 col-md-3 col-6 pt-2 pb-2">
                                                 <div class="input-group">
                                                     <input type="text" id="searchInput" class="form-control txt-input-data" placeholder="Search..."  onkeyup="filterTable()">
                                                     <div class="input-group-addon">
@@ -103,15 +103,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-1 col-md-2 col-4 download-table-wrapper">
+                                            <div class="col-lg-1 col-md-2 col-3 download-table-wrapper ps-0">
                                                 <div class="download-btn-style1" style="padding-right:0px;">
-                                                    <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1"></input>
+                                                    <input type="submit" id="btn_dl_test_result" name="btn_dl_test_result" value="download" class="submit_btn border_rad1 w-100"></input>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-1 col-md-2 col-4 download-image-wrapper">
+                                            <div class="col-lg-1 col-md-2 col-3 download-image-wrapper ps-0">
                                                 <form method="post" action="<?php echo base_url()."pnp_test/downloadImages"; ?>" enctype="multipart/form-data">
                                                     <div class="download-btn-style1" style="padding-right:0px;">
-                                                        <input type="submit" id="btn_dl_img" name="btn_dl_img" value="dl image" class="submit_btn border_rad1"></input>
+                                                        <input type="submit" id="btn_dl_img" name="btn_dl_img" value="dl image" class="submit_btn border_rad1 w-100"></input>
                                                         <input type="hidden" name="periode_dl_hidden" id="periode_dl_hidden" value="<?php echo $displayPeriode; ?>">
                                                     </div>
                                                 </form>
@@ -134,6 +134,7 @@
                                                     <th scope="col" style="min-width: 200px;">Cluster</th>
                                                     <th scope="col" style="min-width: 200px;">City</th>
                                                     <th scope="col" style="min-width: 200px;">Test Date</th>
+                                                    <th scope="col" style="min-width: 200px;">Periode</th>
                                                     <th scope="col">Right Answer</th>
                                                     <th scope="col">Wrong Answer</th>
                                                     <th scope="col">Score</th>
@@ -153,6 +154,7 @@
                                                             <td><?= esc($result['cluster']) ?></td>
                                                             <td><?= esc($result['city']) ?></td>
                                                             <td class="text-center"><?= esc($result['datetime']) ?></td>
+                                                            <td class="text-center"><?= esc($result['periode']) ?></td>
                                                             <td class="text-center"><?= esc($result['num_right']) ?></td>
                                                             <td class="text-center"><?= esc($result['num_wrong']) ?></td>
                                                             <td class="text-center"><?= esc($result['score']) ?></td>
@@ -196,7 +198,7 @@
                                     </div>
                                 </div>
 
-                                <table class="table table-responsive">
+                                <table class="table table-responsive d-none">
                                     <thead>
                                         <td>User ID</td>
                                         <td>Photo</td>
