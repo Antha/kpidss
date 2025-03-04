@@ -58,6 +58,7 @@ class Pnp_test extends Controller
         $where_var = $branch_var.''.$cluster_var.''.$city_var;
 
         $resumeResults = $userQuizModel->getSummaryPNP($periodeSubmit,$where_var);
+        //
 
         if(!isset($resumeResults) || !$resumeResults){
             $bestDs = '';

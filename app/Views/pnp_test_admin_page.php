@@ -134,6 +134,7 @@
                                                     <th scope="col" style="min-width: 200px;">Cluster</th>
                                                     <th scope="col" style="min-width: 200px;">City</th>
                                                     <th scope="col" style="min-width: 200px;">Test Date</th>
+                                                    <th scope="col" style="min-width: 200px;">Periode</th>
                                                     <th scope="col">Right Answer</th>
                                                     <th scope="col">Wrong Answer</th>
                                                     <th scope="col">Score</th>
@@ -153,6 +154,7 @@
                                                             <td><?= esc($result['cluster']) ?></td>
                                                             <td><?= esc($result['city']) ?></td>
                                                             <td class="text-center"><?= esc($result['datetime']) ?></td>
+                                                            <td class="text-center"><?= esc($result['periode']) ?></td>
                                                             <td class="text-center"><?= esc($result['num_right']) ?></td>
                                                             <td class="text-center"><?= esc($result['num_wrong']) ?></td>
                                                             <td class="text-center"><?= esc($result['score']) ?></td>
