@@ -33,7 +33,9 @@ class Quiz extends BaseController
         $userId = $session->get('user_id');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
 
-        if(session()->get('capturedImage') || $unfinishedQuiz["photo"]){
+        //writeLogToFile("session()->get('capturedImage') : ".session()->get('capturedImage'));
+
+        if(session()->has('capturedImage') || $unfinishedQuiz["photo"]){
             if($session->get("user_level") == 'agent_branch' || $session->get("user_level") == 'agent_cluster'){
                 $fileName = "";
                 $quizId = "";
@@ -83,7 +85,7 @@ class Quiz extends BaseController
  
                          //$fileName = 0;
  
-                         if($fileName && $fileName === true){
+                         if($fileName && $fileName !== false){
                              $data = [
                                  'user_id' => $userId,
                                  'photo' => $fileName,
