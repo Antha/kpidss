@@ -10,7 +10,7 @@ class UsersPointsModel extends Model
     protected $primaryKey = 'id'; // Primary key
 
     protected $allowedFields = [
-        'agent_id',
+        'user_id',
         'point',
         'point_category',
         'periode'

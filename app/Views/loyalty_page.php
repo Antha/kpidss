@@ -38,6 +38,8 @@
                                 </div>
                                
                                 <div class="point-content">
+                                    
+                                   
                                     <div class="point-info container">
                                         <div class="row mt-2 justify-content-center">
                                             <div class="col-12 col-sm-12 mt-2">
@@ -57,6 +59,32 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container mt-3" id="point-detail">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <span class="dark-blue-text mb-2 d-inline-block">POIN DETAIL PERIODE <?php echo $yPeriode; ?></span>
+                                                <table class="table table-bordered table-striped table-hover table-sm">
+                                                    <thead>
+                                                        <tr style="background-color: #003057;color: white;">
+                                                            <?php foreach($detailPointMonth as $rm){ 
+                                                                if($rm['bulan'] != 'JAN' && $rm['bulan'] != 'FEB'){ ?>
+                                                                <th class="text-center"><?php echo $rm['bulan']; ?></th>
+                                                            <?php }} ?>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                        <?php foreach($detailPointMonth as $rows){ 
+                                                                if($rows['bulan'] != 'JAN' && $rows['bulan'] != 'FEB' && $rows['total_point'] > 0){ ?>
+                                                                <td class="text-center"><?php echo $rows['total_point']; ?></td>
+                                                            <?php }} ?>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -99,7 +127,7 @@
                                             </div>
                                         </div>
                                     <?php } ?>
-
+                                    
                                     <div class="product-redeem container mt-4">
                                         <!-- Filter Section -->
                                         <div class="filter-section mb-4 justify-content-end">

@@ -50,7 +50,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="content-wrapper">
-                                s<div class="row w-100">
+                                <div class="row w-100">
                                     <div class="col-md-6 offset-md-3 text-center">
                                         <div class="card shadow">
                                             <div class="card-body">
@@ -76,7 +76,7 @@
                                                     echo "<div class='result'>";
                                                     echo "<p><strong>Right Answer:</strong> " . $totalIsRight . "</p>";
                                                     echo "<p><strong>Wrong Answer:</strong> " . $totalIsWrong . "</p>";
-                                                    echo "<p><strong>Score:</strong> " . ($totalIsRight * 10) . "</p>";
+                                                    echo "<p><strong>Score:</strong> " . ($score) . "</p>";
                                                     echo "</div>";
                                                 ?>
                                                 <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>

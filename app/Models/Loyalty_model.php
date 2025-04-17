@@ -74,6 +74,82 @@ class Loyalty_model extends Model
         }
     }
 
+    function getMaxPeriodePoint($user_id){
+        $sql = "SELECT MAX(periode) AS ym
+                FROM users_points
+                WHERE user_id = ?";
+
+        $query = $this->db_con->query($sql, [$user_id]);
+
+        if($query){
+            return $query->getRowArray();
+        }else{
+            return $this->db_con->error();
+        }
+    }
+
+    function getDetailPointMonth($user_id,$yPeriode){
+        $sql = "SELECT 
+                CASE WHEN SUBSTRING(periode,5,6) = '01' THEN 'JAN' 
+                WHEN SUBSTRING(periode,5,6) = '02' THEN 'FEB'
+                WHEN SUBSTRING(periode,5,6) = '03' THEN 'MAR'
+                WHEN SUBSTRING(periode,5,6) = '04' THEN 'APR'
+                WHEN SUBSTRING(periode,5,6) = '05' THEN 'MAY'
+                WHEN SUBSTRING(periode,5,6) = '06' THEN 'JUN'
+                WHEN SUBSTRING(periode,5,6) = '07' THEN 'JUL'
+                WHEN SUBSTRING(periode,5,6) = '08' THEN 'AUG'
+                WHEN SUBSTRING(periode,5,6) = '09' THEN 'SEP'
+                WHEN SUBSTRING(periode,5,6) = '10' THEN 'OCT'
+                WHEN SUBSTRING(periode,5,6) = '11' THEN 'NOV'
+                WHEN SUBSTRING(periode,5,6) = '12' THEN 'DEC'
+                END AS bulan,
+                SUM(POINT) AS total_point
+            FROM 
+                users_points
+            WHERE 
+                user_id = ?
+                AND periode LIKE ?
+            GROUP BY 
+                periode
+            ORDER BY 
+                periode";
+
+         $query = $this->db_con->query($sql, [$user_id, $yPeriode . '%']);
+
+         if ($query) {
+             return $query->getResultArray();
+         } else {
+             return $this->db_con->error();
+         }
+    }
+    
+    function getDetailPoint($yPeriode, $user_id)
+    {
+        $sql = "
+            SELECT 
+                DATE_FORMAT(STR_TO_DATE(periode, '%Y%m'), '%b') AS month,
+                SUM(point) AS total_point
+            FROM 
+                users_points
+            WHERE 
+                user_id = ?
+                AND periode LIKE ?
+            GROUP BY 
+                month
+            ORDER BY 
+                periode
+        ";
+
+        $query = $this->db_con->query($sql, [$user_id, $yPeriode . '%']);
+
+        if ($query) {
+            return $query->getResultArray();
+        } else {
+            return $this->db_con->error();
+        }
+    }
+
+
     function getPoint($user_id){
         $sql = "SELECT
             point.num - ifnull(redeem.num,0) AS point_now
@@ -81,7 +157,8 @@ class Loyalty_model extends Model
             (
                 SELECT 
                 SUM(`point`) `num`
-                FROM `users_points` WHERE user_id = $user_id AND periode >= ( SELECT DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 3 MONTH),\"%Y%m\") FROM DUAL )
+                FROM `users_points` WHERE user_id = $user_id AND periode >= (SELECT DATE_FORMAT(DATE_SUB(NOW(),INTERVAL 3 MONTH),'%Y%m')
+                FROM users_points LIMIT 1)
             ) `point`
             JOIN
             (

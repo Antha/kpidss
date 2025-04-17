@@ -22,12 +22,24 @@ class Loyalty extends Controller
         
         //$query_result_user_point = 300;
         $session = session();
+        //get Max periode point by user id
+        $maxPeriodePoint= $this->loyalty_model->getMaxPeriodePoint($session->get("user_id"));
+        $periodeFormatted = \DateTime::createFromFormat('Ym', $maxPeriodePoint['ym'])->format('Y-m-d');
+        $yPeriode = date('Y', strtotime($periodeFormatted));
+
+        //get detail point
+        $detailPointMonth = $this->loyalty_model->getDetailPointMonth($session->get("user_id"),$yPeriode);
+        $detailPoint = $this->loyalty_model->getDetailPoint($session->get("user_id"),$yPeriode);
+        
         $results= $this->loyalty_model->getPoint($session->get("user_id"));
 
         //display user point
          // Fetch the product redeems for user_id = 6
         $data['product_redeems'] = $this->loyalty_model->getProductRedeemsByUser($session->get("user_id"));
         $data['display_user_point'] = $results[0]["point_now"];
+        $data['detailPoint'] = $detailPoint;
+        $data['detailPointMonth'] = $detailPointMonth;
+        $data['yPeriode'] = $yPeriode;
         $data['display_all_product'] = $this->loyalty_model->display_all_product();
 
         return view('loyalty_page',$data);

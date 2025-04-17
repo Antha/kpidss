@@ -28,6 +28,7 @@ class Camera extends BaseController
         $session->set("recentFinishedQuiz",$recentFinishedQuiz);
 
         $results= $this->loyalty_model->getPoint($session->get("user_id"));
+        //dd($results);
         $data['display_user_point'] = $results[0]["point_now"];
 
         return view('camera_page',$data);

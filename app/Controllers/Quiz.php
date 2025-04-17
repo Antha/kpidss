@@ -203,12 +203,14 @@ class Quiz extends BaseController
         //insert to point
         $totalIsRight = 0;
         $poinVal = 0;
-        
+        $countQuestion = 0;
+
         foreach ($quizAnswers as $item) {
             $totalIsRight += $item['is_right'];
+            $countQuestion += 1;
         }
 
-        switch($totalIsRight){
+        /*switch($totalIsRight){
             case 1:
             case 2:
             case 3:
@@ -231,19 +233,29 @@ class Quiz extends BaseController
             case 10:
                 $poinVal = 150;
                 break;
-        }
+        }*/
 
+        $poinVal = ceil((100 / $countQuestion) * $totalIsRight);
+        
         $dataPoint = [
-            'user_id'    => $userId,
+            'user_id'    => (int) $userId,
             'point'       => $poinVal,
             'point_category' => "Quiz",
             'periode'     => date("Ym"),
         ];
 
-        $this->usersPointsModel->insert($dataPoint);
+        $exists = $this->usersPointsModel
+            ->where('user_id', $dataPoint['user_id'])
+            ->where('periode', $dataPoint['periode'])
+            ->first();
 
-        // Tampilkan hasil atau redirect ke halaman lain
-        return view('quiz_result_page', ['answers' => $quizAnswers]);
+        if (!$exists) {
+            $this->usersPointsModel->insert($dataPoint);
+            return view('quiz_result_page', ['answers' => $quizAnswers,'score' => $poinVal]);
+        } else {
+            return redirect()->to(base_url('/camera'));
+        }
+
     }
 
     function saveBase64Image($base64String, $uploadPath) {
