@@ -29,7 +29,7 @@ class UserQuizModel extends Model
             FROM (
                 SELECT 
                     user_id,
-                    MIN(DATEDIFF(CURDATE(), `datetime`)) AS days_difference,
+                    MIN(DATEDIFF(CURDATE(), `datetime_fake`)) AS days_difference,
                     DATE_ADD(min(datetime), INTERVAL 1 MONTH) as datetime_plus_1_month
                 FROM 
                     `user_quizess`
@@ -76,7 +76,7 @@ class UserQuizModel extends Model
         $db = \Config\Database::connect();
 
         $query = $db->query("
-             SELECT
+              SELECT
                 u.agent_id AS `Agent ID`, 
                 u.`digipos_id` `Digipos ID`,
                 u.`dss_name` `DSS Name`,
@@ -89,11 +89,12 @@ class UserQuizModel extends Model
                 ss.num_right,
                 ss.num_wrong,
                 ss.num_right * 10 AS score, 
-                uq.status
+                uq.status,
+                periode
             FROM
             (
                 SELECT
-                    user_id, quiz_id, 
+                    user_id, quiz_id, periode,
                     SUM(is_right) AS num_right,   
                     SUM(is_wrong) AS num_wrong
                 FROM
@@ -104,18 +105,19 @@ class UserQuizModel extends Model
                         qa.question_id, 
                         qa.answer, 
                         q.correct_option,
+                        q.periode,
                         CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
                         CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
                     FROM 
                         `quiz_answers` qa 
                     JOIN `questions` q ON qa.question_id = q.id 
-                    WHERE DATE_FORMAT(created_at,'%Y%m') = '$periode'
+                    WHERE q.periode = '$periode'
                 ) AS quiz_data
-                GROUP BY user_id, quiz_id
+                GROUP BY user_id, quiz_id, periode
             ) AS ss 
             JOIN `users` u ON ss.user_id = u.id
             JOIN `user_quizess` uq ON ss.quiz_id = uq.id
-            $where_var
+             $where_var
             ORDER BY score DESC
         ");
 

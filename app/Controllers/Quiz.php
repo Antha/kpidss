@@ -139,12 +139,12 @@ class Quiz extends BaseController
                     writeLogToFile("question_no_here : ".$question_no);
                 }
     
-                if ($question_no > $this->questionModel->countAll()) {
+                if ($question_no > $this->questionModel->countOnStatus()) {
                     return redirect()->to('/quiz/result');
                 }else{
                 
                     // Ambil pertanyaan saat ini
-                    writeLogToFile("questionNumber : ".$questionNumber);
+                    writeLogToFile("Ambil pertanyaan saat ini questionNumber : ".$questionNumber."question_no : ".$question_no);
                     $question = $this->questionModel->getQuestionByNumber($questionNumber);
     
                     return view('quiz_page', [
