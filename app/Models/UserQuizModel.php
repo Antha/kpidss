@@ -88,7 +88,7 @@ class UserQuizModel extends Model
                     uq.photo, 
                     ss.num_right,
                     ss.num_wrong,
-                    ss.num_right * 10 AS score, 
+                    ROUND((100/(ss.num_right + ss.num_wrong)),0) * ss.num_right AS score, 
                     uq.status,
                     periode
                     FROM

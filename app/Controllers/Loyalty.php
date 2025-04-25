@@ -23,12 +23,17 @@ class Loyalty extends Controller
         //$query_result_user_point = 300;
         $session = session();
         //get Max periode point by user id
-        $maxPeriodePoint= $this->loyalty_model->getMaxPeriodePoint($session->get("user_id"));
-        $periodeFormatted = \DateTime::createFromFormat('Ym', $maxPeriodePoint['ym'])->format('Y-m-d');
-        $yPeriode = date('Y', strtotime($periodeFormatted));
+        if($session->get("user_level") == 'user'){
+            $maxPeriodePoint= $this->loyalty_model->getMaxPeriodePoint($session->get("user_id"));
+            $periodeFormatted = \DateTime::createFromFormat('Ym', $maxPeriodePoint['ym'])->format('Y-m-d');
+             //$yPeriode = date('Y', strtotime($periodeFormatted));
+        }
+        //stato
+        $yPeriode = '2025';
 
         //get detail point
         $detailPointMonth = $this->loyalty_model->getDetailPointMonth($session->get("user_id"),$yPeriode);
+        $detailPointBatch = $this->loyalty_model->getDetailPointBatch($session->get("user_id"),$yPeriode);
         $detailPoint = $this->loyalty_model->getDetailPoint($session->get("user_id"),$yPeriode);
         
         $results= $this->loyalty_model->getPoint($session->get("user_id"));
@@ -36,10 +41,17 @@ class Loyalty extends Controller
         //display user point
          // Fetch the product redeems for user_id = 6
         $data['product_redeems'] = $this->loyalty_model->getProductRedeemsByUser($session->get("user_id"));
-        $data['display_user_point'] = $results[0]["point_now"];
+        if(is_null( $results[0]["point_now"])){
+            $data['display_user_point'] = "0";
+        }else{
+            $data['display_user_point'] = $results[0]["point_now"];
+        }
+
         $data['detailPoint'] = $detailPoint;
         $data['detailPointMonth'] = $detailPointMonth;
+        $data['detailPointBatch'] = $detailPointBatch;
         $data['yPeriode'] = $yPeriode;
+        $data['redeem_list'] = $this->loyalty_model->get_redeem_list();
         $data['display_all_product'] = $this->loyalty_model->display_all_product();
 
         return view('loyalty_page',$data);
@@ -72,14 +84,21 @@ class Loyalty extends Controller
         //run query for getting product poin
         $get_product_point = $this->loyalty_model->get_product_point($product_id);
 
+        $cek_status_redeem = $this->loyalty_model->cek_status_redeem($session->get("user_id"),$product_id);
+
         if($query_result_user_point > $get_product_point[0]['product_point'])
         {
             if($get_product_point[0]['product_point'] == 0){
                 $parse_value = array('info' => "empty stock");
                 echo json_encode($parse_value);
             }else{
-                $parse_value = array('info' => "good",'parse_product_point' => $get_product_point[0]['product_point'], 'parse_product_name' => $get_product_point[0]['product_name']);
-                echo json_encode($parse_value);
+                if($cek_status_redeem['status_available'] == 'NA'){
+                    $parse_value = array('info' => "not ready");
+                    echo json_encode($parse_value);
+                }else{
+                    $parse_value = array('info' => "good",'parse_product_point' => $get_product_point[0]['product_point'], 'parse_product_name' => $get_product_point[0]['product_name']);
+                    echo json_encode($parse_value);
+                }
             }
         }else{
             $parse_value = array('info' => "not enough point");
@@ -93,8 +112,10 @@ class Loyalty extends Controller
         $product_id = $_POST['product_id'];
         $userId = $session->get("user_id");
         $get_product_point = $this->loyalty_model->get_product_point($product_id);
+        $product_point = $get_product_point[0]['product_point'];
+        $status = "'NA'";
 
-        $this->loyalty_model->redeem_process_product($product_id, $userId, $get_product_point[0]['product_point']);
+        $this->loyalty_model->redeem_process_product($product_id, $userId, $product_point,$status);
         //belum dengan dikurangi user-point - product-point
         echo "success";
     }
