@@ -39,6 +39,45 @@
                                
                                 <div class="point-content">
                                     <div class="point-info container">
+                                        <?php if(session()->get('user_level') == 'admin'){ ?>
+                                        <div class="col-lg-1 col-md-2 col-3 download-table-wrapper ps-0 float-end">
+                                            <div class="download-btn-style1" style="padding-right:0px;">
+                                                <input type="submit" id="btn_dl_redeem_list" name="btn_dl_test_result" value="redeem list" class="submit_btn border_rad1 w-100"></input>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="clear: both;"></div>
+                                        <table id = "table-redeem-list" class="d-none">
+                                            <thead>
+                                                <tr>
+                                                    <th>Username</th>
+                                                    <th>DSS Name</th>
+                                                    <th>Branch</th>
+                                                    <th>Cluster</th>
+                                                    <th>City</th>
+                                                    <th>Product</th>
+                                                    <th>Product Point</th>
+                                                    <th>Redeem Time</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach($redeem_list as $rows){ ?>
+                                                <tr>
+                                                    <td><?php echo $rows['username'];?></td>
+                                                    <td><?php echo $rows['dss_name'];?></td>
+                                                    <td><?php echo $rows['branch'];?></td>
+                                                    <td><?php echo $rows['cluster'];?></td>
+                                                    <td><?php echo $rows['city'];?></td>
+                                                    <td><?php echo $rows['product_name'];?></td>
+                                                    <td><?php echo $rows['redeem_point'];?></td>
+                                                    <td><?php echo $rows['redeem_time'];?></td>
+                                                    <td><?php echo $rows['status_product'];?></td>
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                        <?php } ?>
                                         <div class="row mt-2 justify-content-center">
                                             <div class="col-12 col-sm-12 mt-2">
                                                 <div class="container-fluid rounded point-info-user p-3">
@@ -60,6 +99,34 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <?php if($display_user_point != 0){ ?>
+                                        <div class="container mt-3" id="point-detail">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <span class="dark-blue-text mb-2 d-inline-block">
+                                                        DETAIL PEROLEHAN POINT PERIODE <?php echo $yPeriode; ?>
+                                                    </span>
+                                                    <table class="table table-bordered table-striped table-hover table-sm">
+                                                        <thead>
+                                                            <tr style="background-color: #003057;color: white;">
+                                                                <?php foreach($detailPointBatch as $rm){ ?>
+                                                                    <th class="text-center">Batch <?php echo $rm['batch']; ?></th>
+                                                                <?php } ?>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                            <?php foreach($detailPointBatch as $rows){ ?>
+                                                                    <td class="text-center"><?php echo $rows['total_point']; ?></td>
+                                                                <?php } ?>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
 
                                     <?php if($product_redeems) { ?>
                                         <div class="container">
@@ -99,7 +166,7 @@
                                             </div>
                                         </div>
                                     <?php } ?>
-
+                                    
                                     <div class="product-redeem container mt-4">
                                         <!-- Filter Section -->
                                         <div class="filter-section mb-4 justify-content-end">
@@ -302,6 +369,9 @@
             }else if(data.info == 'empty stock'){
                 $("#fail-info").text("Maaf, stock habis");
                 $("#failModal").modal('show');
+            }else if(data.info == 'not ready'){
+                $("#fail-info").text("Maaf, Anda belum bisa redeem product berikut hingga enam bulan ke depan");
+                $("#failModal").modal('show');
             }else{
                 $("#modal-info-product-name").text(data.parse_product_name);
                 $("#modal-info-product-point").text(data.parse_product_point);
@@ -378,6 +448,51 @@
                 $(this).hide(); // Hide products that don't match the filter
             }
         });
+    });
+
+    $('#btn_dl_redeem_list').click(function () {
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var imageUrls = [];
+            var rows = $('#table-redeem-list thead, #table-redeem-list tbody').find('tr');
+
+            rows.each(function () {
+                var row = [];
+                $(this).find('th, td').each(function () {
+                    var cellContent = $(this).text().trim();
+
+                    row.push('"' + cellContent + '"');
+                });
+                csv.push(row.join(','));
+            });
+
+            var csvContent = csv.join("\n");
+            var blob = new Blob([csvContent], { type: "text/csv" });
+
+            // Deteksi apakah dijalankan di Android atau browser
+            if (window.Android && typeof window.Android.downloadCSV === 'function') {
+                // Android: Kirim data melalui JavaScriptInterface
+                var reader = new FileReader();
+                reader.onload = function () {
+                    window.Android.downloadCSV(reader.result, filename);
+                };
+                reader.readAsText(blob);
+            } else {
+                // Browser: Gunakan mekanisme unduh standar
+                var downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = filename;
+                downloadLink.style.display = 'none';
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
+        }
+
+        const dateformat = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14);
+        const exported_fname = `table_export_${dateformat}.csv`;
+        exportTableToCSV(exported_fname);
     });
 </script>
 

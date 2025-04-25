@@ -80,47 +80,50 @@ class UserQuizModel extends Model
 
         $query = $db->query("
               SELECT
-                u.agent_id AS `Agent ID`, 
-                u.`digipos_id` `Digipos ID`,
-                u.`dss_name` `DSS Name`,
-                u.`branch` `branch`,
-                u.`cluster` `cluster`,
-                u.`city` `city`,
-                u.`role` `role`, 
-                uq.datetime,
-                uq.photo, 
-                ss.num_right,
-                ss.num_wrong,
-                ss.num_right * 10 AS score, 
-                uq.status,
-                periode
-            FROM
-            (
-                SELECT
-                    user_id, quiz_id, periode,
-                    SUM(is_right) AS num_right,   
-                    SUM(is_wrong) AS num_wrong
-                FROM
-                (
-                    SELECT 
+                    u.agent_id AS `Agent ID`, 
+                    u.`digipos_id` `Digipos ID`,
+                    u.`dss_name` `DSS Name`,
+                    u.`branch` `branch`,
+                    u.`cluster` `cluster`,
+                    u.`city` `city`,
+                    u.`role` `role`, 
+                    uq.datetime,
+                    uq.photo, 
+                    ss.num_right,
+                    ss.num_wrong,
+                    ROUND((100/(ss.num_right + ss.num_wrong)),0) * ss.num_right AS score, 
+                    uq.status,
+                    periode
+                    FROM
+                    (
+
+                    SELECT
+                        user_id, quiz_id,created_at,periode,
+                        SUM(is_right) AS num_right,   
+                        SUM(is_wrong) AS num_wrong
+                    FROM
+                    (
+                        SELECT 
                         qa.user_id, 
                         qa.quiz_id, 
                         qa.question_id, 
-                        qa.answer, 
+                        qa.answer,
+                        qa.created_at, 
                         q.correct_option,
-                        q.periode,
+                        CONCAT('PNP TEST#',q.periode) periode,
                         CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
                         CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
-                    FROM 
+                        FROM 
                         `quiz_answers` qa 
-                    JOIN `questions` q ON qa.question_id = q.id 
-                ) AS quiz_data
-                GROUP BY user_id, quiz_id, periode
-            ) AS ss 
-            JOIN `users` u ON ss.user_id = u.id
-            JOIN `user_quizess` uq ON ss.quiz_id = uq.id
-             $where_var
-            ORDER BY score DESC
+                        JOIN `questions` q ON qa.question_id = q.id 
+                    
+                    ) AS quiz_data
+                    GROUP BY user_id, quiz_id
+                    ) AS ss 
+                                JOIN `users` u ON ss.user_id = u.id
+                                JOIN `user_quizess` uq ON ss.quiz_id = uq.id
+                                WHERE DATE_FORMAT(created_at,'%Y%m') = '$periode' $where_var
+                                ORDER BY score DESC
         ");
 
         writeLogTofile("halo kawan apa ada");

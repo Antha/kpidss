@@ -40,7 +40,7 @@ class Pnp_test extends Controller
         if(!isset($branchSubmit) || $branchSubmit == 'ALL'){
             $branch_var = '';
         }else{
-            $branch_var = "WHERE BRANCH = '".$branchSubmit."'";
+            $branch_var = "AND BRANCH = '".$branchSubmit."'";
         }
 
         if(!isset($clusterSubmit)){
