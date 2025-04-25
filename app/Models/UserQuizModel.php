@@ -25,18 +25,21 @@ class UserQuizModel extends Model
         $builder = $db->table($this->table);
 
         $query = $db->query("
-            SELECT *
+            
+        SELECT *
             FROM (
                 SELECT 
                     user_id,
                     MIN(DATEDIFF(CURDATE(), `datetime_fake`)) AS days_difference,
-                    DATE_ADD(min(datetime), INTERVAL 1 MONTH) as datetime_plus_1_month
+                    DATE_ADD(MIN(DATETIME), INTERVAL 1 MONTH) AS datetime_plus_1_month
                 FROM 
                     `user_quizess`
                 WHERE 
-                    user_id = ? AND status = 'finished'
+                    user_id = 3 AND STATUS = 'finished' AND DATETIME =
+                    (SELECT MAX(DATETIME) FROM user_quizess WHERE user_id = 3)
             ) AS DATA
             WHERE days_difference < 30
+            
         ", [$userId]);
 
         return $query->getRowArray(); // Mengembalikan satu baris data sebagai array
@@ -111,7 +114,6 @@ class UserQuizModel extends Model
                     FROM 
                         `quiz_answers` qa 
                     JOIN `questions` q ON qa.question_id = q.id 
-                    WHERE q.periode = '$periode'
                 ) AS quiz_data
                 GROUP BY user_id, quiz_id, periode
             ) AS ss 
@@ -120,6 +122,8 @@ class UserQuizModel extends Model
              $where_var
             ORDER BY score DESC
         ");
+
+        writeLogTofile("halo kawan apa ada");
 
         return $query->getResultArray();
     }

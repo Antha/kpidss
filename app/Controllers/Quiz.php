@@ -170,6 +170,8 @@ class Quiz extends BaseController
         $session = session();
         $quizAnswers = $session->get('quiz_answers');
 
+        writeLogToFile('session_get_user_id = '.$session->get('user_id'));
+
         $userId = $session->get('user_id');
         $quizId = $session->get('id_quiz');
         $fileName = $session->get('file_name');
@@ -239,6 +241,8 @@ class Quiz extends BaseController
             'point_category' => "Quiz",
             'periode'     => date("Ym"),
         ];
+
+        writeLogToFile('poinVal = '.$poinVal);
 
         $this->usersPointsModel->insert($dataPoint);
 

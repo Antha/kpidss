@@ -2,9 +2,9 @@
 
 <?php $this->section('content') ?>
 
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkAWnE66-S2rVK8XBXPp2LLGVePFEw0x0&libraries=places,geometry&callback=initMap" async defer></script>
-  -->
-<script src="script/mapsJavaScriptAPI.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkAWnE66-S2rVK8XBXPp2LLGVePFEw0x0&libraries=places,geometry&callback=initMap" async defer></script>
+ 
+<!-- <script src="script/mapsJavaScriptAPI.js"></script> -->
 
 <script src="/script/sweetalert/sweetalert2@11.js"></script>
 <style>
