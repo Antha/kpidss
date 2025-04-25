@@ -12,7 +12,12 @@
     <script type="text/javascript" src="<?php echo base_url('/script/bootstrap.bundle.min.js') ?>"></script>
     <script src="https://kit.fontawesome.com/47796dec6e.js" crossorigin="anonymous"></script>
 
-    <!-- STYLES -->
+    <!--Font Awesome-->
+    <link href="<?php echo base_url('/assets/fontawesome/css/fontawesome.css') ?>" rel="stylesheet" />
+    <link href="<?php echo base_url('/assets/fontawesome/css/brands.css') ?>" rel="stylesheet" />
+    <link href="<?php echo base_url('/assets/fontawesome/css/solid.css') ?>" rel="stylesheet" />
+
+    <!--STYLES-->
     <link rel="stylesheet" href="<?php echo base_url('/css/bootstrap.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('/css/main_page_style.css') ?>">
 </head>
