@@ -168,6 +168,14 @@ class Quiz extends BaseController
     public function result()
     {
         $session = session();
+
+        writeLogToFile("qp :".$session->get('quiz_processed'));
+
+        if ($session->get('quiz_processed') === true) {
+            $session->remove('quiz_processed');
+            return redirect()->to(base_url('/camera'));
+        } 
+
         $quizAnswers = $session->get('quiz_answers');
 
         writeLogToFile('session_get_user_id = '.$session->get('user_id'));
@@ -212,38 +220,15 @@ class Quiz extends BaseController
             $countQuestion += 1;
         }
 
-        /*switch($totalIsRight){
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                $poinVal = 0;
-                break;
-            case 6:
-                $poinVal = 80;
-                break;
-            case 7:
-                $poinVal = 90;
-                break;
-            case 8:
-                $poinVal = 100;
-                break;
-            case 9:
-                $poinVal = 110;
-                break;
-            case 10:
-                $poinVal = 150;
-                break;
-        }*/
-
+        $batch = $quizAnswers[0]["periode"];
+        writeLogToFile("periode :".$batch);
         $poinVal = ceil((100 / $countQuestion) * $totalIsRight);
-        
         $dataPoint = [
             'user_id'    => (int) $userId,
             'point'       => $poinVal,
             'point_category' => "Quiz",
             'periode'     => date("Ym"),
+            'batch' => $batch
         ];
 
         $exists = $this->usersPointsModel
@@ -258,6 +243,8 @@ class Quiz extends BaseController
             return redirect()->to(base_url('/camera'));
         }
 
+         // Set flag sudah diproses
+        $session->set('quiz_processed', true);
     }
 
     function saveBase64Image($base64String, $uploadPath) {

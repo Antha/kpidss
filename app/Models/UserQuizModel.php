@@ -35,8 +35,8 @@ class UserQuizModel extends Model
                 FROM 
                     `user_quizess`
                 WHERE 
-                    user_id = 3 AND STATUS = 'finished' AND DATETIME =
-                    (SELECT MAX(DATETIME) FROM user_quizess WHERE user_id = 3)
+                    user_id = ".$userId." AND STATUS = 'finished' AND DATETIME =
+                    (SELECT MAX(DATETIME) FROM user_quizess WHERE user_id = ".$userId.")
             ) AS DATA
             WHERE days_difference < 30
             
@@ -126,7 +126,7 @@ class UserQuizModel extends Model
                                 ORDER BY score DESC
         ");
 
-        writeLogTofile("halo kawan apa ada");
+        writeLogTofile($db->getLastQuery());
 
         return $query->getResultArray();
     }

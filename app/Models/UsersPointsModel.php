@@ -13,6 +13,7 @@ class UsersPointsModel extends Model
         'user_id',
         'point',
         'point_category',
-        'periode'
+        'periode',
+        'batch'
     ]; // Kolom yang dapat diisi
 }

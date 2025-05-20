@@ -19,6 +19,7 @@ class Camera extends BaseController
     public function index()
     {
         $session = session();
+        $session->remove('quiz_processed');
         $userId = $session->get('user_id');
         
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);

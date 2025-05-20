@@ -55,6 +55,7 @@ class QuestionAnswerModel extends Model
                     qa.answer, 
                     q.correct_option,
                     q.no question_no,
+                    q.periode,
                     CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
                     CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
                 FROM 
