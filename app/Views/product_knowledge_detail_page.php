@@ -52,16 +52,7 @@
                                                 <h6 class="fst-italic" style="color: #0c7a99;"><?php echo $detail[0]['created_date']; ?></h6>
                                             </div> 
                                             <div class="col-12 product-detail-wrapper">
-                                                <span>
-                                                    <?php 
-                                                        $input =  $detail[0]['product_detail']; 
-                                                        // Ubah contenteditable="true" menjadi contenteditable="false"
-                                                        $input = preg_replace('/contenteditable="true"/', 'contenteditable="false"', $input);
-                                                        // Hapus elemen <input>
-                                                        $input = preg_replace('/<input[^>]*>/', '', $input);
-                                                        echo $input;
-                                                    ?>
-                                                </span>
+                                                <span><?php echo $detail[0]['product_detail']; ?></span>
                                             </div>
                                         </div>
                                     </div>

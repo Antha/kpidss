@@ -13,15 +13,18 @@ class QuestionModel extends Model
     // Ambil pertanyaan berdasarkan nomor urut
     public function getQuestionByNumber($number)
     {
+        $session = session();
         return $this->asArray()
             ->where('id', $number)
-            ->first();
+            ->first('type', $session->get("role"));
     }
 
     // Ambil pertanyaan berdasarkan nomor urut
     public function get_min_id_on_status() {
+        $session = session();
         $this->selectMin('id'); // selectMin untuk memilih nilai minimum
         $this->where('status', 'On');
+        $this->where('type',  $session->get('role') );
         $result = $this->first(); // Mengambil satu hasil pertama (karena ini adalah nilai minimum)
 
         return $result ? $result['id'] : null; // Mengembalikan id atau null jika tidak ada hasil
@@ -36,8 +39,15 @@ class QuestionModel extends Model
              ->update(['status' => 'Off']); // Update kolom status menjadi 'Off'
      }
 
-    public function countOnStatus()
-    {
-        return $this->where('status', 'On')->countAllResults();
-    }
+     public function countOnStatus($type = null)
+     {
+         $builder = $this->where('status', 'On');
+     
+         if ($type !== null) {
+             $builder = $builder->where('type', $type);
+         }
+     
+         return $builder->countAllResults();
+     }
+     
 }

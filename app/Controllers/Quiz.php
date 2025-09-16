@@ -139,7 +139,7 @@ class Quiz extends BaseController
                     writeLogToFile("question_no_here : ".$question_no);
                 }
     
-                if ($question_no > $this->questionModel->countOnStatus()) {
+                if ($question_no > $this->questionModel->countOnStatus( $session->get('role') )) {
                     return redirect()->to('/quiz/result');
                 }else{
                 
@@ -195,6 +195,7 @@ class Quiz extends BaseController
             'lat' => $mylat,
             'status' => 'finished',
             'datetime' => date('Y-m-d H:i:s'),
+            'datetime_fake' => date('Y-m-d H:i:s'),
         ];
 
         // Panggil metode replaceData

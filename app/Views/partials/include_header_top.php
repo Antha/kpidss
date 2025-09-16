@@ -1,5 +1,5 @@
 <div class="greeting float-end">
-    <h6 class="d-inline-block"><?= session('username') ?></h6>
+    <h6 class="d-inline-block"><?= session('username') ?>(<?= session('role') ?>)</h6>
         <form class="float-end btn-logout-form" action="/logout">
             <button class="btn btn_logout" type="submit" name="LOGOUT" title="LOGOUT">
                 <div class="inner_content">

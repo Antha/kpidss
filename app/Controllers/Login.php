@@ -57,7 +57,8 @@ class Login extends Controller
                     'regional' => $user['regional'],
                     'branch' => $user['branch'],
                     'cluster' => $user['cluster'],
-                //'session_id' => $sessionID,
+                    'role' => $user['role'],
+                    //'session_id' => $sessionID,
                     'last_activity' => time(), // Track last activity
                     'isLoggedIn' => true,
                 ]);
