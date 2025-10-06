@@ -35,9 +35,7 @@ class QuestionAnswerModel extends Model
                 ";
         
         $query = $this->db->query($sql, [$userId, $quizId]);
-
         writeLogToFile( $this->db->getLastQuery() );
-
         $result = $query->getRow();
         // Return nilai max_qid jika ada hasil, jika tidak return null
         return $result;

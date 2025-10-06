@@ -14,17 +14,23 @@ class QuestionModel extends Model
     public function getQuestionByNumber($number)
     {
         $session = session();
+
+        $type = ($session->get('role')  == "SPV DS") ? "DS" : $session->get('role') ;
+
         return $this->asArray()
             ->where('id', $number)
-            ->first('type', $session->get("role"));
+            ->first('type',  $type);
     }
 
     // Ambil pertanyaan berdasarkan nomor urut
     public function get_min_id_on_status() {
         $session = session();
+
+        $type = ($session->get('role')  == "SPV DS") ? "DS" : $session->get('role') ;
+
         $this->selectMin('id'); // selectMin untuk memilih nilai minimum
         $this->where('status', 'On');
-        $this->where('type',  $session->get('role') );
+        $this->where('type',  $type);
         $result = $this->first(); // Mengambil satu hasil pertama (karena ini adalah nilai minimum)
 
         return $result ? $result['id'] : null; // Mengembalikan id atau null jika tidak ada hasil
@@ -41,13 +47,25 @@ class QuestionModel extends Model
 
      public function countOnStatus($type = null)
      {
-         $builder = $this->where('status', 'On');
-     
+         // Ambil instance Query Builder dari model
+         $builder = $this->builder();
+         $type = ($type == "SPV DS") ? "DS" : $type;
+         // Tambahkan kondisi WHERE
+         $builder->where('status', 'On');
          if ($type !== null) {
-             $builder = $builder->where('type', $type);
+             $builder->where('type', $type);
          }
      
-         return $builder->countAllResults();
+         // Clone builder untuk melihat query tanpa mengganggu eksekusi
+         $debugBuilder = clone $builder;
+         $sql = $debugBuilder->selectCount('*', 'total')->getCompiledSelect();
+         log_message('debug', 'Generated SQL: ' . $sql); // Atau gunakan dd($sql) untuk melihat langsung
+     
+         // Eksekusi query dan ambil hasil count
+         $result = $builder->selectCount('*', 'total')->get()->getRow();
+         $count = $result->total ?? 0;
+     
+         return $count;
      }
      
 }

@@ -59,7 +59,6 @@
                                                     <?php foreach ($answers as $key => $answer): ?>
                                                         <li class="list-group-item">
                                                             <strong>Question <?= $answer["question_no"] ?>:</strong> Your Answer - <?= htmlspecialchars($answer["answer"]) ?>
-                                                            ( <?= isset($answer["is_right"]) && $answer["is_right"] == 1 ? 'Right' : 'Wrong' ?> )
                                                         </li>
                                                     <?php endforeach; ?>
                                                 </ul>
