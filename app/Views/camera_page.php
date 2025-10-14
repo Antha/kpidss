@@ -127,15 +127,15 @@
                                             return false
                                         }
 
-                                        if(!isSetLoc){
-                                            Swal.fire({
-                                                imageHeight: 250,
-                                                icon: 'warning',
-                                                title: 'Activate Your Location'
-                                            })
+                                        // if(!isSetLoc){
+                                        //     Swal.fire({
+                                        //         imageHeight: 250,
+                                        //         icon: 'warning',
+                                        //         title: 'Activate Your Location'
+                                        //     })
 
-                                            return false
-                                        }
+                                        //     return false
+                                        // }
 
                                          // All validations passed; submit form normally
                                         $("#loadingSpinner").fadeIn();

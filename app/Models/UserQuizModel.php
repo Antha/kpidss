@@ -7,7 +7,7 @@ class UserQuizModel extends Model
 {
     protected $table = 'user_quizess';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['user_id', 'photo', 'status', 'long', 'lat', 'datetime'];
+    protected $allowedFields = ['user_id', 'photo', 'status', 'long', 'lat', 'datetime','datetime_fake'];
 
     // Fungsi untuk mendapatkan data dengan status 'UNFINISHED'
     // Fungsi untuk mendapatkan data berdasarkan status dan user_id

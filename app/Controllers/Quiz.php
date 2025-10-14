@@ -33,7 +33,7 @@ class Quiz extends BaseController
         $userId = $session->get('user_id');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
 
-        //writeLogToFile("session()->get('capturedImage') : ".session()->get('capturedImage'));
+        ////writeLogToFile("session()->get('capturedImage') : ".session()->get('capturedImage'));
 
         if(session()->has('capturedImage') || $unfinishedQuiz["photo"]){
             if($session->get("user_level") == 'agent_branch' || $session->get("user_level") == 'agent_cluster'){
@@ -51,7 +51,7 @@ class Quiz extends BaseController
                     $session->set('mylat', $mylat);
                 }
                 // $stringUN =  json_encode($unfinishedQuiz);
-                // writeLogToFile( $stringUN);
+                // //writeLogToFile( $stringUN);
     
                 if ($this->request->getMethod() === 'POST') {
                     if($unfinishedQuiz){
@@ -60,8 +60,8 @@ class Quiz extends BaseController
                         $mylong = $unfinishedQuiz["long"];
                         $mylat = $unfinishedQuiz["lat"];
     
-                        writeLogToFile("fileName : ".$fileName);
-                        writeLogToFile("ulong : ".$unfinishedQuiz["long"]);
+                        //writeLogToFile("fileName : ".$fileName);
+                        //writeLogToFile("ulong : ".$unfinishedQuiz["long"]);
     
                         // Data yang akan dimasukkan atau di-replace
                         $data = [
@@ -132,19 +132,26 @@ class Quiz extends BaseController
                     $questionNumber = (int) $reslutsMQB->max_qid + 1;
                     $question_no = $reslutsMQB->no + 1;
     
-                    writeLogToFile("question_no_here : ".$question_no);
+                    //writeLogToFile("question_no_here : ".$question_no);
                 }else{
                     $questionNumber = $this->questionModel->get_min_id_on_status();
                     $question_no = 1;
-                    writeLogToFile("question_no_here : ".$question_no);
+                    //writeLogToFile("question_no_here : ".$question_no);
                 }
-    
-                if ($question_no > $this->questionModel->countOnStatus()) {
+                 
+                $num_q = $this->questionModel->countOnStatus( $session->get('role') ); 
+                
+                writeLogToFile("\nusername:".$session->get('username'));
+                writeLogToFile("\nqno : ".$question_no);
+                writeLogToFile("\nnum_q : ".$num_q);
+
+
+                if ($question_no > $num_q) {
                     return redirect()->to('/quiz/result');
                 }else{
                 
                     // Ambil pertanyaan saat ini
-                    writeLogToFile("Ambil pertanyaan saat ini questionNumber : ".$questionNumber."question_no : ".$question_no);
+                    //writeLogToFile("Ambil pertanyaan saat ini questionNumber : ".$questionNumber."question_no : ".$question_no);
                     $question = $this->questionModel->getQuestionByNumber($questionNumber);
     
                     return view('quiz_page', [
@@ -169,7 +176,7 @@ class Quiz extends BaseController
     {
         $session = session();
 
-        writeLogToFile("qp :".$session->get('quiz_processed'));
+        //writeLogToFile("qp :".$session->get('quiz_processed'));
 
         if ($session->get('quiz_processed') === true) {
             $session->remove('quiz_processed');
@@ -178,7 +185,7 @@ class Quiz extends BaseController
 
         $quizAnswers = $session->get('quiz_answers');
 
-        writeLogToFile('session_get_user_id = '.$session->get('user_id'));
+        //writeLogToFile('session_get_user_id = '.$session->get('user_id'));
 
         $userId = $session->get('user_id');
         $quizId = $session->get('id_quiz');
@@ -195,12 +202,13 @@ class Quiz extends BaseController
             'lat' => $mylat,
             'status' => 'finished',
             'datetime' => date('Y-m-d H:i:s'),
+            'datetime_fake' => date('Y-m-d H:i:s'),
         ];
 
         // Panggil metode replaceData
         $result = $this->userQuizModel->replaceData($data);
 
-        //writeLogToFile($this->userQuizModel->getLastQuery());
+        ////writeLogToFile($this->userQuizModel->getLastQuery());
 
         $quizAnswers = $this->questionAnswerModel->getAnswersByUserId($userId, (int) $quizId);
 
@@ -221,7 +229,7 @@ class Quiz extends BaseController
         }
 
         $batch = $quizAnswers[0]["periode"];
-        writeLogToFile("periode :".$batch);
+        //writeLogToFile("periode :".$batch);
         $poinVal = ceil((100 / $countQuestion) * $totalIsRight);
         $dataPoint = [
             'user_id'    => (int) $userId,
@@ -288,22 +296,22 @@ class Quiz extends BaseController
 
          //$userId = $this->request->getPost('user_id'); // ID pengguna
          $json = $this->request->getJSON();
-         writeLogToFile("saved remaining time :".$json->remaining_seconds);
+         //writeLogToFile("saved remaining time :".$json->remaining_seconds);
          $remainingSeconds = $json->remaining_seconds; // Sisa waktu dalam detik
  
          // Cek apakah user sudah memiliki timer
          $this->userQuizTimerModel->where('user_id', $userId);
          $existingTimer = $this->userQuizTimerModel->get()->getRow();
 
-         writeLogToFile(json_encode($existingTimer));
+         //writeLogToFile(json_encode($existingTimer));
  
          if ($existingTimer) {
              // Update sisa waktu
-             writeLogToFile("update sisa waktu : ".$remainingSeconds) ;  
+             //writeLogToFile("update sisa waktu : ".$remainingSeconds) ;  
              $this->userQuizTimerModel->updateRemainingTime($userId, $remainingSeconds);
          } else {
              // Simpan waktu baru
-             writeLogToFile("insert waktu terbaru :".$json->remaining_seconds) ; 
+             //writeLogToFile("insert waktu terbaru :".$json->remaining_seconds) ; 
              $this->userQuizTimerModel->insert([
                  'user_id' => $userId,
                  'remaintime' => (int) $remainingSeconds

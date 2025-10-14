@@ -33,15 +33,16 @@ class Camera extends BaseController
         $data['display_user_point'] = $results[0]["point_now"];
 
         return view('camera_page',$data);
-        
     }
 
     public function save()
     {
         // Ambil data gambar dari POST
         $imageData = $this->request->getPost('imageData');
-        $mylong = $this->request->getPost('mylong');
-        $mylat = $this->request->getPost('mylat');
+
+        $post = $this->request->getPost();
+        $mylong = array_key_exists('mylong', $post) ? $post['mylong'] : 0;
+        $mylat  = array_key_exists('mylat', $post) ? $post['mylat'] : 0;
 
         writeLogToFile("mylong :". $mylong." - mylat : ".$mylat);
 
