@@ -14,6 +14,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/dashboard', 'Dashboard::index');
     $routes->get('/pnp_test', 'Pnp_test::index');
     $routes->post('/pnp_test', 'Pnp_test::index');
+    $routes->get('/pnp_test/lombok_test_result', 'Pnp_test::lombok_test_result');
+    $routes->post('/pnp_test/get_score_detail', 'Pnp_test::get_score_detail');
     $routes->post('/pnp_test/download_test_result', 'Pnp_test::download_test_result');
     $routes->post('/pnp_test/downloadImages', 'Pnp_test::downloadImages');
 

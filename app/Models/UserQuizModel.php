@@ -131,6 +131,166 @@ class UserQuizModel extends Model
         return $query->getResultArray();
     }
 
+    public function getSummaryPNPLombok()
+    {
+        $db = \Config\Database::connect();
+
+        $query = $db->query("SELECT
+                    u.agent_id AS `Agent ID`,
+                    u.id user_id, 
+                    u.`digipos_id` `Digipos ID`,
+                    u.`dss_name` `DSS Name`,
+                    u.`branch` `branch`,
+                    u.`cluster` `cluster`,
+                    u.`city` `city`,
+                    u.`role` `role`, 
+                    uq.datetime,
+                    uq.photo,
+                    ss.quiz_id quiz_id, 
+                    ss.num_right,
+                    ss.num_wrong,
+                    ROUND((100/(ss.num_right + ss.num_wrong)),0) * ss.num_right AS score, 
+                    uq.status,
+                    periode
+                    FROM
+                    (
+
+                    SELECT
+                        user_id, quiz_id,created_at,periode,
+                        SUM(is_right) AS num_right,   
+                        SUM(is_wrong) AS num_wrong
+                    FROM
+                    (
+                        SELECT 
+                        qa.user_id, 
+                        qa.quiz_id, 
+                        qa.question_id, 
+                        qa.answer,
+                        qa.created_at, 
+                        q.correct_option,
+                        CONCAT('PNP TEST#',q.periode) periode,
+                        CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
+                        CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
+                        FROM 
+                        `quiz_answers` qa 
+                        JOIN `questions` q ON qa.question_id = q.id 
+                    
+                    ) AS quiz_data
+                    GROUP BY user_id, quiz_id
+                    ) AS ss 
+                                JOIN `users` u ON ss.user_id = u.id
+                                JOIN `user_quizess` uq ON ss.quiz_id = uq.id
+                                WHERE DATE_FORMAT(created_at,'%Y%m') = '202510' AND cluster = 'LOMBOK'
+                                ORDER BY score DESC");
+
+        writeLogTofile($db->getLastQuery());
+
+        return $query->getResultArray();
+    }
+
+    public function getHighestRightQuestion()
+    {
+        $db = \Config\Database::connect();
+
+        $query = $db->query("SELECT
+                    quiz_no,
+                    (SUM(is_right) / (SUM(is_right) + SUM(is_wrong))) * 100 AS percentage
+                FROM (
+                    SELECT 
+                        qa.user_id, qa.question_id, q.no quiz_no,
+                        CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
+                        CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
+                    FROM quiz_answers qa
+                    JOIN questions q ON qa.question_id = q.id
+                    WHERE q.periode = '7'
+                ) AS quiz_data
+                GROUP BY quiz_no
+                ORDER BY percentage DESC
+                LIMIT 1");
+
+        return $query->getResultArray();
+    }
+
+    public function getLowestRightQuestion()
+    {
+        $db = \Config\Database::connect();
+
+        $query = $db->query("SELECT
+                    quiz_no,
+                    (SUM(is_right) / (SUM(is_right) + SUM(is_wrong))) * 100 AS percentage
+                FROM (
+                    SELECT 
+                        qa.user_id, qa.question_id, q.no quiz_no,
+                        CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
+                        CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
+                    FROM quiz_answers qa
+                    JOIN questions q ON qa.question_id = q.id
+                    WHERE q.periode = '7'
+                ) AS quiz_data
+                GROUP BY quiz_no
+                ORDER BY percentage ASC
+                LIMIT 1");
+
+        return $query->getResultArray();
+    }
+
+    public function getQuestionScore()
+    {
+        $db = \Config\Database::connect();
+
+        $query = $db->query("SELECT
+                    `no` quiz_no,
+                    SUM(is_right) AS num_right,   
+                    SUM(is_wrong) AS num_wrong,
+                    (SUM(is_right)/(SUM(is_right)+SUM(is_wrong)))*100 percentage
+                    FROM
+                    (
+                    SELECT 
+                    qa.user_id, 
+                    qa.quiz_id, 
+                    qa.question_id,
+                    q.no, 
+                    qa.answer,
+                    qa.created_at, 
+                    q.correct_option,
+                    CONCAT('PNP TEST#',q.periode) periode,
+                    CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
+                    CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
+                    FROM 
+                    `quiz_answers` qa 
+                    JOIN `questions` q ON qa.question_id = q.id
+                    WHERE q.periode = '7' AND `type` = 'DS'
+                    
+                    ) AS quiz_data
+                    GROUP BY quiz_no
+                    ORDER BY quiz_no");
+
+        return $query->getResultArray();
+    }
+    
+    public function getScoreDetail($quiz_id)
+    {
+        $db = \Config\Database::connect();
+
+        $query = $db->query("SELECT 
+				qa.created_at, 
+				qa.user_id, 
+				qa.quiz_id,
+				q.no, 
+				qa.question_id, 
+				qa.answer,
+				q.correct_option,
+				CASE WHEN qa.answer = q.correct_option THEN 'Benar' ELSE 'Salah' END AS Statement
+				FROM 
+				quiz_answers qa 
+				JOIN questions q ON qa.question_id = q.id 
+				WHERE quiz_id = $quiz_id");
+
+        writeLogTofile($db->getLastQuery());
+
+        return $query->getResultArray();
+    }
+
     public function getSummaryPNP_old()
     {
         $db = \Config\Database::connect();

@@ -76,6 +76,38 @@ class Pnp_test extends Controller
         }
     }
 
+    function lombok_test_result(){
+        $session = Session();
+        $userQuizModel = new UserQuizModel();
+        $getLastUpdateData = $userQuizModel->getLastUpdateData();
+
+        if(!isset($getLastUpdateData['datetime'])){
+            $lastUpdateData = date('Y-m-d');
+            $displayPeriode = date('Ym');
+        }else{
+            $lastUpdateData = date("Y-m-d",strtotime($getLastUpdateData['datetime']));
+            $displayPeriode = date("Ym",strtotime($getLastUpdateData['datetime']));
+        }
+
+        $resumeResults = $userQuizModel->getSummaryPNPLombok();
+        $highestRightQuestion = $userQuizModel->getHighestRightQuestion();
+
+        $lowestRightQuestion = $userQuizModel->getLowestRightQuestion();
+        return view('pnp_test_lombok_admin_page', ['resumeResults' => $resumeResults,'lastUpdateData' => $lastUpdateData,'hrQuestion' => $highestRightQuestion, 'lrQuestion' => $lowestRightQuestion]);
+    }
+
+    function get_score_detail(){
+        $userQuizModel = new UserQuizModel();
+        //get product id
+        $quiz_id = $_POST['quizId'];
+
+        //run query for getting product poin
+        $score_detail = $userQuizModel->getScoreDetail($quiz_id);
+
+        $parse_value = array('info' => "good",'parse_score_detail' => $score_detail);
+        echo json_encode($parse_value);
+    }
+
     /*function download_test_result(){
         if($this->request->getPost('btn_dl_test_result')){
             $userQuizModel = new UserQuizModel();

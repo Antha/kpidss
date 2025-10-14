@@ -34,7 +34,7 @@
                                     <a class="btn main-menu-btn" href="<?= session()->get('user_level') === 'admin' ? '/pnp_test' : '/camera'; ?>">
                                         <img class="img-fluid menu-icon-dark-blue" loading="lazy" src="<?= base_url('/img/icon-quiz-dark-blue.png') ?>">
                                         <img class="img-fluid menu-icon-light-blue" loading="lazy" src="<?= base_url('/img/icon-quiz-white.png') ?>">
-                                        <h5 class="card-title mt-3">PNP TEST</h5> 
+                                        <h5 class="card-title mt-3" style="font-size: 17px;">PNP TEST</h5> 
                                     </a>
                                 </div>
                                 <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
@@ -59,9 +59,17 @@
                                         <h5 class="card-title cstm-main-menu-card-title">PRODUCT KNOWLEDGE</h5>
                                     </a>
                                 </div>
+
                                 <?php } if($user_level == 'admin' || $user_level == 'admin_cms'){ ?>
                                     <div class="w-100 mt-sm-4"></div>
-
+                                    
+                                    <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
+                                        <a class="btn main-menu-btn" href="<?= session()->get('user_level') === 'admin' ? '/pnp_test/lombok_test_result' : '/camera'; ?>">
+                                            <img class="img-fluid menu-icon-dark-blue" loading="lazy" src="<?= base_url('/img/icon-quiz-dark-blue.png') ?>">
+                                            <img class="img-fluid menu-icon-light-blue" loading="lazy" src="<?= base_url('/img/icon-quiz-white.png') ?>">
+                                            <h5 class="card-title mt-3" style="font-size: 11px;">PNP TEST LOMBOK</h5> 
+                                        </a>
+                                    </div>
                                     <div class="col-lg-2 col-sm-3 col-6 text-center rounded-circle">
                                         <a class="btn main-menu-btn cstm-width-main-menu-wrapper" href="<?php echo base_url('/loyalty_input')?>">
                                             <img class="img-fluid menu-icon-dark-blue cstm-main-menu-img" loading="lazy" src="<?= base_url('/img/icon-setting-dark-blue.png') ?>">
