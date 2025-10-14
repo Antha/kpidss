@@ -110,6 +110,7 @@ class Loyalty_model extends Model
                 user_id = ?
                 AND periode LIKE ?
                 AND point_category = 'Quiz'
+                AND batch > 1
             GROUP BY 
                 periode
             ORDER BY 
@@ -134,6 +135,7 @@ class Loyalty_model extends Model
                 user_id = ?
                 AND periode LIKE ?
                 AND point_category = 'Quiz'
+                AND batch > 1
             GROUP BY 
                 batch
             ORDER BY 
@@ -159,6 +161,7 @@ class Loyalty_model extends Model
             WHERE 
                 user_id = ?
                 AND periode LIKE ?
+                AND batch > 1
             GROUP BY 
                 month
             ORDER BY 
@@ -208,7 +211,7 @@ class Loyalty_model extends Model
                 SELECT 
                 SUM(`point`) `num`
                 FROM `users_points` 
-                WHERE (user_id = $user_id AND LOWER(point_category) = 'quiz' AND batch >= '2') OR (user_id = $user_id AND LOWER(point_category) = 'kpi' AND periode > '202412')
+                WHERE (user_id = $user_id AND LOWER(point_category) = 'quiz' AND batch > '1') OR (user_id = $user_id AND LOWER(point_category) = 'kpi' AND periode > '202412')
             ) `point`
             JOIN
             (
@@ -342,8 +345,9 @@ class Loyalty_model extends Model
        
         $sql = "SELECT username,dss_name,branch,cluster,city,user_id,product_name, redeem_point, redeem_time, status_product
                 FROM
-                (SELECT user_id,product_id,redeem AS redeem_point,`datetime` AS redeem_time, 'BELUM DITERIMA' status_product
-                FROM `users_redeem` WHERE `status` = 'NA')A
+                (SELECT user_id,product_id,redeem AS redeem_point,`datetime` AS redeem_time, 
+                CASE WHEN `status` = 'NA' THEN 'BELUM DITERIMA' ELSE 'DITERIMA' END status_product
+                FROM `users_redeem`)A
                 JOIN
                 (SELECT id,username,dss_name,branch,cluster,city
                 FROM `users`)B
@@ -370,7 +374,7 @@ class Loyalty_model extends Model
                     ELSE 'NA' 
                 END AS status_available
                 FROM (
-                SELECT MAX(`datetime`) AS dt_max 
+                SELECT IFNULL(MAX(`datetime`),CURRENT_DATE - INTERVAL 7 MONTH) AS dt_max 
                 FROM `users_redeem` 
                 WHERE user_id = '$user_id' AND product_id = '$product_id'
                 ) AS t";
