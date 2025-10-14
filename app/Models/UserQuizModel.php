@@ -173,14 +173,13 @@ class UserQuizModel extends Model
                         CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
                         FROM 
                         `quiz_answers` qa 
-                        JOIN `questions` q ON qa.question_id = q.id 
-                    
+                        JOIN `questions` q ON qa.question_id = q.id
+                        WHERE DATE_FORMAT(created_at,'%Y%m') = '202510' AND q.type = 'LMBK' 
                     ) AS quiz_data
                     GROUP BY user_id, quiz_id
                     ) AS ss 
                                 JOIN `users` u ON ss.user_id = u.id
                                 JOIN `user_quizess` uq ON ss.quiz_id = uq.id
-                                WHERE DATE_FORMAT(created_at,'%Y%m') = '202510' AND cluster = 'LOMBOK'
                                 ORDER BY score DESC");
 
         writeLogTofile($db->getLastQuery());
@@ -202,7 +201,7 @@ class UserQuizModel extends Model
                         CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
                     FROM quiz_answers qa
                     JOIN questions q ON qa.question_id = q.id
-                    WHERE q.periode = '7'
+                    WHERE q.type = 'LMBK'
                 ) AS quiz_data
                 GROUP BY quiz_no
                 ORDER BY percentage DESC
@@ -225,7 +224,7 @@ class UserQuizModel extends Model
                         CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
                     FROM quiz_answers qa
                     JOIN questions q ON qa.question_id = q.id
-                    WHERE q.periode = '7'
+                    WHERE q.type = 'LMBK'
                 ) AS quiz_data
                 GROUP BY quiz_no
                 ORDER BY percentage ASC

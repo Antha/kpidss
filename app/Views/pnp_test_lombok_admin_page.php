@@ -146,7 +146,7 @@
                 <div class="modal-content">
                     <div class="modal-body" style="border-radius: 8px;">
                         <div class="modal-title text-center" style="padding: 30px 10px 0px 10px;">
-                            <h3 style="font-size: 20px;margin-top:15px;">SCORE DETAIL</h3>
+                            <h3 style="font-size: 20px;margin-top:15px;color:black;">SCORE DETAIL</h3>
                         </div>
 
                         <!-- Container untuk tabel -->
