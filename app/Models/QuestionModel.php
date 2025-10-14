@@ -15,8 +15,12 @@ class QuestionModel extends Model
     {
         $session = session();
 
-        $type = ($session->get('role')  == "SPV DS") ? "DS" : $session->get('role') ;
-
+        if($session->get('cluster') == "LOMBOK"){
+            $type = "LMBK";
+        }else{
+            $type = ($session->get('role')  == "SPV DS") ? "DS" : $session->get('role') ;
+        }
+       
         return $this->asArray()
             ->where('id', $number)
             ->first('type',  $type);
@@ -26,7 +30,11 @@ class QuestionModel extends Model
     public function get_min_id_on_status() {
         $session = session();
 
-        $type = ($session->get('role')  == "SPV DS") ? "DS" : $session->get('role') ;
+        if($session->get('cluster') == "LOMBOK"){
+            $type = "LMBK";
+        }else{
+            $type = ($session->get('role')  == "SPV DS") ? "DS" : $session->get('role') ;
+        }
 
         $this->selectMin('id'); // selectMin untuk memilih nilai minimum
         $this->where('status', 'On');
@@ -45,11 +53,17 @@ class QuestionModel extends Model
              ->update(['status' => 'Off']); // Update kolom status menjadi 'Off'
      }
 
-     public function countOnStatus($type = null)
+     public function countOnStatus()
      {
          // Ambil instance Query Builder dari model
          $builder = $this->builder();
-         $type = ($type == "SPV DS") ? "DS" : $type;
+         $session = session();
+
+         if($session->get('cluster') == "LOMBOK"){
+            $type = "LMBK";
+         }else{
+            $type = ($session->get('role')  == "SPV DS") ? "DS" : $session->get('role') ;
+         }
          // Tambahkan kondisi WHERE
          $builder->where('status', 'On');
          if ($type !== null) {
