@@ -139,7 +139,7 @@ class Quiz extends BaseController
                     //writeLogToFile("question_no_here : ".$question_no);
                 }
                  
-                $num_q = $this->questionModel->countOnStatus( $session->get('role') ); 
+                $num_q = $this->questionModel->countOnStatus(); 
                 
                 writeLogToFile("\nusername:".$session->get('username'));
                 writeLogToFile("\nqno : ".$question_no);
