@@ -141,6 +141,9 @@
                                                     <th scope="col">Status</th>
                                                     <th scope="col">Role</th>
                                                     <th class="d-none" scope="col">Photo</th>
+                                                    <th class="d-none" scope="col">StarTime</th>
+                                                    <th class="d-none" scope="col">EndTime</th>
+                                                    <th class="d-none" scope="col">Duration</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -161,6 +164,9 @@
                                                             <td><?= esc($result['status']) ?></td>
                                                             <td><?= esc($result['role']) ?></td>
                                                             <td class="d-none"><img src="<?= base_url('/uploads/photos/' . $result['photo']) ?>" width="100" alt="<?= $result['photo'] ?>"></td>
+                                                            <td class="d-none"><?= esc($result['start_time']) ?></td>
+                                                            <td class="d-none"><?= esc($result['end_time']) ?></td>
+                                                            <td class="d-none"><?= esc($result['quiz_time']) ?></td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>

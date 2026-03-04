@@ -43,10 +43,10 @@
                                             <table class="table table-sm">
                                                 <tbody>
                                                     <tr>
-                                                        <td style="border: 0px !important">Soal dengan persentase benar tertinggi adalah nomor <?php echo $hrQuestion[0]['quiz_no'];?>, dengan persentase <?php echo $hrQuestion[0]['percentage'];?>%</td>
+                                                        <td style="border: 0px !important">Soal dengan persentase benar tertinggi adalah nomor <?php echo $hrNo;?>, dengan persentase <?php echo $hrPrcnt;?>%</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px !important">Soal dengan persentase benar terendah adalah nomor <?php echo $lrQuestion[0]['quiz_no'];?>, dengan persentase <?php echo $lrQuestion[0]['percentage'];?>%</td>
+                                                        <td style="border: 0px !important">Soal dengan persentase benar terendah adalah nomor <?php echo $lrNo;?>, dengan persentase <?php echo $lrPrcnt;?>%</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

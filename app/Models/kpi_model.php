@@ -13,7 +13,7 @@ class Kpi_model extends Model
         $this->db_con = db_connect('default');
     }
 
-    /*function default_table_kpi_exists(){
+    function get_latest_table_kpi(){
         $sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES 
 				WHERE TABLE_NAME LIKE 'kpi_data_%' AND DATA_LENGTH != 0 
 				ORDER BY TABLE_NAME DESC LIMIT 1";
@@ -26,17 +26,7 @@ class Kpi_model extends Model
 		return $table_name;
     }
 
-    function cek_table_kpi_exists($periode){
-        $sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES 
-				WHERE TABLE_NAME = 'kpi_data_$periode' AND DATA_LENGTH != 0 
-				ORDER BY TABLE_NAME DESC LIMIT 1";
-					
-		$query = $this->db_con->query($sql);
-
-        $result = $query->getNumRows();
-			
-		return $result;
-    }*/
+   
 
     function get_lastupdate_date(){
         $sql = "SELECT MAX(periode) last_update_date FROM kpi_data";

@@ -74,7 +74,7 @@ class UserQuizModel extends Model
         return $this->insertID();
     }
 
-    public function getSummaryPNP($periode,$where_var)
+    public function getSummaryPNPOld($periode,$where_var)
     {
         $db = \Config\Database::connect();
 
@@ -124,6 +124,71 @@ class UserQuizModel extends Model
                                 JOIN `user_quizess` uq ON ss.quiz_id = uq.id
                                 WHERE DATE_FORMAT(created_at,'%Y%m') = '$periode' $where_var
                                 ORDER BY score DESC
+        ");
+
+        writeLogTofile($db->getLastQuery());
+
+        return $query->getResultArray();
+    }
+
+    public function getSummaryPNP($periode,$where_var)
+    {
+        $db = \Config\Database::connect();
+
+        $query = $db->query("
+                SELECT
+                u.agent_id AS `Agent ID`, 
+                u.`digipos_id` `Digipos ID`,
+                u.`dss_name` `DSS Name`,
+                u.`branch` `branch`,
+                u.`cluster` `cluster`,
+                u.`city` `city`,
+                u.`role` `role`, 
+                uq.datetime,
+                start_time,end_time,
+                uq.photo, 
+                ss.num_right,
+                ss.num_wrong,
+                ROUND((100/(ss.num_right + ss.num_wrong)),0) * ss.num_right AS score,
+                start_time,end_time,
+                quiz_time, 
+                uq.status,
+                periode
+                FROM
+                (
+
+                SELECT
+                user_id, quiz_id, created_at,
+                MIN(created_at) start_time,MAX(created_at) end_time,
+                MAX(created_at) - MIN(created_at) quiz_time,
+                periode,
+                SUM(is_right) AS num_right,   
+                SUM(is_wrong) AS num_wrong
+                FROM
+                (
+                SELECT 
+                qa.user_id, 
+                qa.quiz_id, 
+                q.no,
+                qa.question_id, 
+                qa.answer,
+                qa.created_at, 
+                q.correct_option,
+                CONCAT('PNP TEST#',q.periode) periode,
+                CASE WHEN qa.answer = q.correct_option THEN 1 ELSE 0 END AS is_right,
+                CASE WHEN qa.answer != q.correct_option THEN 1 ELSE 0 END AS is_wrong
+                FROM 
+                `quiz_answers` qa 
+                JOIN `questions` q ON qa.question_id = q.id 
+                ORDER BY user_id,`no`
+                
+                ) AS quiz_data
+                GROUP BY user_id, quiz_id
+                ) AS ss 
+                    JOIN `users` u ON ss.user_id = u.id
+                    JOIN `user_quizess` uq ON ss.quiz_id = uq.id
+                    WHERE quiz_time != '0' AND DATE_FORMAT(created_at,'%Y%m') = '$periode' $where_var 
+                    ORDER BY score DESC, quiz_time ASC
         ");
 
         writeLogTofile($db->getLastQuery());

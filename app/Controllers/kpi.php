@@ -27,7 +27,7 @@ class Kpi extends Controller
         $this->mataram_cluster_array = array('LOMBOK','SUMBAWA BARAT','SUMBAWA TIMUR');
     }
     
-    public function index()
+    /*public function index()
     {
         $session = Session();
         
@@ -212,6 +212,16 @@ class Kpi extends Controller
         }else if($user_level == "admin_cms"){
             return redirect()->to(base_url('/dashboard')); 
         }
+    }*/
+    
+    public function index(){
+        $latest_kpi_table = $this->kpi_model->get_latest_table_kpi();
+        $exp_table_periode = explode("kpi_data_",$latest_kpi_table);
+        $latest_periode = $exp_table_periode[1];
+        
+        $data['periode'] = $latest_periode;
+
+        return view('kpi_admin_page_v2',$data);
     }
 
     function download_data_agent_branch(){

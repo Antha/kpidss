@@ -91,9 +91,28 @@ class Pnp_test extends Controller
 
         $resumeResults = $userQuizModel->getSummaryPNPLombok();
         $highestRightQuestion = $userQuizModel->getHighestRightQuestion();
+        if (count($highestRightQuestion) > 0) {
+            foreach ($highestRightQuestion as $row) {
+                $hrNo = $row['quiz_no'];
+                $hrPrcnt = $row['percentage'];
+            }
+        } else {
+            $hrNo = '';
+            $hrPrcnt = '';
+        }
 
         $lowestRightQuestion = $userQuizModel->getLowestRightQuestion();
-        return view('pnp_test_lombok_admin_page', ['resumeResults' => $resumeResults,'lastUpdateData' => $lastUpdateData,'hrQuestion' => $highestRightQuestion, 'lrQuestion' => $lowestRightQuestion]);
+        if (count($lowestRightQuestion) > 0) {
+            foreach ($lowestRightQuestion as $row) {
+                $lrNo = $row['quiz_no'];
+                $lrPrcnt = $row['percentage'];
+            }
+        } else {
+            $lrNo = '';
+            $lrPrcnt = '';
+        }
+        
+        return view('pnp_test_lombok_admin_page', ['resumeResults' => $resumeResults,'lastUpdateData' => $lastUpdateData,'hrNo' => $hrNo,'hrPrcnt' => $hrPrcnt, 'lrNo' => $lrNo,'lrPrcnt' => $lrPrcnt]);
     }
 
     function get_score_detail(){
