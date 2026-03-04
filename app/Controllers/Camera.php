@@ -38,9 +38,8 @@ class Camera extends BaseController
     public function save()
     {
         // Ambil data gambar dari POST
-        $imageData = $this->request->getPost('imageData');
-
         $post = $this->request->getPost();
+        $imageData = $this->request->getPost('imageData');
         $mylong = array_key_exists('mylong', $post) ? $post['mylong'] : 0;
         $mylat  = array_key_exists('mylat', $post) ? $post['mylat'] : 0;
 
@@ -50,8 +49,9 @@ class Camera extends BaseController
             // Simpan data gambar ke dalam session
             ///writeLogToFile("imageData : ".$imageData);
             session()->set('capturedImage', $imageData);
-            session()->set('mylong', $mylong);
+            session()->set('myinput_location', $post["myinput_location"]);
             session()->set('mylat', $mylat);
+            session()->set('mylong', $mylong);
         }
 
         return redirect()->to('/quiz');

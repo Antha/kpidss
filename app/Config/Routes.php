@@ -12,6 +12,7 @@ $routes->post('/login/authenticate', 'Login::authenticate');
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/logout', 'Login::logout');
     $routes->get('/dashboard', 'Dashboard::index');
+    $routes->get('/selling', 'KnowledgeSellingController::index');
     $routes->get('/pnp_test', 'Pnp_test::index');
     $routes->post('/pnp_test', 'Pnp_test::index');
     $routes->get('/pnp_test/lombok_test_result', 'Pnp_test::lombok_test_result');

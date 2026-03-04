@@ -22,9 +22,7 @@
         </div>
     </div>
     <div class="dashboard-page">
-        
         <?php echo $this->include('partials/include_sidebar') ?>
-
         <div id="main">
             <div class="header-top">
                 <div class="container-fluid">
@@ -70,24 +68,25 @@
                                                 </div>
                                                 <?php } else if(!is_array(session('unfinishedQuiz'))) { ?>
                                                 <div class="row">
-                                                    <div class="col-md-6 col-12 mb-5 mb-md-3">
-                                                        <h6 class="card-title">AMBIL FOTO SELFIE</h6>
+                                                    <div class="col-md-12 col-12 mb-5 mb-md-3">
+                                                        <h5>Dokumentasi Selling</h5>
                                                         <button id="capture" class="btn btn-primary submit_btn mt-2 mb-3" style="font-size: 12px;">Capture</button>
                                                         <div class="d-flex justify-content-center align-items-center">
-                                                            <video id="video" autoplay class="border rounded" style="max-width: 100%; height: auto;"></video>
+                                                            <video id="video" autoplay class="border rounded" style="max-width: 100%; height: 300px;"></video>
                                                         </div>
                                                         <canvas id="canvas" class="mt-3 border rounded" style="max-width: 100%; display: none;"></canvas>
                                                     </div>
-                                                    <div class="col-md-6 col-12 mb-5 mb-md-3">
+                                                    <!-- <div class="col-md-6 col-12 mb-5 mb-md-3">
                                                         <h6 class="card-title">AKTIFKAN LOKASI</h6>
                                                         <button class="btn btn-info mt-2 mb-3 submit_btn" id="getLocationBtn" style="font-size: 12px;">Activate My Location</button>
                                                         <div id="map"></div>
-                                                    </div>
+                                                    </div> -->
                                                     <form id="saveForm" method="POST" action="/camera/save" class="mt-4 text-center">
                                                         <input type="hidden" name="imageData" id="imageData">
-                                                        <input type="hidden" name="mylong" id="mylong">
-                                                        <input type="hidden" name="mylat" id="mylat">
-                                                        <button type="submit" id="saveButton" class="btn btn-success submit_btn"  disabled>SAVE</button>
+                                                        <!-- <input type="hidden" name="mylong" id="mylong">
+                                                        <input type="hidden" name="mylat" id="mylat"> -->
+                                                        <input type="text" name="myinput_location" id="myinput_location" placeholder="Masukan Lokasimu" required>
+                                                        <button type="submit" id="saveButton" class="btn btn-success submit_btn">Finish</button>
                                                     </form>
                                                 </div>
                                                 <?php } else { ?>
@@ -110,14 +109,14 @@
                                     let userMarker;
                                     let isSetLoc = false;
                                     
-                                    $("a, form").on("click submit", function () {
+                                    $("a, form").on("submit", function () {
                                         $("#loadingSpinner").fadeIn();
                                     });
 
                                     $("#saveForm").on("submit",function(e){
                                         e.preventDefault()
 
-                                        if(!imageDataInput){
+                                        if(!isCapture){
                                             Swal.fire({
                                                 imageHeight: 250,
                                                 icon: 'warning',
@@ -145,44 +144,44 @@
                                     // Fungsi untuk menginisialisasi peta
                                     function initMap() {
                                         // Peta awal di Jakarta
-                                        map = new google.maps.Map(document.getElementById("map"), {
-                                            center: { lat: -6.2088, lng: 106.8456 },
-                                            zoom: 10,
-                                        });
+                                        // map = new google.maps.Map(document.getElementById("map"), {
+                                        //     center: { lat: -6.2088, lng: 106.8456 },
+                                        //     zoom: 10,
+                                        // });
                                     }
 
                                     // Fungsi untuk mendapatkan lokasi pengguna
-                                    document.getElementById('getLocationBtn').addEventListener('click', function() {
-                                        if (navigator.geolocation) {
-                                            navigator.geolocation.getCurrentPosition(function(position) {
-                                                const latitude = position.coords.latitude;
-                                                const longitude = position.coords.longitude;
+                                    // document.getElementById('getLocationBtn').addEventListener('click', function() {
+                                    //     if (navigator.geolocation) {
+                                    //         navigator.geolocation.getCurrentPosition(function(position) {
+                                    //             const latitude = position.coords.latitude;
+                                    //             const longitude = position.coords.longitude;
                                                 
-                                                // Update posisi peta ke lokasi pengguna
-                                                const userLocation = { lat: latitude, lng: longitude };
-                                                map.setCenter(userLocation);
-                                                map.setZoom(15);
+                                    //             // Update posisi peta ke lokasi pengguna
+                                    //             const userLocation = { lat: latitude, lng: longitude };
+                                    //             map.setCenter(userLocation);
+                                    //             map.setZoom(15);
 
-                                                isSetLoc = true;
-                                                $("#mylong").val(longitude)
-                                                $("#mylat").val(latitude)
+                                    //             isSetLoc = true;
+                                    //             $("#mylong").val(longitude)
+                                    //             $("#mylat").val(latitude)
 
-                                                // Menambahkan marker untuk lokasi pengguna
-                                                if (userMarker) {
-                                                    userMarker.setMap(null); // Menghapus marker lama jika ada
-                                                }
-                                                userMarker = new google.maps.Marker({
-                                                    position: userLocation,
-                                                    map: map,
-                                                    title: "You are here"
-                                                });
-                                            }, function(error) {
-                                                alert("Error getting location: " + error.message);
-                                            });
-                                        } else {
-                                            alert("Geolocation is not supported by this browser.");
-                                        }
-                                    });
+                                    //             // Menambahkan marker untuk lokasi pengguna
+                                    //             if (userMarker) {
+                                    //                 userMarker.setMap(null); // Menghapus marker lama jika ada
+                                    //             }
+                                    //             userMarker = new google.maps.Marker({
+                                    //                 position: userLocation,
+                                    //                 map: map,
+                                    //                 title: "You are here"
+                                    //             });
+                                    //         }, function(error) {
+                                    //             alert("Error getting location: " + error.message);
+                                    //         });
+                                    //     } else {
+                                    //         alert("Geolocation is not supported by this browser.");
+                                    //     }
+                                    // });
                                 </script>
 
                                 <script>
@@ -202,6 +201,7 @@
                                         });
 
                                     // Capture gambar
+                                    let isCapture = false;
                                     captureButton.addEventListener('click', () => {
                                         const context = canvas.getContext('2d');
                                         canvas.width = video.videoWidth;
@@ -214,10 +214,10 @@
                                         // Ambil data gambar sebagai base64
                                         const imageData = canvas.toDataURL('image/png');
                                         imageDataInput.value = imageData;
-                                        saveButton.disabled = false;
+                                        //saveButton.disabled = false;
+                                        isCapture = true;
 
                                         const scrollHeight = document.body.scrollHeight;
-                                        
                                         const scrollStep = 500;
                                         function scrollStepDown() {
                                             if (window.scrollY + window.innerHeight < scrollHeight) {

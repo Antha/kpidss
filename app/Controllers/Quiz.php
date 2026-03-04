@@ -7,6 +7,7 @@ use App\Models\QuestionAnswerModel;
 use App\Models\UserQuizModel;
 use App\Models\UserQuizTimerModel;
 use App\Models\UsersPointsModel;
+use App\Models\KnowledgeSellingModel;
 
 class Quiz extends BaseController
 {
@@ -15,6 +16,7 @@ class Quiz extends BaseController
     protected $userQuizModel;
     protected $userQuizTimerModel;
     protected $usersPointsModel;
+    protected $knowledgeSellingModel;
 
     public function __construct()
     {
@@ -24,6 +26,7 @@ class Quiz extends BaseController
         $this->userQuizModel = new UserQuizModel();
         $this->userQuizTimerModel = new UserQuizTimerModel();
         $this->usersPointsModel = new UsersPointsModel();
+        $this->knowledgeSellingModel = new KnowledgeSellingModel();
     }
 
     public function index($questionNumber = 1)
@@ -33,9 +36,9 @@ class Quiz extends BaseController
         $userId = $session->get('user_id');
         $unfinishedQuiz = $this->userQuizModel->getUnfinishedQuizzesByUser($userId);
 
-        ////writeLogToFile("session()->get('capturedImage') : ".session()->get('capturedImage'));
+        writeLogToFile("session()->get('capturedImage') : ".session()->get('capturedImage'));
 
-        if(session()->has('capturedImage') || $unfinishedQuiz["photo"]){
+        if ($session->has('capturedImage') || (!empty($unfinishedQuiz) && !empty($unfinishedQuiz["photo"]))){
             if($session->get("user_level") == 'agent_branch' || $session->get("user_level") == 'agent_cluster'){
                 $fileName = "";
                 $quizId = "";
@@ -97,6 +100,15 @@ class Quiz extends BaseController
  
                              // Panggil metode replaceData
                              $quizId = $this->userQuizModel->insertAndGetId($data);
+
+                            $data = [
+                                'id_user'       => $userId,
+                                'pic'           => $fileName,
+                                'location_name' => $session->get('myinput_location'),
+                                'datetime'      => date('Y-m-d H:i:s'),
+                            ];
+
+                            $this->knowledgeSellingModel->insert($data);
                          }else{
                              session()->setFlashdata('errors_camera', 'Terjadi kesalahan saat memproses data. Periksa Jaringan Anda');
                              return redirect()->to(base_url('/camera'));
