@@ -20,6 +20,32 @@
     <!--STYLES-->
     <link rel="stylesheet" href="<?php echo base_url('/css/bootstrap.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('/css/main_page_style.css') ?>">
+
+    <style>
+    /* Body fade-in */
+    body {
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* Preloader spinner */
+    #preloader {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+    }
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+    }
+  </style>
 </head>
 
 <?= $this->renderSection('content'); ?>

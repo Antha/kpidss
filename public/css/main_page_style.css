@@ -1,9 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-  font-family: "Roboto", serif;
+  background-color: #FFE1D9;
+  font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .dashboard-page {
@@ -41,7 +43,7 @@ body {
   }
 }
 
-.dashboard-page::before {
+/*.dashboard-page::before {
   content: "";
   background: url(../img/hero-bg.jpg) top left no-repeat;
   position: absolute;
@@ -51,7 +53,21 @@ body {
   left: 0;
   right: 0;
   min-height: 800px;
+}*/
+
+.dashboard-page::before {
+  content: "";
+  background: url(../img/BACKGROUND-PAGE-V2.jpg) no-repeat center center;
+  background-size: cover;        /* skala agar menutupi seluruh area */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 800px;
+  z-index: -1;                   /* pastikan di belakang konten */
 }
+
 
 .main-content-dashboard {
   position: relative;
@@ -63,9 +79,8 @@ body {
 }
 
 .main-header-title {
-  color: #003057;
-  letter-spacing: 3px;
-  padding-top: 3px;
+  color: #922626;
+  font-weight: bold;
 }
 
 .main-header-title .display-3 {
@@ -73,35 +88,91 @@ body {
 }
 
 .user-name-ses-display {
-  color: #003057;
+  color: #FEDDD6;
+}
+
+.greeting{
+  background-color: #922626;
+  padding: 2px 5px 1px 5px;
 }
 
 .btn_logout i {
-  color: #0bb4ed;
+  color: #FF8360;
 }
 
 .btn_logout:hover i {
-  color: #0ad3ef;
+  color: #ff9477;
 }
 
-.btn-logout-form {
-  margin-left: 8px;
+.btn-logout-form,
+.btn_logout {
+  margin-left: 3px;
+  padding: 0px;
 }
 
 .user-name-ses-display h6 {
-  margin-top: 10px;
+  padding-top: 3px;
+  margin-bottom: 0px;
 }
 
-/*.menu-icon-dark-blue,
-.menu-icon-light-blue {
-  width: 100px;
-  padding: 10px;
-}*/
+.main-menu-btn::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+
+  background: rgba(255,255,255,0.01); /* transparan, bukan solid */
+  backdrop-filter: blur(2px);       /* efek blur */
+  -webkit-backdrop-filter: blur(2px);
+
+  border-radius: inherit;            /* ikuti bentuk tombol */
+  z-index: -1;  
+}
 
 .main-menu-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  padding: 0px;
+  transition: 0.5s;
+  position: relative;
+  width: 100%;
+
+  -webkit-box-shadow: 5px 5px 8px 5px rgba(97,39,39,0.3);
+  -moz-box-shadow: 5px 5px 8px 2px rgba(97,39,39,0.3); 
+  box-shadow: 5px 5px 8px 2px rgba(97,39,39,0.3);
+}
+
+.main-menu-btn .card{
+  border: 0px;
+  background: none;
+}
+
+.main-menu-btn .card .card-title {
+  color: #922626;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.rounded-circle-cstm{
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+}
+
+.main-menu-btn:hover{
+  background: rgba(255,255,255,0.2); /* transparan, bukan solid */
+}
+
+.main-menu-btn .card-body{
+  max-height: 60px;
+  overflow: hidden;
+}
+
+/*.main-menu-btn {
   background: #eef1f6;
   border: 5px solid #003057;
-  /*border-radius: 500px;*/
   padding: 35px 50px;
   transition: 0.5s;
 }
@@ -110,7 +181,14 @@ body {
 .main-menu-btn:active {
   background: #003057;
   border: 5px solid #777777;
-  /*border-radius: 500px;*/
+  padding: 35px 50px;
+  transition: 0.5s;
+}*/
+
+/*.main-menu-btn:hover,
+.main-menu-btn:active {
+  background: #003057;
+  border: 5px solid #777777;
   padding: 35px 50px;
   transition: 0.5s;
 }
@@ -129,14 +207,14 @@ body {
 
 .main-menu-btn:hover .card-title {
   color: #fff;
-}
+}*/
 
-.card-title {
+/*.card-title {
   color: #003057;
   font-size: 18px;
   text-transform: uppercase;
   text-align: center;
-}
+}*/
 
 /*.cstm-main-menu-img {
   width: 80px !important;
@@ -145,6 +223,64 @@ body {
 .cstm-main-menu-card-title {
   font-size: 12px;
   margin-top: 10px !important;
+}
+
+.card-img-top{
+  height: 95px;
+}
+
+/*.bg-img {
+  position: absolute;
+  top:0; left:0; width:100%; height:100%;
+  object-fit: cover;
+  z-index: -1;
+}*/
+
+.login-page {
+  position: relative;
+  min-height: 100vh;   /* tinggi penuh sesuai viewport */
+  width: 100%;         /* lebar penuh */
+}
+
+.login-page::before {
+  content: "";
+  background: url(../img/BACKGROUND_LOGIN_PAGE_V2.jpg) no-repeat center center;
+  background-size: cover;        /* skala agar menutupi seluruh area */
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1;                   /* pastikan di belakang konten */
+}
+
+
+.login-form-wrapper{
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  border-radius: 40px;
+
+  background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 227, 227, 1) 0%, rgba(242, 206, 206, 1) 38%, rgba(248, 183, 177, 1) 96%);
+
+  -webkit-box-shadow: 0px 5px 11px 0px rgba(179,130,126,0.68); 
+  box-shadow: 0px 5px 11px 0px rgba(179,130,126,0.68);
+}
+
+
+.btn-theme {
+  background-color: #AE2D27;
+  border: none;
+  transition: 0.5s;
+}
+
+.btn-theme:hover {
+  background: #82221D;
+}
+
+.disable-btn {
+  opacity: 0.8;
+  cursor: not-allowed !important;
+}
+
+.login-form .form-control{
+  border: 2px solid #F3F1F2;
 }
 
 @media screen and (min-width: 992px) and (max-width: 1210px) {
@@ -231,15 +367,6 @@ body {
   .dashboard-page,
   .dashboard-page::before {
     min-height: 500px !important;
-  }
-
-  .main-menu-btn,
-  .main-menu-btn:hover,
-  .main-menu-btn:active {
-    background: #003057;
-    border: 0px;
-    padding: 15px 25px;
-    margin-bottom: 30px;
   }
 
   .menu-icon-light-blue {

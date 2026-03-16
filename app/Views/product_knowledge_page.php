@@ -33,7 +33,7 @@
                                     <a href="<?php echo esc(base_url('dashboard')); ?>" class="back-btn">
                                         <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
                                     </a>
-                                    <h4 class="dark-blue-text float-end">PRODUCT KNOWLEDGE</h4>
+                                    <h4 class="default-color-text float-end">PRODUCT KNOWLEDGE</h4>
                                     <div style="clear: both;"></div>
                                 </div>
                                 <div class="point-content">
@@ -54,8 +54,8 @@
                                                         <a class="card" href="<?php echo esc(base_url("/product_knowledge/detail") . "?product_id=" . $rows["id"]); ?>" style="width: 100%;">
                                                             <img class="card-img-top img-fluid redeem-product-img" loading="lazy" src="<?php echo esc(base_url('/uploads/product_knowledge/') . $rows["product_image"]); ?>" alt="product_knowledge">
                                                             <div class="card-body">
-                                                                <h5 class="card-title detail-title"><?php echo esc(ucwords($rows['product_name'])); ?></h5>
-                                                                <span style="color: #efba50;" class="subtitle-detail"><?php echo esc($rows['created_date']); ?></span>
+                                                                <h5 class="card-title detail-title fw-bold"><?php echo esc(ucwords($rows['product_name'])); ?></h5>
+                                                                <span style="color: #922626;" class="subtitle-detail fw-bold"><?php echo esc($rows['created_date']); ?></span>
                                                             </div>
                                                         </a>
                                                     </div>
@@ -64,9 +64,9 @@
 
                                             <!-- Pagination -->
                                             <div class="pagination-controls mt-4 text-center">
-                                                <button id="prevPage" class="btn btn-primary" disabled>Previous</button>
+                                                <button id="prevPage" class="btn submit_btn" disabled>Previous</button>
                                                 <span id="currentPage" class="mx-3">1</span>
-                                                <button id="nextPage" class="btn btn-primary">Next</button>
+                                                <button id="nextPage" class="btn submit_btn">Next</button>
                                             </div>
                                         </div>
                                     </div>

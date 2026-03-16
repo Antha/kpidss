@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-sm-2 col-3">
                         <img class="img-fluid menu-icon-front" src="<?= base_url('/img/icon-quiz-white.png') ?>">
-                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-quiz-light-blue.png') ?>">
+                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-quiz-pink.png') ?>">
                     </div>
                     <div class="col-sm-10 col-9">
                         <span class="sidebar-title-menu">PNP TEST</span>
@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-sm-2 col-3">
                         <img class="img-fluid menu-icon-front" src="<?= base_url('/img/icon-kpi-white.png') ?>">
-                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-kpi-light-blue.png') ?>">
+                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-kpi-pink.png') ?>">
                     </div>
                     <div class="col-sm-10 col-9">
                         <span class="sidebar-title-menu">KPI</span>
@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-sm-2 col-3">
                         <img class="img-fluid menu-icon-front" src="<?= base_url('/img/icon-loyalty-white.png') ?>">
-                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-loyalty-light-blue.png') ?>">
+                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-loyalty-pink.png') ?>">
                     </div>
                     <div class="col-sm-10 col-9">
                         <span class="sidebar-title-menu">LOYALTY</span>
@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-sm-2 col-3">
                         <img class="img-fluid menu-icon-front" src="<?= base_url('/img/icon-info-product-white.png') ?>">
-                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-info-product-light-blue.png') ?>">
+                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-info-product-pink.png') ?>">
                     </div>
                     <div class="col-sm-10 col-9">
                         <span class="sidebar-title-menu">PRODUCT KNOWLEDGE</span>
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col-sm-2 col-3">
                         <img class="img-fluid menu-icon-front" src="<?= base_url('/img/icon-setting-white.png') ?>">
-                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-setting-light-blue.png') ?>">
+                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-setting-pink.png') ?>">
                     </div>
                     <div class="col-sm-10 col-9">
                         <span class="sidebar-title-menu">SET PRODUCT REDEEM</span>
@@ -64,7 +64,7 @@
                 <div class="row">
                     <div class="col-sm-2 col-3">
                         <img class="img-fluid menu-icon-front" src="<?= base_url('/img/icon-setting-white.png') ?>">
-                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-setting-light-blue.png') ?>">
+                        <img class="img-fluid menu-icon-back" src="<?= base_url('/img/icon-setting-pink.png') ?>">
                     </div>
                     <div class="col-sm-10 col-9">
                         <span class="sidebar-title-menu">SET PRODUCT KNOWLEDGE</span>

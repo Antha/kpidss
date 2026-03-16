@@ -33,14 +33,14 @@
                                     <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
                                         <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
                                     </a>
-                                    <h4 class="dark-blue-text float-end">LOYALTY</h4>
+                                    <h4 class="default-color-text float-end">LOYALTY</h4>
                                     <div style="clear: both;"></div>
                                 </div>
                                
                                 <div class="point-content">
                                     <div class="point-info container">
                                         <?php if(session()->get('user_level') == 'admin'){ ?>
-                                        <div class="col-lg-1 col-md-2 col-3 download-table-wrapper ps-0 float-end">
+                                        <div class="col-lg-2 col-md-2 col-4 download-table-wrapper ps-0 float-end">
                                             <div class="download-btn-style1" style="padding-right:0px;">
                                                 <input type="submit" id="btn_dl_redeem_list" name="btn_dl_test_result" value="redeem list" class="submit_btn border_rad1 w-100"></input>
                                             </div>
@@ -90,8 +90,8 @@
                                                         </div>
                                                         <div class="col-md-3 offset-md-3 col-6 text-end">
                                                             <div class="redeem-summary-wrapper">
-                                                                <h6 class="d-inline-block dark-blue-text" style="padding-right: 10px;">HISTORY</h6>
-                                                                <button id="btn-toggle-redeem-summary" style="background: none;border: 0px;"><i class="fa-solid fa-circle-plus fac-dark-blue" style="font-size: 18px;"></i></button>
+                                                                <h6 class="d-inline-block dark-blue-text pe-2">HISTORY</h6>
+                                                                <button id="btn-toggle-redeem-summary" style="background: none;border: 0px;"><i class="fa-solid fa-circle-plus fac-pink" style="font-size: 18px;"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -170,8 +170,8 @@
                                     <div class="product-redeem container mt-4">
                                         <!-- Filter Section -->
                                         <div class="filter-section mb-4 justify-content-end">
-                                            <label for="pointFilter" class="form-label" style="margin-top: 5px;color:#505f77">Filter By Points:</label>
-                                            <select id="pointFilter" class="form-select w-25" style="color: #505f77;">
+                                            <label for="pointFilter" class="form-label" style="margin-top: 5px;color:#AE2D27">Filter By Points:</label>
+                                            <select id="pointFilter" class="form-select w-25" style="color: #888;">
                                                 <option value="all">All</option>
                                                 <option value="low">Below 1,000 Points</option>
                                                 <option value="medium">1,000 - 5,000 Points</option>
@@ -184,14 +184,14 @@
                                                     <div class="card">
                                                         <img class="card-img-top img-fluid redeem-product-img p-2" src="<?php echo base_url('/uploads/loyalty/').$rows["product_image"]?>" alt="prize-redeem">
                                                         <div class="card-body">
-                                                            <h5 class="card-title"><?php echo ucwords($rows['product_name']); ?></h5>
-                                                            <div class="product-point-group float-start">
-                                                                <i class="fa-solid fa-coins icon-point"></i>
+                                                            <h4 class="card-title fw-bold text-uppercase"><?php echo ucwords($rows['product_name']); ?></h4>
+                                                            <div class="product-point-group">
+                                                                <i class="fa-solid fa-coins icon-point me-2 mb-1"></i>
                                                                 <p class="card-text product-point"><?php echo number_format($rows['product_point']); ?> Poin</p>
                                                             </div>
-                                                            <div class="product-stock-group float-end">
-                                                                <i class="fa-solid fa-boxes-stacked icon-stock"></i>
-                                                                <p class="card-text float-end product-stock">Stocks <?php echo $rows['product_stock']; ?></p>
+                                                            <div class="product-stock-group">
+                                                                <i class="fa-solid fa-boxes-packing icon-stock me-2"></i>
+                                                                <p class="card-text product-stock">Stocks <?php echo $rows['product_stock']; ?></p>
                                                             </div>
                                                             <div style="clear: both;"></div>
                                                             <input data-image = "<?php echo base_url('/uploads/loyalty/').$rows["product_image"]?>" type="button" id="btn_submit_redeem_<?php echo $rows['id'];?>" name="btn_submit_redeem" value="REDEEM" class="mt-3 btn submit_btn redeem-btn float-end border_rad1"></input>
@@ -215,7 +215,7 @@
         <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="background-color: transparent">
-                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                    <div class="modal-body" style="background-color: #EF847C;border-radius: 8px;">
                         <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
                             <div class="container">
                                 <div class="row justify-content-center">
@@ -231,7 +231,7 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-center">
-                            <button id="btn-finish-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button id="btn-finish-modal" type="button" class="btn submit_btn" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                     
@@ -266,7 +266,7 @@
         <div class="modal fade" id="finishModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="background-color: transparent">
-                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                    <div class="modal-body" style="background-color: #EF847C;border-radius: 8px;">
                         <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
                             <div class="container">
                                 <div class="row justify-content-center">
@@ -293,7 +293,7 @@
         <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content" style="background-color: transparent">
-                    <div class="modal-body" style="background-color: #003057;border-radius: 8px;">
+                    <div class="modal-body" style="background-color: #EF847C;border-radius: 8px;">
                         <div class="modal-title" style="text-align: center;padding: 30px 10px 0px 10px;">
                             <div class="container">
                                 <div class="row justify-content-center">

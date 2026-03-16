@@ -31,9 +31,9 @@
                             <div class="content-wrapper">
                                 <div class="date-update-wrapper" style="width: 100%;">
                                     <a href="<?php echo base_url()."dashboard"?>" class="back-btn">
-                                        <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
+                                        <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;color: #ff7a77"></i>
                                     </a>
-                                    <h4 class="dark-blue-text">PNP TEST SUMMARY</h4>
+                                    <h4 class="default-color-text">PNP TEST SUMMARY</h4>
                                     <span>last update : <?php echo $lastUpdateData; ?></span>
                                 </div>
                                 <div class="filter_wrapper mt-4">
@@ -41,7 +41,7 @@
                                         <form method="post"  action="<?php echo base_url()."pnp_test"; ?>" enctype="multipart/form-data" id="form_submit_date">
                                             <?php csrf_field() ?>
                                             <div class="row">
-                                                <div class="form-group col-md-2 col-4 pe-0" id="col_periode_data">
+                                                <div class="form-group col-md-2 col-4 pe-md-0" id="col_periode_data">
                                                     <div class="input-group dropdown_input">
                                                         <input required type="text" class="monthPicker form-control pull-left txt-input-data" id="periode_data" name="periode_data_pnp_test" value="<?php echo $displayPeriode; ?>" style="padding: 8px 9px" />
                                                         <div class="input-group-addon">
@@ -49,7 +49,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-2 col-4 pe-0 mb-3" id="wrap_filter_branch">
+                                                <div class="form-group col-md-2 col-4 pe-md-0 mb-3" id="wrap_filter_branch">
                                                     <select name='filter_branch_admin' id='filter_branch_admin' class="select_filter" title="Area Type" style="width:100%;">
                                                         <option value="" selected disabled>Branch</option>
                                                         <option value="ALL">ALL BRANCH</option>
@@ -59,18 +59,18 @@
                                                         <option value="MATARAM">MATARAM</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-md-2 col-4 pe-0 mb-3" id="wrap_filter_cluster">
+                                                <div class="form-group col-md-2 col-4 pe-md-0 mb-3" id="wrap_filter_cluster">
                                                     <select name='filter_cluster_admin' id='filter_cluster_admin' class="select_filter" title="Area Type" style="width:100%;">
                                                         <option value="" selected disabled>Cluster</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-md-2 col-4 pe-0 mb-3" id="wrap_filter_city">
+                                                <div class="form-group col-md-2 col-4 pe-md-0 mb-3" id="wrap_filter_city">
                                                     <select name='filter_city_admin' id='filter_city_admin' class="select_filter" title="Area Type" style="width:100%;">
                                                         <option value="" selected disabled>City</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 col-3">			
-                                                    <input type="submit" id="btn_submit_periode" name="submit_periode_data_pnp_test" value="GO" class="submit_btn_datepicker border_rad1" style="float:left;">
+                                                    <input type="submit" id="btn_submit_periode" name="submit_periode_data_pnp_test" value="GO" class="submit_btn_datepicker border_rad1 float-start p-2">
                                                 </div>
                                                 <p style="padding-left:5px;color:#00bd52;"><?= session()->getFlashdata('error_message'); ?></p> 
                                                 <div style="clear: both;"></div>
@@ -80,20 +80,20 @@
                                     <div class="container-fluid additional-info-wrapper">
                                         <div class="row">
                                             <div class="col-md-2 pt-3">
-                                                <i class="fa-solid fa-circle-info pe-1"></i>
+                                                <i class="fa-solid fa-circle-info pe-1" style="color: #ff7a77"></i>
                                                 <span>DS Login : <?= esc($getDsLoginReport[0]['user_login']); ?></span>
                                             </div>
-                                            <div class="col-md-2 pt-3">
-                                                <i class="fa-solid fa-circle-info pe-1"></i>
+                                            <div class="col-md-3 pt-3">
+                                                <i class="fa-solid fa-circle-info pe-1" style="color: #ff7a77"></i>
                                                 <span>DS Belum Login : <?= esc($getDsLoginReport[0]['user_belum_login']); ?></span>
                                             </div>
                                             <div class="col-md-5 pt-3">
-                                                <i class="fa-solid fa-circle-info pe-1"></i>
+                                                <i class="fa-solid fa-circle-info pe-1" style="color: #ff7a77"></i>
                                                 <span>Best DS : <?= esc($bestDs); ?></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="container-fluid download-search-wrapper">
+                                    <div class="container-fluid download-search-wrapper mt-2 mt-md-4">
                                         <div class="row">
                                             <div class="offset-lg-7 col-lg-3 col-md-3 col-6 pt-2 pb-2">
                                                 <div class="input-group">
@@ -126,7 +126,7 @@
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-hover table-custom" id="dataTable">
                                             <thead>
-                                                <tr class="bg-tb-blue">
+                                                <tr class="bg-tb-main">
                                                     <th scope="col">Rank</th>
                                                     <th scope="col">Agent ID</th>
                                                     <th scope="col" style="min-width: 400px;">DSS Name</th>

@@ -50,6 +50,18 @@ class Kpi_model extends Model
 		return $result;
     }
 
+    function get_kpi_data_v2($periode){
+        $sql = "SELECT * FROM kpi_data_$periode";
+
+        $query = $this->db_con->query($sql);
+
+        if($query){
+            return $query->getResultArray();
+        }else{
+            return $this->db_con->error();
+        }
+    }
+
     function get_kpi_data($periode,$where_var){
         $sql = "SELECT * FROM kpi_data WHERE periode LIKE $periode $where_var";
 

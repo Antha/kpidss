@@ -6,6 +6,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\Kpi_model;
 use Config\Session;
+helper(['custom_helper']);
 
 class Kpi extends Controller
 {
@@ -220,6 +221,7 @@ class Kpi extends Controller
         $latest_periode = $exp_table_periode[1];
         
         $data['periode'] = $latest_periode;
+        $data['result_kpi_data'] = $this->kpi_model->get_kpi_data_v2($latest_periode);
 
         return view('kpi_admin_page_v2',$data);
     }

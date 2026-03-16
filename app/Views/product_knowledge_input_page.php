@@ -26,6 +26,17 @@
             <div class="dashboard-menu">
                 <div class="container mt-md-5 mt-2">
                     <div class="row">
+                        <div class="col-xs-12">
+                            <div class="content-wrapper pt-0">
+                                <div class="date-update-wrapper">
+                                    <a href="<?php echo esc(base_url('dashboard')); ?>" class="back-btn">
+                                        <i class="fa-regular fa-circle-left float-start" style="font-size: 25px;padding-top: 2px;margin-right: 10px;"></i>
+                                    </a>
+                                    <h4 class="default-color-text float-end">SET PRODUCT KNOWLEDGE</h4>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-xs-12 mb-4 p-0">
                             <ul class="nav nav-tabs" style="padding: 0px 10px;">
                                 <li class="nav-item">
@@ -41,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 border rounded mb-2 mb-md-5">
                                         <div class="content-wrapper">
-                                            <h3>ADD PRODUCT KNOWLEDGE</h3>
+                                            <h3 class="default-color-text">ADD PRODUCT KNOWLEDGE</h3>
                                             <?php if (session()->getFlashdata('success')): ?>
                                                 <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
                                             <?php endif; ?>
@@ -85,7 +96,7 @@
                                                 </div> -->
                                                 <input type="hidden" id="hidden_dt_now" style="display: none;" value="<?php echo $dt_now; ?>"></input>
                                                 <div class="text-center mt-3 mb-3">
-                                                    <button type="button" id="cropButton" class="btn btn-primary">Crop & Upload Data</button>
+                                                    <button type="button" id="cropButton" class="btn submit_btn">Crop & Upload Data</button>
                                                 </div>
                                             </form>
                                         </div> 
@@ -100,8 +111,8 @@
                                             <h3>DELETE PRODUCT KNOWLEDGE</h3>
                                             <div class="table-scroll-y" style="height: 300px;">
                                                 <div class="table-responsive">
-                                                    <table class="table table-bordered table-hover table-edit-pr">
-                                                        <tr style="background-color: #003057;color:#fff;">
+                                                    <table class="table table-bordered table-edit-pr">
+                                                        <tr class="bg-tb-main" style="color:#fff;">
                                                             <th class="text-center">ID</th>
                                                             <th class="text-center" style="min-width: 100px;">IMAGE</th>
                                                             <th class="text-center" style="min-width: 100px;">TITLE</th>

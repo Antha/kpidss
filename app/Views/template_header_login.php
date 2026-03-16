@@ -18,7 +18,7 @@
 
     <!--STYLES-->
     <link rel="stylesheet" href="<?php echo base_url('/css/bootstrap.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('/css/login_page_style.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('/css/main_page_style.css') ?>">
 </head>
 
 <?= $this->renderSection('content'); ?>

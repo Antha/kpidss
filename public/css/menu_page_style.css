@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-  font-family: "Roboto", serif;
+  font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
-  font-size: 14px;
+  font-size: 12px;
   background-color: #fff;
   transition: opacity 2s;
 }
@@ -73,20 +74,21 @@ body {
   transition: 0.5s;
 }
 
+.fac-pink:hover {
+  color: #ff7a77;
+}
+
+.fac-pink {
+  color: #ff9e9b;;
+  transition: 0.5s;
+}
+
 .fac-dark-blue:hover {
   color: #0bb4ed;
 }
 
 .user-name-ses-display {
   color: #003057;
-}
-
-.btn_logout i {
-  color: #0bb4ed;
-}
-
-.btn_logout:hover i {
-  color: #0ad3ef;
 }
 
 .user-name-ses-display h6 {
@@ -101,11 +103,11 @@ body {
 
 .nav-tabs .nav-link.active {
   font-weight: bold;
-  color: #003057;
+  color: #ff9e9b;
 }
 
 .main-sidebar-open {
-  margin-left: 300px;
+  margin-left: 150px;
   transition: margin-left 0.5s;
 }
 .main-sidebar-close {
@@ -119,7 +121,7 @@ body {
 }
 
 .sidebar-open {
-  background-color: #003057;
+  background-color: #AE2D27;
   display: block !important;
   width: 300px;
   height: 100%; /* 100% Full-height */
@@ -139,6 +141,10 @@ body {
   color: #ea2c2c;
 }
 
+.default-color-text{
+  color: #922626;
+}
+
 .dark-blue-text {
   color: #003057;
 }
@@ -149,6 +155,10 @@ body {
 
 .animate-left {
   animation: animateleft 0.4s;
+}
+
+.greeting{
+  background-color: #AE2D27;
 }
 
 .greeting h6 {
@@ -177,7 +187,8 @@ body {
 .nav-link:hover,
 .nav-link:active,
 .nav-link:target {
-  color: #0ad3ef;
+  /*color: #0ad3ef;*/
+  color: #ff9e9b;
 }
 
 .nav-link:hover .menu-icon-front {
@@ -193,7 +204,9 @@ body {
 }
 
 .header-top {
-  background: #eef1f6;
+  /*background: #eef1f6;*/
+
+  background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 227, 227, 1) 0%, rgba(242, 206, 206, 1) 38%, rgba(248, 183, 177, 1) 96%);
 }
 
 .main-header-wrapper {
@@ -201,7 +214,7 @@ body {
 }
 
 .main-header-title {
-  color: #003057;
+  color: #922626;
   display: inline-block;
   letter-spacing: 3px;
   padding-top: 3px;
@@ -211,22 +224,24 @@ body {
   margin-right: 12px;
   color: #fff;
   border-radius: 20px;
-  background: #003057;
+  background: #AE2D27;
 }
 
 .open-nav-btn:hover,
 .open-nav-btn:active,
 .open-nav-btn:target {
-  background: #00508e;
+  background: #82221D;
   color: #fff;
 }
 
-.back-btn {
-  color: #0bb4ed;
+.back-btn,
+.btn_logout i {
+  color: #ff9e9b;
 }
 
-.back-btn:hover {
-  color: #0ad3ef;
+.back-btn:hover,
+.btn_logout:hover i {
+  color: #ff7a77;
 }
 
 .close-nav-btn-wrapper {
@@ -240,7 +255,7 @@ body {
 }
 
 .close-nav-btn:hover {
-  color: #0ad3ef;
+  color: #ff7a77;
 }
 
 .input-group-addon {
@@ -257,20 +272,20 @@ body {
 
 .submit_btn_datepicker,
 .submit_btn {
+  border: 0px;
   padding: 7px 8px 7px 8px;
-  border: 1px solid #0bb4ed;
   font-weight: bold;
   text-transform: uppercase;
   color: #fff;
-  background-color: #0bb4ed;
+  background-color: #AE2D27;
 }
 
 .submit_btn_datepicker:hover,
 .submit_btn_datepicker:active,
 .submit_btn:hover,
 .submit_btn:active {
-  border: 1px solid #0ad3ef;
-  background-color: #0ad3ef;
+  color: #fff;
+  background-color: #82221D;
 }
 
 .txt-input-data {
@@ -338,6 +353,10 @@ body {
   background-color: #004f90 !important;
 }
 
+.bg-tb-main{
+  background-color: #AE2D27;
+}
+
 .sub-title-table {
   font-size: 12px;
   color: #505f77;
@@ -353,7 +372,12 @@ body {
 }
 
 .select_filter {
-  padding: 9px 5px;
+  background-color: #fff;
+  padding: 10px 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
 }
 
 .flashdata_error {
@@ -378,8 +402,10 @@ body {
 }
 
 .footer-style {
-  background: #003057;
-  color: #fff;
+  /*background: #003057;*/
+  background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 227, 227, 1) 0%, rgba(242, 206, 206, 1) 38%, rgba(248, 183, 177, 1) 96%);
+
+  color: #922626;
 }
 
 .download-btn-style1 {
@@ -389,6 +415,10 @@ body {
   margin-top: 10px;
 }
 
+.download-btn-style1 #btn_dl_redeem_list{
+  border: 0px;
+}
+
 .icon-wrapper1 {
   width: 50px;
   padding-right: 0px;
@@ -396,13 +426,13 @@ body {
 
 .point-info-user {
   /*background-color: #003057;*/
-  border: 1px solid #0c7a99;
+  border: 1px solid #ccc;
   width: 100%;
 }
 
 .point-info-user h6 {
   margin-bottom: 0px !important;
-  color: #003057;
+  color: #922626;
   /*color: #ffbd3a;*/
 }
 
@@ -411,40 +441,40 @@ body {
   overflow: hidden;
 }
 
-.product-redeem .card-body {
-  background-color: #003057;
+.product-redeem .card-body,
+.product-knowledge .card-body {
+  /*background-color: #003057;*/
+  background-color: #ef847c;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
-.product-redeem .card {
-  border-color: #0c7a99;
+.product-redeem .card,
+.product-knowledge .card {
+  /*border-color: #0c7a99;*/
+  border-color: #ccc;
 }
 
-.product-redeem .card-title {
-  color: #fff;
-}
-
-.product-redeem .card-title {
-  color: #fff;
+.product-redeem .card-title,
+.product-knowledge .card-title {
+  color: #922626;
 }
 
 .product-point-group {
   /*color: #ffde23;*/
-  color: #ffbd3a;
+  color: #1c1c1c;
   font-size: 12px;
 }
 
 .product-redeem .product-point {
   font-weight: normal;
   display: inline-block;
-  margin-right: 3px;
 }
 
 .product-stock-group {
-  color: #eef1f6;
+  color: #1c1c1c;
   font-size: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .product-redeem .product-stock {
@@ -452,13 +482,7 @@ body {
   display: inline-block;
 }
 
-.product-redeem .icon-stock {
-  margin-right: 5px;
-}
-
-.card-title,
-.product-point-group,
-.product-stock-group {
+.card-title{
   font-size: 14px;
   font-weight: normal;
 }
@@ -473,7 +497,7 @@ body {
 
 .redeem-btn:hover {
   color: #fff;
-  background-color: #0ad3ef;
+  background-color: #82221D;
 }
 
 .modal-header {
@@ -488,7 +512,7 @@ body {
 .modal-title,
 #modal-info-product-name,
 #modal-info-product-point {
-  color: #efba50;
+  color: #922626;
 }
 
 .modal-info-process {
@@ -537,14 +561,14 @@ body {
   font-size: 14px;
 }
 
-.product-knowledge .card-body {
+/*.product-knowledge .card-body {
   background-color: #003057;
   color: #f5f5f5;
   height: 120px !important;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   overflow: hidden;
-}
+}*/
 
 .product-knowledge a {
   text-decoration: none;
@@ -628,7 +652,7 @@ body {
 }
 @media screen and (max-width: 575px) {
   .main-sidebar-open {
-    margin-left: 180px;
+    margin-left: 90px;
   }
 
   .sidebar-open {

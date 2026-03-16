@@ -44,7 +44,7 @@
                                             <div class="col-12" style="margin-top: 15px;">
                                                 <h6>SUMMARY</h6>
                                             </div>
-                                            <div class="col-4 col-sm-7 col-lg-8">
+                                            <div class="col-4 col-sm-10 col-lg-11">
                                                 <span style="font-size: 12px;margin-top: 10px;display: inline-block;" class="sub-title-table sub-title-table">
                                                     AREA 3            
                                                 </span>
@@ -66,11 +66,49 @@
                                                     <div class="table-responsive">
                                                         <table id="dataTable"  class="table table-bordered table-hover table-custom">
                                                             <thead>
-                                                                
+                                                                <tr class="bg-tb-main">
+                                                                    <th rowspan="2" colspan="2">CLUSTER</th>
+                                                                    <th rowspan="2">TARGET SO</th>
+                                                                    <th colspan="3">JUMLAH DS</th>
+                                                                    <th rowspan="2">EVENT</th>
+                                                                    <th rowspan="2">SITE SSGJ</th>
+                                                                    <th colspan="3">TRX</th>
+                                                                    <th colspan="4">REVENUE</th>
+                                                                </tr>
+                                                                <tr class="bg-tb-main">
+                                                                    <th>DS</th>
+                                                                    <th>DS ACTIVE</th>
+                                                                    <th>% ACTIVE</th>
+                                                                    <th>VAS</th>
+                                                                    <th>RECHARGE</th>
+                                                                    <th>SO</th>
+                                                                    <th>REVENUE ALL</th>
+                                                                    <th>DATA</th>
+                                                                    <th>DIGITAL</th>
+                                                                    <th>DIGISTAR</th>
+                                                                </tr>
                                                             </thead>
 
                                                             <tbody id="dataTable_body_filter">
-                                                                
+                                                                <?php foreach($result_kpi_data as $rows){ ?>
+                                                                    <tr>
+                                                                        <td><?php echo $rows['BRANCH'];?></td>
+                                                                        <td><?php echo $rows['CLUSTER'];?></td>
+                                                                        <td class="text-center"><?php echo nf0($rows['TARGET_SO']);?></td>
+                                                                        <td class="text-center"><?php echo $rows['DS'];?></td>
+                                                                        <td class="text-center"><?php echo $rows['DS_ACTIVE'];?></td>
+                                                                        <td class="text-center"><?php echo $rows['PERCENT_ACTIVE'];?></td>
+                                                                        <td class="text-center"><?php echo $rows['EVENT'];?></td>
+                                                                        <td class="text-center"><?php echo $rows['SITE_SSGJ'];?></td>
+                                                                        <td class="text-center"><?php echo $rows['TRX_VAS'];?></td>
+                                                                        <td class="text-center"><?php echo $rows['TRX_RECHARGE'];?></td>
+                                                                        <td class="text-center"><?php echo $rows['TRX_SO'];?></td>
+                                                                        <td class="text-end"><?php echo nf0($rows['REV_ALL']);?></td>
+                                                                        <td class="text-end"><?php echo nf0($rows['REV_DATA']);?></td>
+                                                                        <td class="text-end"><?php echo nf0($rows['REV_DIGITAL']);?></td>
+                                                                        <td class="text-end"><?php echo nf0($rows['REV_DIGISTAR']);?></td>
+                                                                    </tr>
+                                                                <?php } ?>
                                                             </tbody>
                                                         </table>
                                                     </div>
