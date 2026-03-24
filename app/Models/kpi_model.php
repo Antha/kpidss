@@ -26,7 +26,32 @@ class Kpi_model extends Model
 		return $table_name;
     }
 
+     function get_list_table_kpi(){
+        $sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES 
+				WHERE TABLE_NAME LIKE 'kpi_data_%' AND DATA_LENGTH != 0 
+				ORDER BY TABLE_NAME DESC";
+					
+		$query = $this->db_con->query($sql);
+
+        if($query){
+            return $query->getResultArray();
+        }else{
+            return $this->db_con->error();
+        }
+    }
+
    
+    function get_kpi_data_update_date($kpi_table){
+        $sql = "SELECT MAX(UPDATE_DATE) last_update_date FROM $kpi_table";
+					
+		$query = $this->db_con->query($sql);
+
+        if($query){
+            return $query->getRowArray();
+        }else{
+            return $this->db_con->error();
+        }
+    }
 
     function get_lastupdate_date(){
         $sql = "SELECT MAX(periode) last_update_date FROM kpi_data";

@@ -3,14 +3,18 @@
 namespace App\Controllers;
 !defined('BASEPATH') OR exit('No direct script access aloowed');
 
+use App\Models\ImportJobModel;
 use CodeIgniter\Controller;
 use App\Models\Kpi_model;
+use App\Models\ReplaceDataModel;
 use Config\Session;
 helper(['custom_helper']);
 
 class Kpi extends Controller
 {
     protected $kpi_model;
+    protected $replace_data_model;
+    protected $import_model;
     protected $session_user;
     protected $denpasar_cluster_array;
     protected $kupang_cluster_array;
@@ -20,6 +24,8 @@ class Kpi extends Controller
     function __construct()
     {
         $this->kpi_model = new Kpi_model();
+        $this->replace_data_model = new ReplaceDataModel();
+        $this->import_model = new ImportJobModel();
         $this->session_user = session();
         
         $this->denpasar_cluster_array = array('BALI BARAT','BALI TENGAH','BALI TIMUR');
@@ -219,7 +225,11 @@ class Kpi extends Controller
         $latest_kpi_table = $this->kpi_model->get_latest_table_kpi();
         $exp_table_periode = explode("kpi_data_",$latest_kpi_table);
         $latest_periode = $exp_table_periode[1];
+        $update_date = $this->kpi_model->get_kpi_data_update_date($latest_kpi_table);
+        $list_kpi_table = $this->kpi_model->get_list_table_kpi();
         
+        $data['update_date'] = $update_date['last_update_date'];
+        $data['list_kpi_table'] = $list_kpi_table;
         $data['periode'] = $latest_periode;
         $data['result_kpi_data'] = $this->kpi_model->get_kpi_data_v2($latest_periode);
 
@@ -375,6 +385,185 @@ class Kpi extends Controller
             fclose($file); 
             exit;
         }
+    }
+
+    public function preview()
+    {
+        $table = $this->request->getPost('table_name');
+        $file  = $this->request->getFile('csv_file');
+
+        if (!$file->isValid() || $file->getExtension() !== 'csv') {
+            return redirect()->back()->with('error', 'Invalid CSV file');
+        }
+
+        $handle = fopen($file->getTempName(), 'r');
+        $header = fgetcsv($handle);
+
+        $tableColumns = $this->replace_data_model->getTableColumns($table);
+        $validation   = $this->replace_data_model->validateCSVHeader($header, $tableColumns);
+
+        if (!$validation['valid']) {
+            return redirect()->back()->with(
+                'error',
+                'Column mismatch. Missing: '
+                . implode(',', $validation['missing'])
+            );
+        }
+
+        $previewRows = [];
+        $count = 0;
+        while (($data = fgetcsv($handle)) !== false && $count < 10) {
+            $previewRows[] = array_combine($header, $data);
+            $count++;
+        }
+        fclose($handle);
+
+        // ✅ PINDAHKAN FILE KE LOKASI PERMANEN
+        $uploadPath = WRITEPATH . 'uploads/csv/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
+        $newName = 'replace_' . time() . '.csv';
+        $file->move($uploadPath, $newName);
+        $csvPath = $uploadPath . $newName;
+
+        // ✅ SIMPAN PATH FILE, BUKAN TEMP NAME
+        session()->set('replace_payload', [
+            'table' => $table,
+            'file'  => $csvPath
+        ]);
+
+        return view('replace_preview', [
+            'header' => $header,
+            'rows'   => $previewRows
+        ]);
+
+        return view('replace_preview', [
+            'header' => $header,
+            'rows'   => $previewRows // preview first 10 rows
+        ]);
+    }
+
+    public function confirm()
+    {
+        $payload = session()->get('replace_payload');
+
+        if (!$payload) {
+            return redirect()->to('replace/upload');
+        }
+
+        $table = $payload['table'];
+        $file  = $payload['file'];
+
+        if (!file_exists($file)) {
+            return redirect()->to('replace/upload')
+                ->with('error', 'File CSV tidak ditemukan');
+        }
+
+        // 🔥 Trigger CLI import (BACKGROUND)
+        $cmd = sprintf(
+            'php %sspark import:csv %s %s > /dev/null 2>&1 &',
+            ROOTPATH,
+            escapeshellarg($file),
+            escapeshellarg($table)
+        );
+
+        exec($cmd);
+
+        session()->remove('replace_payload');
+
+        return redirect()->to('replace/upload')
+            ->with('success', 'Import sedang diproses di background. Silakan tunggu.');
+    }
+
+    public function startImport()
+    {
+        $payload = session()->get('replace_payload');
+        if (!$payload) {
+            return redirect()->to('kpi')
+            ->with('error', 'Session import tidak ditemukan');
+        }
+
+        $this->replace_data_model->truncateTable($payload['table']);
+
+        // hitung total baris (sekali saja)
+        $total = 0;
+        $handle = fopen($payload['file'], 'r');
+        fgetcsv($handle);
+        while (fgetcsv($handle)) $total++;
+        fclose($handle);
+
+        $jobId = $this->import_model->createJob($payload,$total);
+
+        return view('replace_progress', ['jobId' => $jobId]);
+    }
+
+    public function processImport($jobId)
+    {
+        //$job = $this->model->table('import_jobs')->where('id', $jobId)->get()->getRowArray();
+        $job = $this->import_model->getJobById($jobId);
+
+        if (!$job) {
+            return $this->response->setJSON([
+                'done' => true,
+                'error' => 'Job tidak ditemukan'
+            ]);
+        }
+
+        if ($job['status'] === 'done') {
+            return $this->response->setJSON([
+                'done'      => true,
+                'processed' => (int)$job['total_rows'],
+                'total'     => (int)$job['total_rows']
+            ]);
+        }
+
+        $limit = 1000;
+        $count  = 0;
+        $batch  = [];
+
+        $handle = fopen($job['file_path'], 'r');
+        $header = fgetcsv($handle);
+
+        // 🔥 SKIP BARIS YANG SUDAH DIPROSES (RESUME)
+        for ($i = 0; $i < $job['processed_rows']; $i++) {
+            fgetcsv($handle);
+        }
+
+        //$batch = [];
+        //$count = 0;
+        while (($row = fgetcsv($handle)) !== false && $count < $limit) {
+            $batch[] = array_combine($header, $row);
+            $count++;
+        }
+        $isEOF = feof($handle);
+        fclose($handle);
+
+        if ($batch) {
+            $this->import_model->insertBatchData($job['table_name'],$batch);
+            $this->import_model->increaseProcessedRows($jobId, $count);
+        }
+
+        // ✅ CEK SELESAI BERDASARKAN TOTAL
+        if ((int)$job['processed_rows'] >= (int)$job['total_rows']) {
+            $this->import_model->markDone($jobId);
+
+            return $this->response->setJSON([
+                'done'      => true,
+                'processed' => (int)$job['total_rows'],
+                'total'     => (int)$job['total_rows']
+            ]);
+        }
+
+
+        // 🔁 MASIH LANJUT
+        return $this->response->setJSON([
+            'done'      => false,
+            'processed' => (int)$job['processed_rows'] + $count,
+            'total'     => (int)$job['total_rows']
+        ]);
+
     }
         
 }

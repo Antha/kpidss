@@ -59,4 +59,11 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/product_knowledge/detail', 'Product_knowledge::detail');
     $routes->post('/product_knowledge/get_selected_product', 'Product_knowledge::get_selected_product');
     $routes->post('/product_knowledge/delete_selected_product', 'Product_knowledge::delete_selected_product');
+
+    $routes->post('/kpi/preview', 'Kpi::preview');
+    $routes->post('/kpi/confirm', 'ReplaceData::confirm');
+    $routes->get('/kpi/startImport', 'Kpi::startImport');
+    $routes->post('/kpi/startimport', 'Kpi::startImport');
+    $routes->get('/kpi/processImport/(:num)', 'Kpi::processImport/$1');
+    $routes->post('/kpi/download/sample', 'DownloadSample::sampleTablePost');
 });

@@ -35,7 +35,7 @@
                                     </a>
                                     <h4 class="dark-blue-text">KPI</h4>
                                     <div style="clear: both;"></div>
-                                    <span>last update : </span>
+                                    <span>last update : <?php echo $update_date; ?></span>
                                 </div>
                                
                                 <div class="table-group-wrapper">
@@ -116,6 +116,78 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="container-fluid p-0">
+                                        <div class="row mt-3">
+                                            <h5 class="mb-3">REPLACE DATA</h5>
+                                            <div class="container-fluid mt-2 mt-sm-4">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-10 col-md-10 col-lg-8 col-xl-8 border rounded px-3 py-4 filter_group_top bg-body-secondary">
+                                                        <!--ERROR MESSAGE -->
+                                                        <?php if(session()->getFlashdata('error')): ?>
+                                                            <div class="alert alert-danger w-100 mb-3">
+                                                                <?= session()->getFlashdata('error') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+
+                                                        <?php if(session()->getFlashdata('success')): ?>
+                                                            <div class="alert alert-success w-100 mb-3">
+                                                                <?= session()->getFlashdata('success') ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <!-- FORM UPLOAD & PREVIEW -->
+                                                        <form method="post"
+                                                            action="<?= base_url('kpi/preview') ?>"
+                                                            enctype="multipart/form-data"
+                                                            onsubmit="return validateCSV()"
+                                                            id="formUpload">
+
+                                                            <?= csrf_field() ?>
+
+                                                            <select name="table_name" id="table_name_select" required class="form-select mb-2">
+                                                                <?php foreach($list_kpi_table as $rows){ ?>
+                                                                    <option value="<?php echo $rows['TABLE_NAME'];?>"><?php echo $rows['TABLE_NAME'];?></option>
+                                                                <?php } ?>
+                                                            </select>
+
+                                                            <input type="file"
+                                                                name="csv_file"
+                                                                id="csv_file"
+                                                                class="form-control mb-2"
+                                                                required>
+
+                                                            <div class="col-12 text-end d-flex justify-content-end gap-2">
+
+                                                                <button type="submit" class="btn submit_btn fw-bold" style="font-size: 12px;">
+                                                                    Upload & Preview
+                                                                </button>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-8 col-md-8 col-lg-8 col-xl-8 border rounded px-3 py-4 mt-4 mb-4 bg-body-secondary">
+                                                        <div class="row">
+                                                            <div class="col-12 col-sm-9 pt-2">
+                                                                <h6 class="fw-light fst-italic text-info-emphasis">Download Contoh Kolom dan Data yang Sesuai Dengan Database</h6>
+                                                            </div>
+                                                            <div class="offset-6 col-6 offset-sm-0 col-sm-3 text-end">
+                                                                <!-- FORM DOWNLOAD SAMPLE (TERPISAH) -->
+                                                                <form method="post"
+                                                                    action="<?= base_url('kpi/download/sample') ?>"
+                                                                    id="formDownloadSample">
+                                                                    <?= csrf_field() ?>
+                                                                    <input type="hidden" name="table_name" id="table_name_download">
+                                                                    <button type="submit" class="btn submit_btn fw-bold" style="font-size: 12px;">
+                                                                        Download Sample
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
                                 </div>
                             </div> 
                         </div>
@@ -132,6 +204,27 @@
 
 <link rel="stylesheet" href="<?php echo base_url('/css/datepicker.css') ?>">
 <script type="text/javascript" src="<?php echo base_url('/script/bootstrap-datepicker.js') ?>"></script>
+<script>
+    function validateCSV() {
+        const file = document.getElementById('csv_file').value;
+        if (!file.endsWith('.csv')) {
+            alert('Only CSV files allowed');
+            return false;
+        }
+        return true;
+    }
+
+    const tableSelect = document.querySelector('select[name="table_name"]');
+    const tableHidden = document.getElementById('table_name_download');
+
+    // set nilai awal
+    tableHidden.value = tableSelect.value;
+
+    // update saat select berubah
+    tableSelect.addEventListener('change', function () {
+    tableHidden.value = this.value;
+});
+</script>
 <script>
     function w3_open() {
         $('#main').removeClass('main-sidebar-close');
