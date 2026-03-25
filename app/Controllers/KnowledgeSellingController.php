@@ -18,9 +18,13 @@ class KnowledgeSellingController extends Controller
         
         $model = new KnowledgeSellingModel();
 
-        // Ambil semua data kolom pic
-        $pics = $model->select('pic')->findAll();
-  
+        $userId = session()->get('user_id');
+
+        // Ambil semua data kolom pic berdasarkan user_id
+        $pics = $model->select('pic')
+              ->where('id_user', $userId)   // ganti $userId dengan variabel user yang aktif
+              ->findAll();
+
         return view('selling_page',['pics' => $pics]);
     }
 
